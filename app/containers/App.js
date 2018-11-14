@@ -1,12 +1,12 @@
 import React from 'react';
+import * as Expo from 'expo';
+import SignUp from './SignUp';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <SignUp />
     );
   }
 }
@@ -19,3 +19,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+Expo.registerRootComponent(App);
