@@ -5,12 +5,9 @@ import { View, Text, StatusBar } from 'react-native'
 class SignUp extends React.PureComponent {
   render() {
     return (
-      <View backgroundColor="#303030">
+      <View style={styles.main_container}>
         <StatusBar barStyle="light-content" />
-        <View>
-          <StatusBar hidden={route.statusBarHidden} />
           <Text style={styles.text}>Welcome to the sign up screen.</Text>
-        </View>
       </View>
     )
   }

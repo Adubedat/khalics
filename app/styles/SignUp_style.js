@@ -6,6 +6,7 @@ export default StyleSheet.create({
     flex: 1
   },
   text: {
+    marginTop: 20,
     color: 'red'
   }
 })
