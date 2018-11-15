@@ -9,6 +9,11 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
+import {
+  CognitoUserPool,
+  CognitoUserAttribute,
+  CognitoUser,
+} from 'amazon-cognito-identity-js';
 import styles from './styles';
 
 class SignUp extends React.PureComponent {
@@ -21,7 +26,38 @@ class SignUp extends React.PureComponent {
     this.state = {};
   }
 
+  componentDidMount() {
+  }
+
+  signUp = () => {
+    const poolData = {
+      UserPoolId: 'eu-west-1_jrpxZzyiw',
+      ClientId: '2h58edhdok2kc8ujlankvev9cj',
+    };
+    const userPool = new CognitoUserPool(poolData);
+    const attributeList = [];
+    const dataEmail = {
+      Name: 'email',
+      Value: 'arthur.dubedat@gmail.com',
+    };
+    const attributeEmail = new CognitoUserAttribute(dataEmail);
+
+    attributeList.push(attributeEmail);
+    userPool.signUp('abcdefok', 'pD42assword', attributeList, null, (err, result) => {
+      if (err) {
+        console.log(err);
+        // console.error(err);
+        // alert(err);
+        return;
+      }
+      const cognitoUser = result.user;
+      console.log(`user name is ${cognitoUser.getUsername()}`);
+    });
+  }
+
   render() {
+    console.log('SIGN UP !');
+    this.signUp();
     return (
       <View style={{ flex: 1, backgroundColor: '#303030' }}>
         <StatusBar barStyle="light-content" />
