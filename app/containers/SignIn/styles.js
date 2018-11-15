@@ -3,7 +3,7 @@ import { StatusBar, Platform, StyleSheet } from 'react-native';
 export default StyleSheet.create({
   main_container: {
     // marginTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
-    backgroundColor: '#424242',
+    // backgroundColor: 'transparent',
     flex: 1,
   },
   text: {

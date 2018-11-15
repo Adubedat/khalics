@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View,
   StatusBar,
+  ImageBackground,
 } from 'react-native';
 import {
   Text,
@@ -75,46 +76,55 @@ class SignUp extends React.PureComponent {
 
   render() {
     const { username, email, password } = this.state;
+    //  const resizeMode = 'center';
     console.log('SIGN UP !');
     // this.signUp();
     return (
-      <View style={{ flex: 1, backgroundColor: '#303030' }}>
-        <StatusBar barStyle="light-content" />
-        <View style={styles.main_container}>
-          <View style={styles.title_container}>
-            <Text style={styles.title}>Khalics</Text>
-          </View>
-          <View style={styles.form_container}>
-            <FloatingLabelInput
-              label="Username"
-              value={username}
-              onChangeText={this.handleUsernameTextChange}
-            />
-            <FloatingLabelInput
-              label="Email"
-              value={email}
-              onChangeText={this.handleEmailTextChange}
-            />
-            <FloatingLabelInput
-              label="Password"
-              value={password}
-              onChangeText={this.handlePasswordTextChange}
-            />
-          </View>
-          <View style={styles.validation_container}>
-            <Button
-              buttonStyle={styles.form_button}
-              title="Sign up"
-              titleStyle={{ fontWeight: 'bold' }}
-              color="white"
-            />
-            <Text style={[styles.small_text, { textAlign: 'center' }]}>
-              Already have an account ?
-              <Text style={{ fontWeight: 'bold' }}> Sign in</Text>
-            </Text>
+      <ImageBackground
+        source={require('../../../assets/gym-background.jpg')}
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <View style={{ flex: 1, backgroundColor: 'rgba(52, 52, 52, 0.5)' }}>
+          <StatusBar barStyle="light-content" />
+          <View style={styles.main_container}>
+            <View style={styles.title_container}>
+              <Text style={styles.title}>Khalics</Text>
+            </View>
+            <View style={styles.form_container}>
+              <FloatingLabelInput
+                label="Username"
+                value={username}
+                onChangeText={this.handleUsernameTextChange}
+              />
+              <FloatingLabelInput
+                label="Email"
+                value={email}
+                onChangeText={this.handleEmailTextChange}
+              />
+              <FloatingLabelInput
+                label="Password"
+                value={password}
+                onChangeText={this.handlePasswordTextChange}
+              />
+            </View>
+            <View style={styles.validation_container}>
+              <Button
+                buttonStyle={styles.form_button}
+                title="Sign up"
+                titleStyle={{ fontWeight: 'bold' }}
+                color="white"
+              />
+              <Text style={[styles.small_text, { textAlign: 'center' }]}>
+                Already have an account ?
+                <Text style={{ fontWeight: 'bold' }}> Sign in</Text>
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }

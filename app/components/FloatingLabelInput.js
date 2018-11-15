@@ -47,7 +47,7 @@ class FloatingLabelInput extends React.PureComponent {
         inputRange: [0, 1],
         outputRange: [20, 14],
       }),
-      color: !isFocused ? '#B0B0B0' : 'white',
+      color: !isFocused ? '#D3D3D3' : 'white',
     };
     const styles = StyleSheet.flatten({
       textInputStyle: {
@@ -55,7 +55,7 @@ class FloatingLabelInput extends React.PureComponent {
         fontSize: 16,
         color: 'white',
         borderBottomWidth: !isFocused ? 1 : 2,
-        borderBottomColor: !isFocused ? '#B0B0B0' : 'white',
+        borderBottomColor: !isFocused ? '#D3D3D3' : 'white',
       },
     });
     return (
