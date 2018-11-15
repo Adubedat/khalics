@@ -7,14 +7,14 @@ export default StyleSheet.create({
     flex: 1,
   },
   small_text: {
-    fontSize: 12,
+    fontSize: 15,
     color: 'white',
   },
   text: {
     color: 'red',
   },
   title_container: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -25,11 +25,26 @@ export default StyleSheet.create({
   form_container: {
     flex: 2,
     justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  form_input_container: {
+    margin: 10,
+  },
+  form_label: {
+    color: 'white',
+  },
+  form_input: {
+    color: 'white',
+  },
+  validation_container: {
+    flex: 1,
   },
   form_button: {
     backgroundColor: '#D60000',
-    borderRadius: 10,
+    borderRadius: 4,
     margin: 20,
+    marginBottom: 5,
+    elevation: 0,
   },
   left_icon_container: {
     paddingLeft: 10,

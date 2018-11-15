@@ -39,7 +39,10 @@ class SignUp extends React.PureComponent {
                   color="white"
                 />
               )}
-            //  leftIconContainerStyle={styles.left_icon_container}
+              labelStyle={styles.form_label}
+              inputStyle={styles.form_input}
+              containerStyle={styles.form_input_container}
+              leftIconContainerStyle={{ marginLeft: 0 }}
             />
             <Input
               label="Email"
@@ -50,7 +53,10 @@ class SignUp extends React.PureComponent {
                   color="white"
                 />
               )}
-            //  leftIconContainerStyle={styles.left_icon_container}
+              labelStyle={styles.form_label}
+              inputStyle={styles.form_input}
+              containerStyle={styles.form_input_container}
+              leftIconContainerStyle={{ marginLeft: 0 }}
             />
             <Input
               secureTextEntry
@@ -63,14 +69,16 @@ class SignUp extends React.PureComponent {
                   size={45}
                 />
               )}
-              leftIconContainerStyle={{ marginLeft: 5 }}
-              inputStyle={{ marginLeft: 0 }}
+              leftIconContainerStyle={{ marginLeft: -10 }}
+              inputStyle={[styles.form_input, { marginLeft: 0 }]}
               labelStyle={styles.form_label}
-              inputContainerStyle={styles.form_input_container}
+              containerStyle={styles.form_input_container}
             />
+          </View>
+          <View style={styles.validation_container}>
             <Button
               buttonStyle={styles.form_button}
-              title="SIGN UP"
+              title="Sign up"
               titleStyle={{ fontWeight: 'bold' }}
               color="white"
             />
