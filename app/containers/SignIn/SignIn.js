@@ -47,9 +47,8 @@ class SignUp extends React.PureComponent {
               buttonStyle={{ backgroundColor: '#D60000', marginBottom: '5%' }}
               color="white"
             />
-            {/* TODO: cannot set fontSize on text */}
             <Text
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontSize: 15 }}
               onPress={() => this.props.navigation.navigate('SignUp')}
             >
               Don&apos;t have an account?
