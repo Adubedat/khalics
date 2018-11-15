@@ -2,11 +2,11 @@ import React from 'react';
 import {
   View,
   StatusBar,
+  Button,
 } from 'react-native';
 import {
   Text,
   Input,
-  Button,
 } from 'react-native-elements';
 import styles from './styles';
 
@@ -41,12 +41,13 @@ class SignUp extends React.PureComponent {
               inputStyle={{ color: 'white' }}
               labelStyle={{ color: 'white' }}
             />
-            <Button
-              borderRadius={10}
-              title="Sign up"
-              buttonStyle={{ backgroundColor: '#D60000', marginBottom: '5%' }}
-              color="white"
-            />
+            <View style={{ backgroundColor: '#D60000', marginBottom: '5%', borderRadius: 8 }}>
+              <Button
+                title="Sign up"
+                onPress={() => {}}
+                color="white"
+              />
+            </View>
             <Text
               style={{ color: 'white', fontSize: 15 }}
               onPress={() => this.props.navigation.navigate('SignUp')}
