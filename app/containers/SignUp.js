@@ -1,14 +1,11 @@
 import React from 'react';
 import {
   View,
-  Text,
   StatusBar,
-  TextInput,
 } from 'react-native';
 import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage,
+  Text,
+  Input,
   Button,
 } from 'react-native-elements';
 import styles from '../styles/SignUp';
@@ -28,15 +25,9 @@ class SignUp extends React.PureComponent {
             <Text style={styles.title}>Khalics</Text>
           </View>
           <View style={{ flex: 2 }}>
-            <FormLabel labelStyle={styles.form_label}>Username</FormLabel>
-            <FormInput inputStyle={styles.form_input} />
-            <FormValidationMessage>Error message</FormValidationMessage>
-            <FormLabel labelStyle={styles.form_label}>Email</FormLabel>
-            <FormInput inputStyle={styles.form_input} />
-            <FormValidationMessage>Error message</FormValidationMessage>
-            <FormLabel labelStyle={styles.form_label}>Password</FormLabel>
-            <TextInput secureTextEntry style={styles.form_input} />
-            <FormValidationMessage>Error message</FormValidationMessage>
+            <Input />
+            <Input />
+            <Input />
             <Button borderRadius={10} title="Sign up" backgroundColor="#C00000" color="white" />
           </View>
         </View>
