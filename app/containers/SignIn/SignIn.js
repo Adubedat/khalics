@@ -21,7 +21,6 @@ class SignUp extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props.navigation.navigate);
     return (
       <View style={{ flex: 1, backgroundColor: '#303030' }}>
         <StatusBar barStyle="light-content" />
@@ -30,16 +29,32 @@ class SignUp extends React.PureComponent {
             <Text style={styles.title}>Khalics</Text>
           </View>
           <View style={{ flex: 0.7, alignItems: 'center' }}>
-            <Input label="username" containerStyle={{ marginBottom: '2%' }} inputStyle={{ color: 'white' }} labelStyle={{ color: 'white' }} />
-            <Input label="password" containerStyle={{ marginBottom: '4%' }} inputStyle={{ color: 'white' }} labelStyle={{ color: 'white' }} />
-            <Button borderRadius={10} title="Sign up" buttonStyle={{ backgroundColor: '#D60000', marginBottom: '6%' }} color="white" />
-            {/* TODO: cannot set fontSize on text */}
-            <Text style={{ color: 'white' }}>Don't have an account?</Text>
-            <Button
-              type="submit"
-              title="Sign Up"
-              onPress={() => this.props.navigation.navigate('SignUp')}
+            <Input
+              label="username"
+              containerStyle={{ marginBottom: '2%' }}
+              inputStyle={{ color: 'white' }}
+              labelStyle={{ color: 'white' }}
             />
+            <Input
+              label="password"
+              containerStyle={{ marginBottom: '4%' }}
+              inputStyle={{ color: 'white' }}
+              labelStyle={{ color: 'white' }}
+            />
+            <Button
+              borderRadius={10}
+              title="Sign up"
+              buttonStyle={{ backgroundColor: '#D60000', marginBottom: '5%' }}
+              color="white"
+            />
+            {/* TODO: cannot set fontSize on text */}
+            <Text
+              style={{ color: 'white' }}
+              onPress={() => this.props.navigation.navigate('SignUp')}
+            >
+              Don&apos;t have an account?
+              <Text style={{ fontWeight: 'bold' }}> SignUp</Text>
+            </Text>
           </View>
         </View>
       </View>
