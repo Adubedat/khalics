@@ -51,7 +51,7 @@ class SignUp extends React.PureComponent {
             </View>
             <Text
               style={{ color: 'white', fontSize: 15 }}
-              onPress={() => this.props.navigation.navigate('SignUp')}
+              onPress={() => { this.props.navigation.navigate('SignUp'); }}
             >
               Don&apos;t have an account?
               <Text style={{ fontWeight: 'bold' }}> SignUp</Text>
