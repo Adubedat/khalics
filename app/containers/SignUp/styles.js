@@ -24,8 +24,8 @@ export default StyleSheet.create({
   },
   form_container: {
     flex: 2,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
+  //  alignItems: 'center',
   },
   form_input_container: {
     margin: 10,
@@ -40,10 +40,10 @@ export default StyleSheet.create({
     flex: 1,
   },
   form_button: {
-    backgroundColor: '#D60000',
+    backgroundColor: '#EB241A',
     borderRadius: 4,
     margin: 20,
-    marginBottom: 5,
+    marginBottom: 10,
     elevation: 0,
   },
   left_icon_container: {

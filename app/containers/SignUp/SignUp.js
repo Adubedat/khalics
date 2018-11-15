@@ -9,6 +9,7 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
+import FloatingLabelInput from '../../components/FloatingLabelInput';
 import styles from './styles';
 
 class SignUp extends React.PureComponent {
@@ -18,10 +19,33 @@ class SignUp extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      username: '',
+      email: '',
+      password: '',
+    };
+  }
+
+  handleUsernameTextChange = (newText) => {
+    this.setState({
+      username: newText,
+    });
+  }
+
+  handleEmailTextChange = (newText) => {
+    this.setState({
+      email: newText,
+    });
+  }
+
+  handlePasswordTextChange = (newText) => {
+    this.setState({
+      password: newText,
+    });
   }
 
   render() {
+    const { username, email, password } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: '#303030' }}>
         <StatusBar barStyle="light-content" />
@@ -30,7 +54,22 @@ class SignUp extends React.PureComponent {
             <Text style={styles.title}>Khalics</Text>
           </View>
           <View style={styles.form_container}>
-            <Input
+            <FloatingLabelInput
+              label="Username"
+              value={username}
+              onChangeText={this.handleUsernameTextChange}
+            />
+            <FloatingLabelInput
+              label="Email"
+              value={email}
+              onChangeText={this.handleEmailTextChange}
+            />
+            <FloatingLabelInput
+              label="Password"
+              value={password}
+              onChangeText={this.handlePasswordTextChange}
+            />
+            {/* <Input
               label="Username"
               leftIcon={(
                 <Icon
@@ -73,7 +112,7 @@ class SignUp extends React.PureComponent {
               inputStyle={[styles.form_input, { marginLeft: 0 }]}
               labelStyle={styles.form_label}
               containerStyle={styles.form_input_container}
-            />
+            /> */}
           </View>
           <View style={styles.validation_container}>
             <Button
