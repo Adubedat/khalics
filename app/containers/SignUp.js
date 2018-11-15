@@ -11,6 +11,10 @@ import {
 import styles from '../styles/SignUp';
 
 class SignUp extends React.PureComponent {
+  static navigationOptions = {
+    header: null,
+  };
+
   constructor(props) {
     super(props);
     this.state = {};
