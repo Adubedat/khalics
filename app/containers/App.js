@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import * as Expo from 'expo';
-import SignUp from './SignUp';
+// import SignUp from './SignUp';
+import SignIn from './SignIn/SignIn';
 
 
 export default class App extends React.PureComponent {
   render() {
     return (
-      <SignUp />
+      <SignIn />
     );
   }
 }
