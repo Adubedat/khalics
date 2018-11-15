@@ -41,16 +41,17 @@ class SignUp extends React.PureComponent {
               inputStyle={{ color: 'white' }}
               labelStyle={{ color: 'white' }}
             />
-            <Button
-              borderRadius={10}
-              title="Sign up"
-              buttonStyle={{ backgroundColor: '#D60000', marginBottom: '5%' }}
-              color="white"
-            />
-            {/* TODO: cannot set fontSize on text */}
+            <View>
+              <Button
+                title="Sign up"
+                radius={10}
+                buttonStyle={{ backgroundColor: '#D60000' }}
+                onPress={() => {}}
+              />
+            </View>
             <Text
-              style={{ color: 'white' }}
-              onPress={() => this.props.navigation.navigate('SignUp')}
+              style={{ color: 'white', fontSize: 15 }}
+              onPress={() => { this.props.navigation.navigate('SignUp'); }}
             >
               Don&apos;t have an account?
               <Text style={{ fontWeight: 'bold' }}> SignUp</Text>
