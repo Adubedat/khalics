@@ -25,16 +25,6 @@ export default StyleSheet.create({
   form_container: {
     flex: 2,
     justifyContent: 'flex-end',
-  //  alignItems: 'center',
-  },
-  form_input_container: {
-    margin: 10,
-  },
-  form_label: {
-    color: 'white',
-  },
-  form_input: {
-    color: 'white',
   },
   validation_container: {
     flex: 1,
@@ -45,9 +35,5 @@ export default StyleSheet.create({
     margin: 20,
     marginBottom: 10,
     elevation: 0,
-  },
-  left_icon_container: {
-    paddingLeft: 10,
-    paddingRight: 10,
   },
 });
