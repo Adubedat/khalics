@@ -2,11 +2,11 @@ import React from 'react';
 import {
   View,
   StatusBar,
-  Button,
 } from 'react-native';
 import {
   Text,
   Input,
+  Button,
 } from 'react-native-elements';
 import styles from './styles';
 
@@ -41,11 +41,12 @@ class SignUp extends React.PureComponent {
               inputStyle={{ color: 'white' }}
               labelStyle={{ color: 'white' }}
             />
-            <View style={{ backgroundColor: '#D60000', marginBottom: '5%', borderRadius: 8 }}>
+            <View>
               <Button
                 title="Sign up"
+                radius={10}
+                buttonStyle={{ backgroundColor: '#D60000' }}
                 onPress={() => {}}
-                color="white"
               />
             </View>
             <Text
