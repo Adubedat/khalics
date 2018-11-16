@@ -50,33 +50,26 @@ class SignUp extends React.PureComponent {
   }
 
   handlePasswordTextChange = (newText) => {
-    console.log('ABCD');
     this.setState({
       password: newText,
     });
   }
 
   signUpError = (username, email, password) => {
-    console.log('state ->:', this.state);
     const error = { username: '', email: '', password: '' };
     let invalid = false;
     if (!/[\p{L}\p{M}\p{S}\p{N}\p{P}]+/.test(username)) {
-      error.username = 'username error';
+      error.username = 'must be between between 1 and 32 characters';
       invalid = true;
     }
-    console.log('state:', this.state);
     if (invalid) {
-      // console.log('refresh state');
       const state = { ...this.state, error };
       this.setState(state);
-      // this.setState({ password: 'abcd' });
     }
     return invalid;
-    // verify username, email and password and set appropriate errors
   }
 
   signUp = () => {
-    console.log('SignUp begin');
     const poolData = {
       UserPoolId: 'eu-west-1_jrpxZzyiw',
       ClientId: '2h58edhdok2kc8ujlankvev9cj',
@@ -86,7 +79,6 @@ class SignUp extends React.PureComponent {
     if (this.signUpError(username, email, password)) {
       return;
     }
-    return;
     // console.log('-->', username, email, password);
     const userPool = new CognitoUserPool(poolData);
     const attributeList = [];
@@ -118,10 +110,13 @@ class SignUp extends React.PureComponent {
   }
 
   render() {
-    console.log('render !', this.state);
     const {
-      username, email, password, error,
+      username,
+      email,
+      password,
+      error,
     } = this.state;
+
     return (
       <ImageBackground
         source={require('../../../assets/gym-background.jpg')}
