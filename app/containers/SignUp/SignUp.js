@@ -147,6 +147,7 @@ class SignUp extends React.PureComponent {
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => { this.EmailTextInput.focus(); }}
+                  error={(error.username.length !== 0)}
                 />
                 { this.fieldError(error.username) }
                 <FloatingLabelInput
@@ -158,6 +159,7 @@ class SignUp extends React.PureComponent {
                   blurOnSubmit={false}
                   keyboardType="email-address"
                   onSubmitEditing={() => { this.PasswordTextInput.focus(); }}
+                  error={(error.email.length !== 0)}
                 />
                 { this.fieldError(error.email) }
                 <FloatingLabelInput

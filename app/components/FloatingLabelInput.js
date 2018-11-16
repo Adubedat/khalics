@@ -32,36 +32,46 @@ class FloatingLabelInput extends React.PureComponent {
 
   handleBlur = () => this.setState({ isFocused: false });
 
+  color = (error, isFocused) => {
+    if (error) {
+      return '#EB241A';
+    }
+    if (isFocused) {
+      return 'white';
+    }
+    return '#D3D3D3';
+  };
+
   render() {
-    const { label, ...props } = this.props;
+    const { label, error, ...props } = this.props;
     const { isFocused } = this.state;
-    const labelStyle = {
-      position: 'absolute',
-      left: 0,
-      fontWeight: !isFocused ? 'normal' : 'bold',
-      top: this.animatedIsFocused.interpolate({
-        inputRange: [0, 1],
-        outputRange: [18, 0],
-      }),
-      fontSize: this.animatedIsFocused.interpolate({
-        inputRange: [0, 1],
-        outputRange: [20, 14],
-      }),
-      color: !isFocused ? '#D3D3D3' : 'white',
-    };
     const styles = StyleSheet.flatten({
+      labelStyle: {
+        position: 'absolute',
+        left: 0,
+        fontWeight: !isFocused ? 'normal' : 'bold',
+        top: this.animatedIsFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: [18, 0],
+        }),
+        fontSize: this.animatedIsFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: [20, 14],
+        }),
+        color: this.color(error, isFocused),
+      },
       textInputStyle: {
         height: 30,
         fontSize: 16,
         color: 'white',
         borderBottomWidth: !isFocused ? 1 : 2,
-        borderBottomColor: !isFocused ? '#D3D3D3' : 'white',
+        borderBottomColor: this.color(error, isFocused),
       },
     });
     return (
       <View style={{ margin: 5, marginLeft: 20, marginRight: 20 }}>
         <View style={{ paddingTop: 18 }}>
-          <Animated.Text style={labelStyle}>
+          <Animated.Text style={styles.labelStyle}>
             {label}
           </Animated.Text>
           <TextInput
