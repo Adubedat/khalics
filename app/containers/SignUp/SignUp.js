@@ -81,10 +81,7 @@ class SignUp extends React.PureComponent {
     console.log('SIGN UP !');
     // this.signUp();
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={{ flex: 1 }}
-        resetScrollToCoords={{ x: 0, y: 0 }}
-      >
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
         <ImageBackground
           source={require('../../../assets/gym-background.jpg')}
           style={{
