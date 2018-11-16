@@ -7,6 +7,7 @@ import {
 import {
   Text,
   Button,
+  Icon,
 } from 'react-native-elements';
 import {
   CognitoUserPool,
@@ -137,7 +138,17 @@ class SignUp extends React.PureComponent {
             <StatusBar barStyle="light-content" />
             <View style={styles.main_container}>
               <View style={styles.title_container}>
-                <Text style={styles.title}>Khalics</Text>
+                <Button
+                  title="Sign up with facebook"
+                  buttonStyle={styles.facebook_button}
+                  icon={(
+                    <Icon
+                      type="font-awesome"
+                      name="facebook"
+                      color="white"
+                    />
+                  )}
+                />
               </View>
               <View style={styles.form_container}>
                 <FloatingLabelInput

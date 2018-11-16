@@ -13,11 +13,13 @@ export default StyleSheet.create({
   title_container: {
     flex: 2,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  title: {
-    fontSize: 30,
-    color: 'white',
+  facebook_button: {
+    backgroundColor: '#4267b2',
+    borderRadius: 4,
+    margin: 20,
+    marginBottom: 10,
+    elevation: 0,
   },
   form_container: {
     flex: 2,
