@@ -32,7 +32,7 @@ class SignUp extends React.PureComponent {
     // below for testing
     this.state = {
       username: 'test42',
-      email: 'test42@test.fr',
+      email: 'test42test.fr',
       password: 'Pas42sword1',
       error: { username: '', email: '', password: '' },
     };
@@ -58,11 +58,18 @@ class SignUp extends React.PureComponent {
 
   signUpError = (username, email, password) => {
     const error = { username: '', email: '', password: '' };
-    let invalid = false;
-    if (!/[\p{L}\p{M}\p{S}\p{N}\p{P}]+/.test(username)) {
+    if (/\s/.test(username) || username.length === 0 || username.length > 32) {
       error.username = 'must be between between 1 and 32 characters';
-      invalid = true;
     }
+    if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,256}$/.test(password)) {
+      error.password = 'must require at least one number, one uppercase letter,'
+      + ' one lowercase letter and be between 8 and 256 characters';
+    }
+    if (!/^\S+@\S+[\.][0-9a-z]{3,255}$/.test(email) //eslint-disable-line
+        || email.length < 3 || email.length > 256) {
+      error.email = 'invalid email format';
+    }
+    const invalid = Object.values(error).some(val => val.length !== 0);
     if (invalid) {
       const state = { ...this.state, error };
       this.setState(state);
@@ -76,11 +83,10 @@ class SignUp extends React.PureComponent {
       ClientId: '2h58edhdok2kc8ujlankvev9cj',
     };
     const { username, email, password } = this.state;
-    // if error signUpError refresh state
+    // if error signUpError refresh the state
     if (this.signUpError(username, email, password)) {
       return;
     }
-    // console.log('-->', username, email, password);
     const userPool = new CognitoUserPool(poolData);
     const attributeList = [];
     const dataEmail = {
@@ -103,7 +109,7 @@ class SignUp extends React.PureComponent {
   fieldError = (field) => {
     if (field) {
       return (
-        <Text>
+        <Text style={styles.field_error}>
           { field }
         </Text>
       );
