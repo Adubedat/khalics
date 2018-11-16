@@ -70,6 +70,7 @@ class FloatingLabelInput extends React.PureComponent {
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             blurOnSubmit
+            ref={input => props.inputRef && props.inputRef(input)}
           />
         </View>
       </View>
