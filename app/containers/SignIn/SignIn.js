@@ -53,7 +53,7 @@ class SignIn extends React.PureComponent {
     const { username, password, error } = this.state;
     const { navigation } = this.props;
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }} enableOnAndroid>
         <ImageBackground
           source={require('../../../assets/gym-background.jpg')}
           resizeMode="cover"
