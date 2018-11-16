@@ -48,23 +48,32 @@ class SignUp extends React.PureComponent {
     });
   }
 
+  verifySignUp = () => true
+
+
   signUp = () => {
+    console.log('SignUp begin');
+    if (!this.verifySignUp()) {
+      return;
+    }
     const poolData = {
       UserPoolId: 'eu-west-1_jrpxZzyiw',
       ClientId: '2h58edhdok2kc8ujlankvev9cj',
     };
+    // this.setState({ username: 'test1', email: 'test@test.fr', password: 'Password1'}); // testing
+    const { username, email, password } = this.state;
     const userPool = new CognitoUserPool(poolData);
     const attributeList = [];
     const dataEmail = {
       Name: 'email',
-      Value: 'arthur.dubedat@gmail.com',
+      Value: email,
     };
     const attributeEmail = new CognitoUserAttribute(dataEmail);
 
     attributeList.push(attributeEmail);
-    userPool.signUp('abcdefok', 'pD42assword', attributeList, null, (err, result) => {
+    userPool.signUp(username, password, attributeList, null, (err, result) => {
       if (err) {
-        console.log(err);
+        console.error(err);
         // console.error(err);
         // alert(err);
         return;
@@ -77,8 +86,6 @@ class SignUp extends React.PureComponent {
   render() {
     const { username, email, password } = this.state;
     //  const resizeMode = 'center';
-    console.log('SIGN UP !');
-    // this.signUp();
     return (
       <ImageBackground
         source={require('../../../assets/gym-background.jpg')}
@@ -107,6 +114,7 @@ class SignUp extends React.PureComponent {
               <FloatingLabelInput
                 label="Password"
                 value={password}
+                secureTextEntry
                 onChangeText={this.handlePasswordTextChange}
               />
             </View>
@@ -116,6 +124,7 @@ class SignUp extends React.PureComponent {
                 title="Sign up"
                 titleStyle={{ fontWeight: 'bold' }}
                 color="white"
+                onPress={this.signUp}
               />
               <Text style={[styles.small_text, { textAlign: 'center' }]}>
                 Already have an account ?
