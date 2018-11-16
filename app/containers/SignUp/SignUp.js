@@ -146,6 +146,13 @@ class SignUp extends React.PureComponent {
                   value={username}
                   error={error.username.length !== 0}
                   onChangeText={this.handleUsernameTextChange}
+<<<<<<< HEAD
+=======
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => { this.EmailTextInput.focus(); }}
+                  error={(error.username.length !== 0)}
+>>>>>>> ce216f43f623a00428e3ef40879aef8eb7863029
                 />
                 { this.fieldError(error.username) }
                 <FloatingLabelInput
@@ -153,6 +160,14 @@ class SignUp extends React.PureComponent {
                   value={email}
                   error={error.email.length !== 0}
                   onChangeText={this.handleEmailTextChange}
+<<<<<<< HEAD
+=======
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  keyboardType="email-address"
+                  onSubmitEditing={() => { this.PasswordTextInput.focus(); }}
+                  error={(error.email.length !== 0)}
+>>>>>>> ce216f43f623a00428e3ef40879aef8eb7863029
                 />
                 { this.fieldError(error.email) }
                 <FloatingLabelInput

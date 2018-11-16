@@ -1,4 +1,4 @@
-import { StatusBar, Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   main_container: {
@@ -9,9 +9,6 @@ export default StyleSheet.create({
   small_text: {
     fontSize: 15,
     color: 'white',
-  },
-  text: {
-    color: 'red',
   },
   title_container: {
     flex: 2,
@@ -39,6 +36,6 @@ export default StyleSheet.create({
   field_error: {
     marginLeft: 20,
     marginRight: 20,
-    color: '#D60000',
+    color: '#EB241A',
   },
 });
