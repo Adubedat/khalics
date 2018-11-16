@@ -2,8 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   main_container: {
-    // marginTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
-    backgroundColor: 'transparent',
     flex: 1,
   },
   small_text: {
@@ -12,14 +10,23 @@ export default StyleSheet.create({
   },
   title_container: {
     flex: 2,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   facebook_button: {
-    backgroundColor: '#4267b2',
-    borderRadius: 4,
-    margin: 20,
+    backgroundColor: '#3b5998',
+    margin: 30,
+    marginTop: 10,
     marginBottom: 10,
     elevation: 0,
+    height: 40,
+  },
+  google_button: {
+    backgroundColor: '#dd4b39',
+    margin: 30,
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 0,
+    height: 40,
   },
   form_container: {
     flex: 2,
@@ -30,10 +37,10 @@ export default StyleSheet.create({
   },
   form_button: {
     backgroundColor: '#EB241A',
-    borderRadius: 4,
-    margin: 20,
+    margin: 30,
     marginBottom: 10,
     elevation: 0,
+    height: 40,
   },
   field_error: {
     marginLeft: 20,

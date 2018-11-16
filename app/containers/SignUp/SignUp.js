@@ -125,7 +125,7 @@ class SignUp extends React.PureComponent {
       password,
       error,
     } = this.state;
-
+    const { navigation } = this.props;
     return (
       <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }} enableOnAndroid>
         <ImageBackground
@@ -141,11 +141,26 @@ class SignUp extends React.PureComponent {
               <View style={styles.title_container}>
                 <Button
                   title="Sign up with facebook"
+                  titleStyle={{ fontSize: 16 }}
                   buttonStyle={styles.facebook_button}
+                  style={{ borderRadius: 4 }}
                   icon={(
                     <Icon
                       type="font-awesome"
-                      name="facebook"
+                      name="facebook-square"
+                      color="white"
+                    />
+                  )}
+                />
+                <Button
+                  title="Sign up with google"
+                  titleStyle={{ fontSize: 16 }}
+                  buttonStyle={styles.google_button}
+                  style={{ borderRadius: 4 }}
+                  icon={(
+                    <Icon
+                      type="font-awesome"
+                      name="google-plus"
                       color="white"
                     />
                   )}
@@ -187,12 +202,16 @@ class SignUp extends React.PureComponent {
               <View style={styles.validation_container}>
                 <Button
                   buttonStyle={styles.form_button}
+                  style={{ borderRadius: 4 }}
                   title="Sign up"
                   titleStyle={{ fontWeight: 'bold' }}
                   color="white"
                   onPress={this.signUp}
                 />
-                <Text style={[styles.small_text, { textAlign: 'center' }]}>
+                <Text
+                  style={[styles.small_text, { textAlign: 'center' }]}
+                  onPress={() => { navigation.navigate('SignIn'); }}
+                >
                   Already have an account ?
                   <Text style={{ fontWeight: 'bold' }}> Sign in</Text>
                 </Text>

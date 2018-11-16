@@ -1,28 +1,50 @@
-import { StatusBar, Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   main_container: {
-    // marginTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
-    // backgroundColor: 'transparent',
     flex: 1,
   },
-  text: {
-    color: 'red',
-  },
-  title_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 30,
+  small_text: {
+    fontSize: 15,
     color: 'white',
   },
-  form_label: {
-    color: '#e6e6e6',
-    fontSize: 14,
+  title_container: {
+    flex: 2,
+    justifyContent: 'flex-end',
   },
-  form_input: {
-    color: '#cccccc',
+  facebook_button: {
+    backgroundColor: '#3b5998',
+    margin: 30,
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 0,
+    height: 40,
+  },
+  google_button: {
+    backgroundColor: '#dd4b39',
+    margin: 30,
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 0,
+    height: 40,
+  },
+  form_container: {
+    flex: 2,
+    justifyContent: 'flex-end',
+  },
+  validation_container: {
+    flex: 1,
+  },
+  form_button: {
+    backgroundColor: '#EB241A',
+    margin: 30,
+    marginBottom: 10,
+    elevation: 0,
+    height: 40,
+  },
+  field_error: {
+    marginLeft: 20,
+    marginRight: 20,
+    color: '#EB241A',
   },
 });
