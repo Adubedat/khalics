@@ -127,7 +127,7 @@ class SignUp extends React.PureComponent {
     } = this.state;
 
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }} enableOnAndroid>
         <ImageBackground
           source={require('../../../assets/gym-background.jpg')}
           style={{
@@ -163,6 +163,7 @@ class SignUp extends React.PureComponent {
                 />
                 { this.fieldError(error.username) }
                 <FloatingLabelInput
+                  inputRef={(input) => { this.EmailTextInput = input; }}
                   label="Email"
                   value={email}
                   error={error.email.length !== 0}
@@ -174,6 +175,7 @@ class SignUp extends React.PureComponent {
                 />
                 { this.fieldError(error.email) }
                 <FloatingLabelInput
+                  inputRef={(input) => { this.PasswordTextInput = input; }}
                   label="Password"
                   value={password}
                   error={error.password.length !== 0}
