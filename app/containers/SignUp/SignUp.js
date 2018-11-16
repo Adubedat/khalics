@@ -143,18 +143,21 @@ class SignUp extends React.PureComponent {
                 <FloatingLabelInput
                   label="Username"
                   value={username}
+                  error={error.username.length !== 0}
                   onChangeText={this.handleUsernameTextChange}
                 />
                 { this.fieldError(error.username) }
                 <FloatingLabelInput
                   label="Email"
                   value={email}
+                  error={error.email.length !== 0}
                   onChangeText={this.handleEmailTextChange}
                 />
                 { this.fieldError(error.email) }
                 <FloatingLabelInput
                   label="Password"
                   value={password}
+                  error={error.password.length !== 0}
                   secureTextEntry
                   onChangeText={this.handlePasswordTextChange}
                 />
