@@ -12,6 +12,7 @@ import {
   CognitoUserPool,
   CognitoUserAttribute,
 } from 'amazon-cognito-identity-js';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
 import styles from './styles';
 
@@ -118,56 +119,58 @@ class SignUp extends React.PureComponent {
     } = this.state;
 
     return (
-      <ImageBackground
-        source={require('../../../assets/gym-background.jpg')}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <View style={{ flex: 1, backgroundColor: 'rgba(52, 52, 52, 0.5)' }}>
-          <StatusBar barStyle="light-content" />
-          <View style={styles.main_container}>
-            <View style={styles.title_container}>
-              <Text style={styles.title}>Khalics</Text>
-            </View>
-            <View style={styles.form_container}>
-              <FloatingLabelInput
-                label="Username"
-                value={username}
-                onChangeText={this.handleUsernameTextChange}
-              />
-              { this.fieldError(error.username) }
-              <FloatingLabelInput
-                label="Email"
-                value={email}
-                onChangeText={this.handleEmailTextChange}
-              />
-              { this.fieldError(error.email) }
-              <FloatingLabelInput
-                label="Password"
-                value={password}
-                secureTextEntry
-                onChangeText={this.handlePasswordTextChange}
-              />
-              { this.fieldError(error.password) }
-            </View>
-            <View style={styles.validation_container}>
-              <Button
-                buttonStyle={styles.form_button}
-                title="Sign up"
-                titleStyle={{ fontWeight: 'bold' }}
-                color="white"
-                onPress={this.signUp}
-              />
-              <Text style={[styles.small_text, { textAlign: 'center' }]}>
-                Already have an account ?
-                <Text style={{ fontWeight: 'bold' }}> Sign in</Text>
-              </Text>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+        <ImageBackground
+          source={require('../../../assets/gym-background.jpg')}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <View style={{ flex: 1, backgroundColor: 'rgba(52, 52, 52, 0.5)' }}>
+            <StatusBar barStyle="light-content" />
+            <View style={styles.main_container}>
+              <View style={styles.title_container}>
+                <Text style={styles.title}>Khalics</Text>
+              </View>
+              <View style={styles.form_container}>
+                <FloatingLabelInput
+                  label="Username"
+                  value={username}
+                  onChangeText={this.handleUsernameTextChange}
+                />
+                { this.fieldError(error.username) }
+                <FloatingLabelInput
+                  label="Email"
+                  value={email}
+                  onChangeText={this.handleEmailTextChange}
+                />
+                { this.fieldError(error.email) }
+                <FloatingLabelInput
+                  label="Password"
+                  value={password}
+                  secureTextEntry
+                  onChangeText={this.handlePasswordTextChange}
+                />
+                { this.fieldError(error.password) }
+              </View>
+              <View style={styles.validation_container}>
+                <Button
+                  buttonStyle={styles.form_button}
+                  title="Sign up"
+                  titleStyle={{ fontWeight: 'bold' }}
+                  color="white"
+                  onPress={this.signUp}
+                />
+                <Text style={[styles.small_text, { textAlign: 'center' }]}>
+                  Already have an account ?
+                  <Text style={{ fontWeight: 'bold' }}> Sign in</Text>
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </ImageBackground>
+        </ImageBackground>
+      </KeyboardAwareScrollView>
     );
   }
 }
