@@ -36,4 +36,9 @@ export default StyleSheet.create({
     marginBottom: 10,
     elevation: 0,
   },
+  field_error: {
+    marginLeft: 20,
+    marginRight: 20,
+    color: '#D60000',
+  },
 });

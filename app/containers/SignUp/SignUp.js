@@ -32,7 +32,7 @@ class SignUp extends React.PureComponent {
     // below for testing
     this.state = {
       username: 'test42',
-      email: 'test42@test.fr',
+      email: 'test42test.fr',
       password: 'Pas42sword1',
       error: { username: '', email: '', password: '' },
     };
@@ -70,7 +70,6 @@ class SignUp extends React.PureComponent {
       error.email = 'invalid email format';
     }
     const invalid = Object.values(error).some(val => val.length !== 0);
-    console.log('invalid:', invalid);
     if (invalid) {
       const state = { ...this.state, error };
       this.setState(state);
@@ -88,7 +87,6 @@ class SignUp extends React.PureComponent {
     if (this.signUpError(username, email, password)) {
       return;
     }
-    console.log('-->', username, email, password);
     const userPool = new CognitoUserPool(poolData);
     const attributeList = [];
     const dataEmail = {
@@ -111,7 +109,7 @@ class SignUp extends React.PureComponent {
   fieldError = (field) => {
     if (field) {
       return (
-        <Text>
+        <Text style={styles.field_error}>
           { field }
         </Text>
       );
