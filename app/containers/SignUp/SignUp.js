@@ -11,7 +11,6 @@ import {
 import {
   CognitoUserPool,
   CognitoUserAttribute,
-  CognitoUser,
 } from 'amazon-cognito-identity-js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
@@ -28,6 +27,14 @@ class SignUp extends React.PureComponent {
       username: '',
       email: '',
       password: '',
+      error: { username: '', email: '', password: '' },
+    };
+    // below for testing
+    this.state = {
+      username: 'test42',
+      email: 'test42@test.fr',
+      password: 'Pas42sword1',
+      error: { username: '', email: '', password: '' },
     };
   }
 
@@ -44,30 +51,56 @@ class SignUp extends React.PureComponent {
   }
 
   handlePasswordTextChange = (newText) => {
+    console.log('ABCD');
     this.setState({
       password: newText,
     });
   }
 
+  signUpError = (username, email, password) => {
+    console.log('state ->:', this.state);
+    const error = { username: '', email: '', password: '' };
+    let invalid = false;
+    if (!/[\p{L}\p{M}\p{S}\p{N}\p{P}]+/.test(username)) {
+      error.username = 'username error';
+      invalid = true;
+    }
+    console.log('state:', this.state);
+    if (invalid) {
+      // console.log('refresh state');
+      const state = { ...this.state, error };
+      this.setState(state);
+      // this.setState({ password: 'abcd' });
+    }
+    return invalid;
+    // verify username, email and password and set appropriate errors
+  }
+
   signUp = () => {
+    console.log('SignUp begin');
     const poolData = {
       UserPoolId: 'eu-west-1_jrpxZzyiw',
       ClientId: '2h58edhdok2kc8ujlankvev9cj',
     };
+    const { username, email, password } = this.state;
+    // if error signUpError refresh state
+    if (this.signUpError(username, email, password)) {
+      return;
+    }
+    return;
+    // console.log('-->', username, email, password);
     const userPool = new CognitoUserPool(poolData);
     const attributeList = [];
     const dataEmail = {
       Name: 'email',
-      Value: 'arthur.dubedat@gmail.com',
+      Value: email,
     };
     const attributeEmail = new CognitoUserAttribute(dataEmail);
 
     attributeList.push(attributeEmail);
-    userPool.signUp('abcdefok', 'pD42assword', attributeList, null, (err, result) => {
+    userPool.signUp(username, password, attributeList, null, (err, result) => {
       if (err) {
-        console.log(err);
-        // console.error(err);
-        // alert(err);
+        console.error(err);
         return;
       }
       const cognitoUser = result.user;
@@ -75,11 +108,21 @@ class SignUp extends React.PureComponent {
     });
   }
 
+  fieldError = (field) => {
+    if (field) {
+      return (
+        <Text>
+          { field }
+        </Text>
+      );
+    }
+  }
+
   render() {
-    const { username, email, password } = this.state;
-    //  const resizeMode = 'center';
-    console.log('SIGN UP !');
-    // this.signUp();
+    console.log('render !', this.state);
+    const {
+      username, email, password, error,
+    } = this.state;
     return (
       <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
         <ImageBackground
@@ -101,16 +144,20 @@ class SignUp extends React.PureComponent {
                   value={username}
                   onChangeText={this.handleUsernameTextChange}
                 />
+                { this.fieldError(error.username) }
                 <FloatingLabelInput
                   label="Email"
                   value={email}
                   onChangeText={this.handleEmailTextChange}
                 />
+                { this.fieldError(error.email) }
                 <FloatingLabelInput
                   label="Password"
                   value={password}
+                  secureTextEntry
                   onChangeText={this.handlePasswordTextChange}
                 />
+                { this.fieldError(error.password) }
               </View>
               <View style={styles.validation_container}>
                 <Button
@@ -118,6 +165,7 @@ class SignUp extends React.PureComponent {
                   title="Sign up"
                   titleStyle={{ fontWeight: 'bold' }}
                   color="white"
+                  onPress={this.signUp}
                 />
                 <Text style={[styles.small_text, { textAlign: 'center' }]}>
                   Already have an account ?
