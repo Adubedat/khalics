@@ -32,7 +32,7 @@ class SignUp extends React.PureComponent {
     // below for testing
     this.state = {
       username: 'test42',
-      email: 'test42test.fr',
+      email: 'test@test.com',
       password: 'Pas42sword1',
       error: { username: '', email: '', password: '' },
     };
@@ -65,12 +65,13 @@ class SignUp extends React.PureComponent {
       error.password = 'must require at least one number, one uppercase letter,'
       + ' one lowercase letter and be between 8 and 256 characters';
     }
-    if (!/^\S+@\S+[\.][0-9a-z]{3,255}$/.test(email) //eslint-disable-line
+    if (!/^\S+@\S+[\.][0-9a-z]{1,}$/.test(email) //eslint-disable-line
         || email.length < 3 || email.length > 256) {
       error.email = 'invalid email format';
     }
     const invalid = Object.values(error).some(val => val.length !== 0);
     if (invalid) {
+      console.log(this.state.email, error);
       const state = { ...this.state, error };
       this.setState(state);
     }
@@ -125,7 +126,7 @@ class SignUp extends React.PureComponent {
     } = this.state;
 
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }} enableOnAndroid>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
         <ImageBackground
           source={require('../../../assets/gym-background.jpg')}
           style={{
@@ -145,25 +146,16 @@ class SignUp extends React.PureComponent {
                   value={username}
                   error={error.username.length !== 0}
                   onChangeText={this.handleUsernameTextChange}
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  onSubmitEditing={() => { this.EmailTextInput.focus(); }}
                 />
                 { this.fieldError(error.username) }
                 <FloatingLabelInput
-                  inputRef={(input) => { this.EmailTextInput = input; }}
                   label="Email"
                   value={email}
                   error={error.email.length !== 0}
                   onChangeText={this.handleEmailTextChange}
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  keyboardType="email-address"
-                  onSubmitEditing={() => { this.PasswordTextInput.focus(); }}
                 />
                 { this.fieldError(error.email) }
                 <FloatingLabelInput
-                  inputRef={(input) => { this.PasswordTextInput = input; }}
                   label="Password"
                   value={password}
                   error={error.password.length !== 0}
