@@ -82,6 +82,9 @@ class SignUp extends React.PureComponent {
     const errorMsg = { username: '', email: '', password: '' };
     if (error.code === 'UsernameExistsException') {
       errorMsg.username = error.message;
+    } else if (error.code === 'UserLambdaValidationException'
+        && error.message.includes('emailExists')) {
+      errorMsg.email = 'Email already exist';
     }
     const state = { ...this.state, error: errorMsg };
     this.setState(state);
