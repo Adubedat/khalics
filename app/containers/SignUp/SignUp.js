@@ -57,7 +57,7 @@ class SignUp extends React.PureComponent {
     });
   }
 
-  signUpError = (username, email, password) => {
+  signUpFrontError = (username, email, password) => {
     const error = { username: '', email: '', password: '' };
     if (/\s/.test(username) || username.length === 0 || username.length > 32) {
       error.username = 'must be between between 1 and 32 characters';
@@ -72,11 +72,19 @@ class SignUp extends React.PureComponent {
     }
     const invalid = Object.values(error).some(val => val.length !== 0);
     if (invalid) {
-      console.log(this.state.email, error);
       const state = { ...this.state, error };
       this.setState(state);
     }
     return invalid;
+  }
+
+  signUpBackError = (error) => {
+    const errorMsg = { username: '', email: '', password: '' };
+    if (error.code === 'UsernameExistsException') {
+      errorMsg.username = error.message;
+    }
+    const state = { ...this.state, error: errorMsg };
+    this.setState(state);
   }
 
   signUp = () => {
@@ -86,7 +94,7 @@ class SignUp extends React.PureComponent {
     };
     const { username, email, password } = this.state;
     // if error signUpError refresh the state
-    if (this.signUpError(username, email, password)) {
+    if (this.signUpFrontError(username, email, password)) {
       return;
     }
     const userPool = new CognitoUserPool(poolData);
@@ -98,9 +106,10 @@ class SignUp extends React.PureComponent {
     const attributeEmail = new CognitoUserAttribute(dataEmail);
 
     attributeList.push(attributeEmail);
-    userPool.signUp(username, password, attributeList, null, (err, result) => {
-      if (err) {
-        console.error(err);
+    userPool.signUp(username, password, attributeList, null, (error, result) => {
+      if (error) {
+        this.signUpBackError(error);
+        console.log('signUpBackError', error);
         return;
       }
       const cognitoUser = result.user;
