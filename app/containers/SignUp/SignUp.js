@@ -96,7 +96,7 @@ class SignUp extends React.PureComponent {
       ClientId: '2h58edhdok2kc8ujlankvev9cj',
     };
     const { username, email, password } = this.state;
-    // if error signUpError refresh the state
+    // if signUpFrontError is true -> refresh the state
     if (this.signUpFrontError(username, email, password)) {
       return;
     }
@@ -111,12 +111,13 @@ class SignUp extends React.PureComponent {
     attributeList.push(attributeEmail);
     userPool.signUp(username, password, attributeList, null, (error, result) => {
       if (error) {
+        // signUpBackError refresh the state
         this.signUpBackError(error);
-        console.log('signUpBackError', error);
+        console.log('signUpBackError:', error);
         return;
       }
       const cognitoUser = result.user;
-      console.log(`user name is ${cognitoUser.getUsername()}`);
+      console.log(`success: creation of user ${cognitoUser.getUsername()}`);
     });
   }
 
