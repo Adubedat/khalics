@@ -61,7 +61,7 @@ class FloatingLabelInput extends React.PureComponent {
       textInputStyle: {
         height: 30,
         fontSize: 16,
-        color: 'white',
+        color: inputColor,
         borderBottomWidth: !isFocused ? 1 : 2,
         borderBottomColor: error ? errorColor : inputColor,
       },
