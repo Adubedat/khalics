@@ -9,6 +9,11 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
+import {
+  CognitoUserPool,
+  CognitoUser,
+  AuthenticationDetails,
+} from 'amazon-cognito-identity-js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
 import styles from './styles';
@@ -22,6 +27,12 @@ class SignIn extends React.PureComponent {
     super(props);
     this.state = {
       username: '',
+      password: '',
+      error: { username: '', password: '' },
+    };
+    // below for testing
+    this.state = {
+      username: 'test42',
       password: '',
       error: { username: '', password: '' },
     };
@@ -47,6 +58,51 @@ class SignIn extends React.PureComponent {
         </Text>
       );
     }
+  }
+
+  signInError = (err) => {
+    const error = { username: '', password: '' };
+    if (err.code === 'UserNotFoundException') {
+      error.username = 'Incorrect username';
+    } else if (err.code === 'UserNotConfirmedException') {
+      error.username = 'You have not confirmed your account. Please check your email.';
+    } else if (err.code === 'NotAuthorizedException') {
+      error.username = err.message; error.password = err.message;
+    }
+    const state = { ...this.state, error };
+    this.setState(state);
+  }
+
+  signIn = () => {
+    const { username, password } = this.state;
+    const authenticationData = {
+      Username: username,
+      Password: password,
+    };
+    const authenticationDetails = new AuthenticationDetails(authenticationData);
+    const poolData = {
+      UserPoolId: 'eu-west-1_jrpxZzyiw',
+      ClientId: '2h58edhdok2kc8ujlankvev9cj',
+    };
+    const userPool = new CognitoUserPool(poolData);
+    const userData = {
+      Username: username,
+      Pool: userPool,
+    };
+    const cognitoUser = new CognitoUser(userData);
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: (result) => {
+        const accessToken = result.getAccessToken().getJwtToken();
+        /* Use the idToken for Logins Map when Federating User Pools with identity pools or */
+        /* when passing through an Authorization Header to an API Gateway Authorizer */
+        const idToken = result.idToken.jwtToken;
+        console.log('[success]: {accessToken}: ', accessToken, '{idToken}:', idToken);
+      },
+      onFailure: (err) => {
+        this.signInError(err);
+        console.log('[Error]:', err);
+      },
+    });
   }
 
   render() {
@@ -121,7 +177,7 @@ class SignIn extends React.PureComponent {
                   title="Sign in"
                   titleStyle={{ fontWeight: 'bold' }}
                   color="white"
-                  // onPress={this.signUp} //TODO Sign in function
+                  onPress={this.signIn} // TODO Sign in function
                 />
                 <Text
                   style={[styles.small_text, { textAlign: 'center' }]}
