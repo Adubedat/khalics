@@ -32,19 +32,17 @@ class FloatingLabelInput extends React.PureComponent {
 
   handleBlur = () => this.setState({ isFocused: false });
 
-  color = (error, isFocused) => {
-    if (error) {
-      return '#EB241A';
-    }
-    if (isFocused) {
-      return 'white';
-    }
-    return '#D3D3D3';
-  };
-
   render() {
-    const { label, error, ...props } = this.props;
+    const {
+      label,
+      error,
+      focusColor = 'black',
+      unfocusColor = '#505050',
+      ...props
+    } = this.props;
     const { isFocused } = this.state;
+    const errorColor = '#EB241A';
+    const inputColor = isFocused ? focusColor : unfocusColor;
     const styles = StyleSheet.flatten({
       labelStyle: {
         position: 'absolute',
@@ -58,14 +56,14 @@ class FloatingLabelInput extends React.PureComponent {
           inputRange: [0, 1],
           outputRange: [20, 14],
         }),
-        color: this.color(error, isFocused),
+        color: error ? errorColor : inputColor,
       },
       textInputStyle: {
         height: 30,
         fontSize: 16,
         color: 'white',
         borderBottomWidth: !isFocused ? 1 : 2,
-        borderBottomColor: this.color(error, isFocused),
+        borderBottomColor: error ? errorColor : inputColor,
       },
     });
     return (

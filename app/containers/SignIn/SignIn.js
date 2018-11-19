@@ -16,6 +16,7 @@ import {
 } from 'amazon-cognito-identity-js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
+import ForgotPasswordPopup from '../../components/ForgotPasswordPopup';
 import styles from './styles';
 
 class SignIn extends React.PureComponent {
@@ -105,6 +106,11 @@ class SignIn extends React.PureComponent {
     });
   }
 
+  forgotPassword = () => {
+    //const test = prompt('test', '');
+    console.log('forgotPassword');
+  }
+
   render() {
     const { username, password, error } = this.state;
     const { navigation } = this.props;
@@ -152,6 +158,8 @@ class SignIn extends React.PureComponent {
               <View style={styles.form_container}>
                 <FloatingLabelInput
                   label="Username"
+                  focusColor="white"
+                  unfocusColor="#D3D3D3"
                   value={username}
                   error={error.username.length !== 0}
                   onChangeText={this.handleUsernameTextChange}
@@ -163,12 +171,20 @@ class SignIn extends React.PureComponent {
                 <FloatingLabelInput
                   inputRef={(input) => { this.PasswordTextInput = input; }}
                   label="Password"
+                  focusColor="white"
+                  unfocusColor="#D3D3D3"
                   value={password}
                   error={error.password.length !== 0}
                   secureTextEntry
                   onChangeText={this.handlePasswordTextChange}
                 />
                 { this.fieldError(error.password) }
+                <Text
+                  style={styles.forgot_password_text}
+                  onPress={() => { this.forgotPassword.visible(); }}
+                >
+                  Forgot your password ?
+                </Text>
               </View>
               <View style={styles.validation_container}>
                 <Button
@@ -188,6 +204,7 @@ class SignIn extends React.PureComponent {
                 </Text>
               </View>
             </View>
+            <ForgotPasswordPopup ref={(popup) => { this.forgotPassword = popup; }} />
           </View>
         </ImageBackground>
       </KeyboardAwareScrollView>

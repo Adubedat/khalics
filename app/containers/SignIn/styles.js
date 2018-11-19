@@ -8,6 +8,13 @@ export default StyleSheet.create({
     fontSize: 15,
     color: 'white',
   },
+  forgot_password_text: {
+    textAlign: 'right',
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginRight: 20,
+  },
   title_container: {
     flex: 2,
     justifyContent: 'flex-end',

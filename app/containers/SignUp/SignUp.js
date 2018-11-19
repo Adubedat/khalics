@@ -182,6 +182,8 @@ class SignUp extends React.PureComponent {
               <View style={styles.form_container}>
                 <FloatingLabelInput
                   label="Username"
+                  focusColor="white"
+                  unfocusColor="#D3D3D3"
                   value={username}
                   error={error.username.length !== 0}
                   onChangeText={this.handleUsernameTextChange}
@@ -193,6 +195,8 @@ class SignUp extends React.PureComponent {
                 <FloatingLabelInput
                   inputRef={(input) => { this.EmailTextInput = input; }}
                   label="Email"
+                  focusColor="white"
+                  unfocusColor="#D3D3D3"
                   value={email}
                   error={error.email.length !== 0}
                   onChangeText={this.handleEmailTextChange}
@@ -205,6 +209,8 @@ class SignUp extends React.PureComponent {
                 <FloatingLabelInput
                   inputRef={(input) => { this.PasswordTextInput = input; }}
                   label="Password"
+                  focusColor="white"
+                  unfocusColor="#D3D3D3"
                   value={password}
                   error={error.password.length !== 0}
                   secureTextEntry
