@@ -1,34 +1,110 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
+import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
 import FloatingLabelInput from './FloatingLabelInput';
 
 class ForgotPasswordPopup extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      step: 1,
       email: '',
+      newPassword: '',
+      verifCode: '',
       isVisible: false,
     };
+    this.cognitoUser = '';
   }
 
   handleEmailTextChange = (newText) => {
-    this.setState({
-      email: newText,
+    this.setState({ email: newText });
+  }
+
+  handleVerifCodeChange = (newText) => {
+    this.setState({ verifCode: newText });
+  }
+
+  handleNewPasswordTextChange = (newText) => {
+    this.setState({ newPassword: newText });
+  }
+
+  sendVerificationCode = () => {
+    const { email } = this.state;
+    const poolData = {
+      UserPoolId: 'eu-west-1_jrpxZzyiw',
+      ClientId: '2h58edhdok2kc8ujlankvev9cj',
+    };
+    const userPool = new CognitoUserPool(poolData);
+    const userData = {
+      Username: email,
+      Pool: userPool,
+    };
+    this.cognitoUser = new CognitoUser(userData);
+    this.cognitoUser.forgotPassword({
+      onSuccess: (result) => {
+        console.log('sendVerificationCode success');
+        console.log(result);
+        this.setState({ step: 2 });
+      },
+      onFailure: (err) => {
+        console.log('sendVerificationCode error');
+        console.log(err);
+      },
+      // inputVerificationCode() {
+      //   const verificationCode = prompt('Please input verification code ' ,'');
+      //   const newPassword = prompt('Enter new password ' ,'');
+      //   cognitoUser.confirmPassword(verificationCode, newPassword, this);
+      // },
     });
   }
 
-  visible() {
+  changePassword = () => {
+    console.log(this.cognitoUser);
+    const { verifCode, newPassword, email } = this.state;
+    const poolData = {
+      UserPoolId: 'eu-west-1_jrpxZzyiw',
+      ClientId: '2h58edhdok2kc8ujlankvev9cj',
+    };
+    const userPool = new CognitoUserPool(poolData);
+    const userData = {
+      Username: email,
+      Pool: userPool,
+    };
+    //const cognitoUser = new CognitoUser(userData);
+    this.cognitoUser.confirmPassword(verifCode, newPassword, {
+      onSuccess: (result) => {
+        console.log('confirmPassword success');
+        console.log(result);
+      },
+      onFailure: (err) => {
+        console.log('confirmPassword error');
+        console.log(err);
+      },
+    });
+  }
+
+  closePopup = () => {
+    this.setState({
+      step: 1,
+      email: '',
+      newPassword: '',
+      verifCode: '',
+      isVisible: false,
+    });
+  }
+
+  visible = () => {
     this.setState({ isVisible: true });
   }
 
   render() {
-    const { isVisible, email } = this.state;
+    const { isVisible, step, email, newPassword, verifCode } = this.state;
     return (
       <Overlay
         isVisible={isVisible}
         windowBackgroundColor="rgba(52, 52, 52, 0.7)"
-        onBackdropPress={() => this.setState({ isVisible: false })}
+        onBackdropPress={this.closePopup}
         width="80%"
         height="auto"
         borderRadius={10}
@@ -37,11 +113,33 @@ class ForgotPasswordPopup extends React.PureComponent {
           label="Email"
           value={email}
           onChangeText={this.handleEmailTextChange}
+          autoCapitalize="none"
+          keyboardType="email-address"
         />
         <Button
-          title="Recover password"
+          title="Send verification code"
           style={{ borderRadius: 4 }}
           buttonStyle={styles.form_button} // eslint-disable-line
+          onPress={this.sendVerificationCode}
+        />
+        <FloatingLabelInput
+          label="Verification code"
+          value={verifCode}
+          onChangeText={this.handleVerifCodeChange}
+          autoCapitalize="none"
+        />
+        <FloatingLabelInput
+          label="New password"
+          value={newPassword}
+          onChangeText={this.handleNewPasswordTextChange}
+          autoCapitalize="none"
+          secureTextEntry
+        />
+        <Button
+          title="Change password"
+          style={{ borderRadius: 4 }}
+          buttonStyle={styles.form_button} // eslint-disable-line
+          onPress={this.changePassword}
         />
       </Overlay>
     );

@@ -202,6 +202,7 @@ class SignUp extends React.PureComponent {
                   onChangeText={this.handleEmailTextChange}
                   returnKeyType="next"
                   blurOnSubmit={false}
+                  autoCapitalize="none"
                   keyboardType="email-address"
                   onSubmitEditing={() => { this.PasswordTextInput.focus(); }}
                 />

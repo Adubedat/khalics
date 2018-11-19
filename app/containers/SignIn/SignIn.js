@@ -106,11 +106,6 @@ class SignIn extends React.PureComponent {
     });
   }
 
-  forgotPassword = () => {
-    //const test = prompt('test', '');
-    console.log('forgotPassword');
-  }
-
   render() {
     const { username, password, error } = this.state;
     const { navigation } = this.props;
