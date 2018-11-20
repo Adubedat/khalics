@@ -109,24 +109,12 @@ class SignIn extends React.PureComponent {
     });
   }
 
-  oauthSignIn = async () => {
+  googleSignIn = async () => {
     try {
-      // const googleWebAppId = '103645810049-n4d9p1qj5lk005m0g5vbldkbh7p3hnji.apps.googleusercontent.com';
-      // const redirectUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com/oauth2/idpresponse';
-      // const result = await Expo.AuthSession.startAsync({
-      //   authUrl:
-      //     'https://accounts.google.com/o/oauth2/v2/auth?'
-      //     + `&client_id=${googleWebAppId}`
-      //     + `&redirect_uri=${encodeURIComponent(redirectUrl)}`
-      //     + '&response_type=code'
-      //     + '&access_type=offline'
-      //     + '&scope=profile',
-      // });
       const result = await Expo.Google.logInAsync({
-        // webClientId: '103645810049-n4d9p1qj5lk005m0g5vbldkbh7p3hnji.apps.googleusercontent.com',
-        // androidClientId: '103645810049-3eii44q1peb4st03reos8u8gq50m1ihj.apps.googleusercontent.com',
+        androidClientId: '103645810049-3eii44q1peb4st03reos8u8gq50m1ihj.apps.googleusercontent.com',
         iosClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
-        // iosStandaloneAppClientId: '', androidStandaloneAppClientId: '' // TODO: to use when deploy ?
+        // iosStandaloneAppClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       });
       if (result.type === 'success') {
@@ -141,6 +129,29 @@ class SignIn extends React.PureComponent {
       }
     } catch (e) {
       console.log('error', e);
+    }
+  }
+
+  facebookSignIn = async () => {
+    try {
+      const {
+        type,
+        token,
+        // expires,
+        // permissions,
+        // declinedPermissions,
+      } = await Expo.Facebook.logInWithReadPermissionsAsync('<APP_ID>', {
+        permissions: ['public_profile'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        console.log(`Hi ${(await response.json()).name}!`);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
     }
   }
 
@@ -186,7 +197,7 @@ class SignIn extends React.PureComponent {
                       color="white"
                     />
                   )}
-                  onPress={this.oauthSignIn}
+                  onPress={this.googleSignIn}
                 />
               </View>
               <View style={styles.form_container}>
