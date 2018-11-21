@@ -135,18 +135,34 @@ class SignIn extends React.PureComponent {
   }
 
 
-
   facebookSignIn = async () => {
     const cognitoUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com';
     const redirectUrl = AuthSession.getRedirectUrl();
     console.log(redirectUrl);
-    const ClientId = '2h58edhdok2kc8ujlankvev9cj';
+    const clientId = '2h58edhdok2kc8ujlankvev9cj';
     const result = await AuthSession.startAsync({
-      authUrl: cognitoUrl + '/login?response_type=code'+
-      `&client_id=${ClientId}` +
-      `&redirect_uri=${redirectUrl}`
-    })
+      authUrl: `${cognitoUrl}/login?response_type=code`
+      + `&client_id=${clientId}`
+      + `&redirect_uri=${redirectUrl}`,
+    });
     console.log(result);
+    const requestUrl = `${cognitoUrl}/oauth2/token`;
+    const authCode = result.params.code;
+    console.log(authCode);
+    const token = await fetch(requestUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        grant_type: 'authorization_code',
+        scope: 'email profile',
+        redirect_uri: redirectUrl,
+        client_id: clientId,
+        code: authCode,
+      }),
+    });
+    console.log(token);
   }
 
   // facebookSignIn = async () => {
