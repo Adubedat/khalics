@@ -30,7 +30,8 @@ class ForgotPasswordPopup extends React.PureComponent {
   }
 
   sendVerificationCode = () => {
-    const { email } = this.state;
+    // const { email } = this.state;
+    const email = 'arthur.dubedat@gmail.com';
     const poolData = {
       UserPoolId: 'eu-west-1_jrpxZzyiw',
       ClientId: '2h58edhdok2kc8ujlankvev9cj',
@@ -51,6 +52,24 @@ class ForgotPasswordPopup extends React.PureComponent {
         console.log('sendVerificationCode error');
         console.log(err);
       },
+      inputVerificationCode: () => {
+            setTimeout(() => {
+              console.log('HELLo', this.state.verifCode);
+              this.cognitoUser.confirmPassword(this.state.verifCode, 'newPassword42', {
+                onSuccess: (result) => {
+                  console.log('confirmPassword success');
+                  console.log(result);
+                },
+                onFailure: (err) => {
+                  console.log('confirmPassword error');
+                  console.log(err);
+                },
+              });
+            }, 20000);
+            // var verificationCode = prompt('Please input verification code ' ,'');
+            // var newPassword = prompt('Enter new password ' ,'');
+            // const { verifCode, newPassword } = this.state;
+        }
       // inputVerificationCode() {
       //   const verificationCode = prompt('Please input verification code ' ,'');
       //   const newPassword = prompt('Enter new password ' ,'');
