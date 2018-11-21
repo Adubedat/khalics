@@ -135,73 +135,84 @@ class SignIn extends React.PureComponent {
   }
 
 
-  facebookSignIn = async () => {
-    const cognitoUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com';
-    const redirectUrl = AuthSession.getRedirectUrl();
-    console.log(redirectUrl);
-    const clientId = '2h58edhdok2kc8ujlankvev9cj';
-    const result = await AuthSession.startAsync({
-      authUrl: `${cognitoUrl}/login?response_type=code`
-      + `&client_id=${clientId}`
-      + `&redirect_uri=${redirectUrl}`,
-    });
-    console.log(result);
-    const requestUrl = `${cognitoUrl}/oauth2/token`;
-    const authCode = result.params.code;
-    console.log(authCode);
-    const token = await fetch(requestUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({
-        grant_type: 'authorization_code',
-        scope: 'email profile',
-        redirect_uri: redirectUrl,
-        client_id: clientId,
-        code: authCode,
-      }),
-    });
-    console.log(token);
-  }
-
   // facebookSignIn = async () => {
-  //   try {
-  //     const {
-  //       type,
-  //       token,
-  //       // expires,
-  //       // permissions,
-  //       // declinedPermissions,
-  //     } = await Expo.Facebook.logInWithReadPermissionsAsync('696904080692208', {
-  //       permissions: ['public_profile', 'email'],
-  //     });
-  //     if (type === 'success') {
-  //       console.log('token:', token);
-  //       const fields = 'email,name';
-  //       // Get the user's fields using Facebook's Graph API
-  //       const response = await fetch(`https://graph.facebook.com/me?fields=${fields}&access_token=${token}`);
-  //       const resFields = await response.json();
-  //       console.log('response:', resFields);
-  //       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  //         IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
-  //         Logins: {
-  //           'graph.facebook.com': token,
-  //         },
-  //       });
-  //       AWS.config.credentials.get(() => {
-  //         const accessKeyId = AWS.config.credentials.accessKeyId;
-  //         const secretAccessKey = AWS.config.credentials.secretAccessKey;
-  //         const sessionToken = AWS.config.credentials.sessionToken;
-  //         console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
-  //         console.log('SUCCESS !');
-  //       });
-  //       // add user to cognito pool
-  //     }
-  //   } catch ({ message }) {
-  //     alert(`Facebook Login Error: ${message}`);
-  //   }
+  //   const cognitoUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com';
+  //   const redirectUrl = AuthSession.getRedirectUrl();
+  //   console.log(redirectUrl);
+  //   const clientId = '2h58edhdok2kc8ujlankvev9cj';
+  //   const result = await AuthSession.startAsync({
+  //     authUrl: `${cognitoUrl}/login?response_type=code`
+  //     + `&client_id=${clientId}`
+  //     + `&redirect_uri=${redirectUrl}`,
+  //   });
+  //   console.log(result);
+  //   const requestUrl = `${cognitoUrl}/oauth2/token`;
+  //   const authCode = result.params.code;
+  //   console.log(authCode);
+  //   const token = await fetch(requestUrl, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //     body: JSON.stringify({
+  //       grant_type: 'authorization_code',
+  //       // scope: 'email profile',
+  //       redirect_uri: redirectUrl,
+  //       client_id: clientId,
+  //       code: authCode,
+  //     }),
+  //   });
+  //   console.log(token);
   // }
+
+  facebookSignIn = async () => {
+    try {
+      const {
+        type,
+        token,
+        // expires,
+        // permissions,
+        // declinedPermissions,
+      } = await Expo.Facebook.logInWithReadPermissionsAsync('696904080692208', {
+        permissions: ['public_profile', 'email'],
+      });
+      if (type === 'success') {
+        console.log('token:', token);
+        const fields = 'email,name';
+        // Get the user's fields using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?fields=${fields}&access_token=${token}`);
+        const resFields = await response.json();
+        console.log('response:', resFields);
+
+        // //
+
+        const cognitoUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com';
+        const redirectUrl = AuthSession.getRedirectUrl();
+        console.log(redirectUrl);
+        const clientId = '2h58edhdok2kc8ujlankvev9cj';
+        const result = await fetch(`${cognitoUrl}/login?response_type=code`
+          + `&client_id=${clientId}`
+          + `&redirect_uri=${redirectUrl}`);
+        console.log(`status code :${result.status}`);
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
+          Logins: {
+            'graph.facebook.com': token,
+          },
+        });
+        AWS.config.credentials.get(() => {
+          const accessKeyId = AWS.config.credentials.accessKeyId;
+          const secretAccessKey = AWS.config.credentials.secretAccessKey;
+          const sessionToken = AWS.config.credentials.sessionToken;
+          console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
+          console.log('SUCCESS !');
+        });
+        // add user to cognito pool
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
 
   render() {
     const { username, password, error } = this.state;
