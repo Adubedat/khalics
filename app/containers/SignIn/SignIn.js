@@ -140,7 +140,7 @@ class SignIn extends React.PureComponent {
         // expires,
         // permissions,
         // declinedPermissions,
-      } = await Expo.Facebook.logInWithReadPermissionsAsync('<APP_ID>', {
+      } = await Expo.Facebook.logInWithReadPermissionsAsync('696904080692208', {
         permissions: ['public_profile'],
       });
       if (type === 'success') {
@@ -184,6 +184,7 @@ class SignIn extends React.PureComponent {
                       color="white"
                     />
                   )}
+                  onPress={this.facebookSignIn}
                 />
                 <Button
                   title="Sign in with google"
@@ -252,10 +253,6 @@ class SignIn extends React.PureComponent {
             <ForgotPasswordPopup ref={(popup) => { this.forgotPassword = popup; }} />
           </View>
         </ImageBackground>
-        {/* <div>
-          <script src="https://apis.google.com/js/platform.js" async defer />
-          <meta name="google-signin-client_id" content="103645810049-n4d9p1qj5lk005m0g5vbldkbh7p3hnji.apps.googleusercontent.com" />
-        </div> */}
       </KeyboardAwareScrollView>
     );
   }
