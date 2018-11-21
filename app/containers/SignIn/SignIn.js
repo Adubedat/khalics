@@ -10,6 +10,7 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
+import AWS from 'aws-sdk';
 import {
   CognitoUserPool,
   CognitoUser,
@@ -150,6 +151,19 @@ class SignIn extends React.PureComponent {
         const response = await fetch(`https://graph.facebook.com/me?fields=${fields}&access_token=${token}`);
         const resFields = await response.json();
         console.log('response:', resFields);
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
+          Logins: {
+            'graph.facebook.com': token,
+          },
+        });
+        AWS.config.credentials.get(() => {
+          const accessKeyId = AWS.config.credentials.accessKeyId;
+          const secretAccessKey = AWS.config.credentials.secretAccessKey;
+          const sessionToken = AWS.config.credentials.sessionToken;
+          console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
+          console.log('SUCCESS !');
+        });
         // add user to cognito pool
       }
     } catch ({ message }) {
