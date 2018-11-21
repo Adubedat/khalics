@@ -141,14 +141,16 @@ class SignIn extends React.PureComponent {
         // permissions,
         // declinedPermissions,
       } = await Expo.Facebook.logInWithReadPermissionsAsync('696904080692208', {
-        permissions: ['public_profile'],
+        permissions: ['public_profile', 'email'],
       });
       if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        console.log(`Hi ${(await response.json()).name}!`);
-      } else {
-        // type === 'cancel'
+        console.log('token:', token);
+        const fields = 'email,name';
+        // Get the user's fields using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?fields=${fields}&access_token=${token}`);
+        const resFields = await response.json();
+        console.log('response:', resFields);
+        // add user to cognito pool
       }
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
