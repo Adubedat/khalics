@@ -1,20 +1,21 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
-import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
+import Amplify, { Auth } from 'aws-amplify';
 import FloatingLabelInput from './FloatingLabelInput';
+import awsExports from '../../aws-exports';
+
+Amplify.configure(awsExports);
 
 class ForgotPasswordPopup extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      step: 1,
       email: '',
       newPassword: '',
       verifCode: '',
       isVisible: false,
     };
-    this.cognitoUser = '';
   }
 
   handleEmailTextChange = (newText) => {
@@ -29,83 +30,23 @@ class ForgotPasswordPopup extends React.PureComponent {
     this.setState({ newPassword: newText });
   }
 
-  sendVerificationCode = () => {
+  forgotPassword = () => {
     // const { email } = this.state;
     const email = 'arthur.dubedat@gmail.com';
-    const poolData = {
-      UserPoolId: 'eu-west-1_jrpxZzyiw',
-      ClientId: '2h58edhdok2kc8ujlankvev9cj',
-    };
-    const userPool = new CognitoUserPool(poolData);
-    const userData = {
-      Username: email,
-      Pool: userPool,
-    };
-    this.cognitoUser = new CognitoUser(userData);
-    this.cognitoUser.forgotPassword({
-      onSuccess: (result) => {
-        console.log('sendVerificationCode success');
-        console.log(result);
-        this.setState({ step: 2 });
-      },
-      onFailure: (err) => {
-        console.log('sendVerificationCode error');
-        console.log(err);
-      },
-      inputVerificationCode: () => {
-            setTimeout(() => {
-              console.log('HELLo', this.state.verifCode);
-              this.cognitoUser.confirmPassword(this.state.verifCode, 'newPassword42', {
-                onSuccess: (result) => {
-                  console.log('confirmPassword success');
-                  console.log(result);
-                },
-                onFailure: (err) => {
-                  console.log('confirmPassword error');
-                  console.log(err);
-                },
-              });
-            }, 20000);
-            // var verificationCode = prompt('Please input verification code ' ,'');
-            // var newPassword = prompt('Enter new password ' ,'');
-            // const { verifCode, newPassword } = this.state;
-        }
-      // inputVerificationCode() {
-      //   const verificationCode = prompt('Please input verification code ' ,'');
-      //   const newPassword = prompt('Enter new password ' ,'');
-      //   cognitoUser.confirmPassword(verificationCode, newPassword, this);
-      // },
-    });
+    Auth.forgotPassword(email)
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
   }
 
-  changePassword = () => {
-    console.log(this.cognitoUser);
+  forgotPasswordSubmit = () => {
     const { verifCode, newPassword, email } = this.state;
-    const poolData = {
-      UserPoolId: 'eu-west-1_jrpxZzyiw',
-      ClientId: '2h58edhdok2kc8ujlankvev9cj',
-    };
-    const userPool = new CognitoUserPool(poolData);
-    const userData = {
-      Username: email,
-      Pool: userPool,
-    };
-    //const cognitoUser = new CognitoUser(userData);
-    this.cognitoUser.confirmPassword(verifCode, newPassword, {
-      onSuccess: (result) => {
-        console.log('confirmPassword success');
-        console.log(result);
-      },
-      onFailure: (err) => {
-        console.log('confirmPassword error');
-        console.log(err);
-      },
-    });
+    Auth.forgotPasswordSubmit(email, verifCode, newPassword)
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
   }
 
   closePopup = () => {
     this.setState({
-      step: 1,
       email: '',
       newPassword: '',
       verifCode: '',
@@ -118,7 +59,9 @@ class ForgotPasswordPopup extends React.PureComponent {
   }
 
   render() {
-    const { isVisible, step, email, newPassword, verifCode } = this.state;
+    const {
+      isVisible, email, newPassword, verifCode,
+    } = this.state;
     return (
       <Overlay
         isVisible={isVisible}
@@ -139,7 +82,7 @@ class ForgotPasswordPopup extends React.PureComponent {
           title="Send verification code"
           style={{ borderRadius: 4 }}
           buttonStyle={styles.form_button} // eslint-disable-line
-          onPress={this.sendVerificationCode}
+          onPress={this.forgotPassword}
         />
         <FloatingLabelInput
           label="Verification code"
@@ -158,7 +101,7 @@ class ForgotPasswordPopup extends React.PureComponent {
           title="Change password"
           style={{ borderRadius: 4 }}
           buttonStyle={styles.form_button} // eslint-disable-line
-          onPress={this.changePassword}
+          onPress={this.forgotPasswordSubmit}
         />
       </Overlay>
     );
