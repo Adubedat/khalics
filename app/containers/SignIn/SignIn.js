@@ -1,6 +1,6 @@
 // import qs from 'querystring'; // npm uninstall --save qs
 import React from 'react';
-// import * as Expo from 'expo';
+import * as Expo from 'expo';
 // import { AuthSession } from 'expo';
 import Amplify, { Auth } from 'aws-amplify';
 import {
@@ -84,6 +84,30 @@ class SignIn extends React.PureComponent {
     Auth.signIn(username, password)
       .then(user => console.log(user))
       .catch(err => console.log(err));
+  }
+
+  facebookSignIn = async () => {
+    try {
+      await Auth.signOut({ global: true }); // TODO to remove
+    } catch (err) {
+      console.error(err);
+    }
+    const { type, token, expires } = await Expo.Facebook.logInWithReadPermissionsAsync('696904080692208', {
+      permissions: ['public_profile', 'email'],
+    });
+    if (type === 'success') {
+      // sign in with federated identity
+      const fields = 'email,name';
+      const userData = await fetch(`https://graph.facebook.com/me?fields=${fields}&access_token=${token}`);
+      Auth.federatedSignIn('facebook',
+        { token, expires_at: expires },
+        { name: userData.name, email: userData.email })
+        .then((credentials) => {
+          console.log('get aws credentials', credentials);
+        }).catch((e) => {
+          console.log(e);
+        });
+    }
   }
 
   // googleSignIn = async () => {
