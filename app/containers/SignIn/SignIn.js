@@ -1,7 +1,8 @@
-import qs from 'querystring'; // to delete
+import qs from 'querystring'; // npm uninstall --save qs
 import React from 'react';
 import * as Expo from 'expo';
 import { AuthSession } from 'expo';
+import Amplify, { Auth } from 'aws-amplify';
 import {
   View,
   StatusBar,
@@ -22,6 +23,39 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import FloatingLabelInput from '../../components/FloatingLabelInput';
 import ForgotPasswordPopup from '../../components/ForgotPasswordPopup';
 import styles from './styles';
+
+Amplify.configure({
+  Auth: {
+    // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
+    identityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
+    // REQUIRED - Amazon Cognito Region
+    region: 'eu-west-1',
+    // OPTIONAL - Amazon Cognito Federated Identity Pool Region
+    // Required only if it's different from Amazon Cognito Region
+    identityPoolRegion: 'eu-west-1',
+    // OPTIONAL - Amazon Cognito User Pool ID
+    userPoolId: 'eu-west-1_jrpxZzyiw',
+    // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+    userPoolWebClientId: '2h58edhdok2kc8ujlankvev9cj',
+    // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
+    mandatorySignIn: false,
+    // OPTIONAL - Configuration for cookie storage
+    cookieStorage: {
+      // REQUIRED - Cookie domain (only required if cookieStorage is provided)
+      domain: '.yourdomain.com',
+      // OPTIONAL - Cookie path
+      path: '/',
+      // OPTIONAL - Cookie expiration in days
+      expires: 365,
+      // OPTIONAL - Cookie secure flag
+      secure: true,
+    },
+    // OPTIONAL - customized storage object
+    // storage: new MyStorage(),
+    // OPTIONAL - Manually set the authentication flow type. Default is 'USER_SRP_AUTH'
+    authenticationFlowType: 'USER_PASSWORD_AUTH',
+  },
+});
 
 class SignIn extends React.PureComponent {
   static navigationOptions = {
@@ -82,34 +116,9 @@ class SignIn extends React.PureComponent {
 
   cognitoSignIn = () => {
     const { username, password } = this.state;
-    const authenticationData = {
-      Username: username,
-      Password: password,
-    };
-    const authenticationDetails = new AuthenticationDetails(authenticationData);
-    const poolData = {
-      UserPoolId: 'eu-west-1_jrpxZzyiw',
-      ClientId: '2h58edhdok2kc8ujlankvev9cj',
-    };
-    const userPool = new CognitoUserPool(poolData);
-    const userData = {
-      Username: username,
-      Pool: userPool,
-    };
-    const cognitoUser = new CognitoUser(userData);
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: (result) => {
-        const accessToken = result.getAccessToken().getJwtToken();
-        /* Use the idToken for Logins Map when Federating User Pools with identity pools or */
-        /* when passing through an Authorization Header to an API Gateway Authorizer */
-        const idToken = result.idToken.jwtToken;
-        console.log('[success]: {accessToken}: ', accessToken, '{idToken}:', idToken);
-      },
-      onFailure: (err) => {
-        this.signInError(err);
-        console.log('[Error]:', err);
-      },
-    });
+    Auth.signIn(username, password)
+      .then(user => console.log(user))
+      .catch(err => console.log(err));
   }
 
   googleSignIn = async () => {
@@ -164,16 +173,16 @@ class SignIn extends React.PureComponent {
     });
     const tokenJson = await token.json();
     console.log(tokenJson);
-    // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    //   IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
-    //   Logins: {
-    //     'graph.facebook.com': token,
-    //   },
-    // });
-    // AWS.config.credentials.get(() => {
-    //   const { accessKeyId, secretAccessKey, sessionToken } = AWS.config.credentials.accessKeyId;
-    //   console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
-    // });
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
+      Logins: {
+        'graph.facebook.com': tokenJson.access_token,
+      },
+    });
+    AWS.config.credentials.get(() => {
+      const { accessKeyId, secretAccessKey, sessionToken } = AWS.config.credentials;
+      console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
+    });
   }
 
 
@@ -261,7 +270,7 @@ class SignIn extends React.PureComponent {
                   title="Sign in"
                   titleStyle={{ fontWeight: 'bold' }}
                   color="white"
-                  onPress={this.cognitoSignIn} // TODO Sign in function
+                  onPress={this.testSignIn} // TODO Sign in function
                 />
                 <Text
                   style={[styles.small_text, { textAlign: 'center' }]}

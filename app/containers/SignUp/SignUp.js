@@ -34,7 +34,7 @@ class SignUp extends React.PureComponent {
     this.state = {
       username: 'test42',
       email: 'test@test.fr',
-      password: 'Pas42sword1',
+      password: 'Password1',
       error: { username: '', email: '', password: '' },
     };
   }
