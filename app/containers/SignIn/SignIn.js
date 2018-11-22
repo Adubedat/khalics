@@ -1,7 +1,7 @@
-import qs from 'querystring'; // npm uninstall --save qs
+// import qs from 'querystring'; // npm uninstall --save qs
 import React from 'react';
-import * as Expo from 'expo';
-import { AuthSession } from 'expo';
+// import * as Expo from 'expo';
+// import { AuthSession } from 'expo';
 import Amplify, { Auth } from 'aws-amplify';
 import {
   View,
@@ -13,49 +13,14 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
-import AWS from 'aws-sdk';
-import {
-  CognitoUserPool,
-  CognitoUser,
-  AuthenticationDetails,
-} from 'amazon-cognito-identity-js';
+// import AWS from 'aws-sdk';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
 import ForgotPasswordPopup from '../../components/ForgotPasswordPopup';
 import styles from './styles';
+import awsExports from '../../../aws-exports';
 
-Amplify.configure({
-  Auth: {
-    // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-    identityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
-    // REQUIRED - Amazon Cognito Region
-    region: 'eu-west-1',
-    // OPTIONAL - Amazon Cognito Federated Identity Pool Region
-    // Required only if it's different from Amazon Cognito Region
-    identityPoolRegion: 'eu-west-1',
-    // OPTIONAL - Amazon Cognito User Pool ID
-    userPoolId: 'eu-west-1_jrpxZzyiw',
-    // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-    userPoolWebClientId: '2h58edhdok2kc8ujlankvev9cj',
-    // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
-    mandatorySignIn: false,
-    // OPTIONAL - Configuration for cookie storage
-    cookieStorage: {
-      // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-      domain: '.yourdomain.com',
-      // OPTIONAL - Cookie path
-      path: '/',
-      // OPTIONAL - Cookie expiration in days
-      expires: 365,
-      // OPTIONAL - Cookie secure flag
-      secure: true,
-    },
-    // OPTIONAL - customized storage object
-    // storage: new MyStorage(),
-    // OPTIONAL - Manually set the authentication flow type. Default is 'USER_SRP_AUTH'
-    authenticationFlowType: 'USER_PASSWORD_AUTH',
-  },
-});
+Amplify.configure(awsExports);
 
 class SignIn extends React.PureComponent {
   static navigationOptions = {
@@ -121,69 +86,69 @@ class SignIn extends React.PureComponent {
       .catch(err => console.log(err));
   }
 
-  googleSignIn = async () => {
-    try {
-      const result = await Expo.Google.logInAsync({
-        androidClientId: '103645810049-3eii44q1peb4st03reos8u8gq50m1ihj.apps.googleusercontent.com',
-        iosClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
-        // iosStandaloneAppClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
-        scopes: ['profile', 'email'],
-      });
-      if (result.type === 'success') {
-        const state = {
-          ...this.state,
-          signedIn: true,
-          name: result.user.name,
-        };
-        this.setState(state);
-      } else {
-        console.log('cancelled');
-      }
-    } catch (e) {
-      console.log('error', e);
-    }
-  }
+  // googleSignIn = async () => {
+  //   try {
+  //     const result = await Expo.Google.logInAsync({
+  //       androidClientId: '103645810049-3eii44q1peb4st03reos8u8gq50m1ihj.apps.googleusercontent.com',
+  //       iosClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
+  //       // iosStandaloneAppClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
+  //       scopes: ['profile', 'email'],
+  //     });
+  //     if (result.type === 'success') {
+  //       const state = {
+  //         ...this.state,
+  //         signedIn: true,
+  //         name: result.user.name,
+  //       };
+  //       this.setState(state);
+  //     } else {
+  //       console.log('cancelled');
+  //     }
+  //   } catch (e) {
+  //     console.log('error', e);
+  //   }
+  // }
 
-  facebookSignIn = async () => {
-    const cognitoUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com';
-    const redirectUrl = AuthSession.getRedirectUrl();
-    console.log(redirectUrl);
-    const clientId = '2h58edhdok2kc8ujlankvev9cj';
-    const result = await AuthSession.startAsync({
-      authUrl: `${cognitoUrl}/login?response_type=code`
-      + `&client_id=${clientId}`
-      + `&redirect_uri=${redirectUrl}`,
-    });
-    console.log(result);
-    const requestUrl = `${cognitoUrl}/oauth2/token`;
-    const authCode = result.params.code;
-    console.log(authCode);
-    const token = await fetch(requestUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: qs.stringify({
-        grant_type: 'authorization_code',
-        // scope: 'email profile',
-        redirect_uri: redirectUrl,
-        client_id: clientId,
-        code: authCode,
-      }),
-    });
-    const tokenJson = await token.json();
-    console.log(tokenJson);
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
-      Logins: {
-        'graph.facebook.com': tokenJson.access_token,
-      },
-    });
-    AWS.config.credentials.get(() => {
-      const { accessKeyId, secretAccessKey, sessionToken } = AWS.config.credentials;
-      console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
-    });
-  }
+  // facebookSignIn = async () => {
+  //   const cognitoUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com';
+  //   const redirectUrl = AuthSession.getRedirectUrl();
+  //   console.log(redirectUrl);
+  //   const clientId = '2h58edhdok2kc8ujlankvev9cj';
+  //   const result = await AuthSession.startAsync({
+  //     authUrl: `${cognitoUrl}/login?response_type=code`
+  //     + `&client_id=${clientId}`
+  //     + `&redirect_uri=${redirectUrl}`,
+  //   });
+  //   console.log(result);
+  //   const requestUrl = `${cognitoUrl}/oauth2/token`;
+  //   const authCode = result.params.code;
+  //   console.log(authCode);
+  //   const token = await fetch(requestUrl, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //     body: qs.stringify({
+  //       grant_type: 'authorization_code',
+  //       // scope: 'email profile',
+  //       redirect_uri: redirectUrl,
+  //       client_id: clientId,
+  //       code: authCode,
+  //     }),
+  //   });
+  //   const tokenJson = await token.json();
+  //   console.log(tokenJson);
+  //   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+  //     IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
+  //     Logins: {
+  //       'graph.facebook.com': tokenJson.access_token,
+  //     },
+  //   });
+  //   AWS.config.credentials.get(() => {
+  //     const { accessKeyId, secretAccessKey, sessionToken } = AWS.config.credentials;
+  //     console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
+  //   });
+  // }
 
 
   render() {
@@ -270,7 +235,7 @@ class SignIn extends React.PureComponent {
                   title="Sign in"
                   titleStyle={{ fontWeight: 'bold' }}
                   color="white"
-                  onPress={this.testSignIn} // TODO Sign in function
+                  onPress={this.cognitoSignIn} // TODO Sign in function
                 />
                 <Text
                   style={[styles.small_text, { textAlign: 'center' }]}

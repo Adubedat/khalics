@@ -9,11 +9,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "amazon-cognito-identity-js": "^3.0.3",
     "aws-amplify": "^1.1.10",
     "aws-sdk": "^2.360.0",
     "expo": "^31.0.2",
-    "qs": "^6.5.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-elements": "^1.0.0-beta7",
