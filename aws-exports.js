@@ -14,16 +14,16 @@ const awsExports = {
     // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
     mandatorySignIn: false,
     // OPTIONAL - Configuration for cookie storage
-    cookieStorage: {
-      // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-      domain: '.yourdomain.com',
-      // OPTIONAL - Cookie path
-      path: '/',
-      // OPTIONAL - Cookie expiration in days
-      expires: 365,
-      // OPTIONAL - Cookie secure flag
-      secure: true,
-    },
+    // cookieStorage: {
+    // REQUIRED - Cookie domain (only required if cookieStorage is provided)
+    // domain: '.yourdomain.com',
+    // OPTIONAL - Cookie path
+    // path: '/',
+    // OPTIONAL - Cookie expiration in days
+    // expires: 365,
+    // OPTIONAL - Cookie secure flag
+    // secure: true,
+    // },
     // OPTIONAL - customized storage object
     // storage: new MyStorage(),
     // OPTIONAL - Manually set the authentication flow type. Default is 'USER_SRP_AUTH'

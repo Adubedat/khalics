@@ -9,13 +9,13 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
-import {
-  CognitoUserPool,
-  CognitoUserAttribute,
-} from 'amazon-cognito-identity-js';
+import Amplify, { Auth } from 'aws-amplify';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
 import styles from './styles';
+import awsExports from '../../../aws-exports';
+
+Amplify.configure(awsExports);
 
 class SignUp extends React.PureComponent {
   static navigationOptions = {
@@ -91,34 +91,20 @@ class SignUp extends React.PureComponent {
   }
 
   signUp = () => {
-    const poolData = {
-      UserPoolId: 'eu-west-1_jrpxZzyiw',
-      ClientId: '2h58edhdok2kc8ujlankvev9cj',
-    };
     const { username, email, password } = this.state;
-    // if signUpFrontError is true -> refresh the state
     if (this.signUpFrontError(username, email, password)) {
       return;
     }
-    const userPool = new CognitoUserPool(poolData);
-    const attributeList = [];
-    const dataEmail = {
-      Name: 'email',
-      Value: email,
-    };
-    const attributeEmail = new CognitoUserAttribute(dataEmail);
-
-    attributeList.push(attributeEmail);
-    userPool.signUp(username, password, attributeList, null, (error, result) => {
-      if (error) {
-        // signUpBackError refresh the state
-        this.signUpBackError(error);
-        console.log('signUpBackError:', error);
-        return;
-      }
-      const cognitoUser = result.user;
-      console.log(`success: creation of user ${cognitoUser.getUsername()}`);
-    });
+    Auth.signUp({
+      username,
+      password,
+      attributes: { email },
+    })
+      .then(data => console.log(data))
+      .catch((err) => {
+        this.signUpBackError(err);
+        console.log('signUpBackError:', err);
+      });
   }
 
   fieldError = (field) => {
