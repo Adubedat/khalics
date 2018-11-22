@@ -87,14 +87,10 @@ class SignIn extends React.PureComponent {
   }
 
   facebookSignIn = async () => {
-    try {
-      await Auth.signOut({ global: true }); // TODO to remove
-    } catch (err) {
-      console.error(err);
-    }
     const { type, token, expires } = await Expo.Facebook.logInWithReadPermissionsAsync('696904080692208', {
       permissions: ['public_profile', 'email'],
     });
+    console.log('expires:', expires);
     if (type === 'success') {
       // sign in with federated identity
       const fields = 'email,name';
@@ -110,70 +106,33 @@ class SignIn extends React.PureComponent {
     }
   }
 
-  // googleSignIn = async () => {
-  //   try {
-  //     const result = await Expo.Google.logInAsync({
-  //       androidClientId: '103645810049-3eii44q1peb4st03reos8u8gq50m1ihj.apps.googleusercontent.com',
-  //       iosClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
-  //       // iosStandaloneAppClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
-  //       scopes: ['profile', 'email'],
-  //     });
-  //     if (result.type === 'success') {
-  //       const state = {
-  //         ...this.state,
-  //         signedIn: true,
-  //         name: result.user.name,
-  //       };
-  //       this.setState(state);
-  //     } else {
-  //       console.log('cancelled');
-  //     }
-  //   } catch (e) {
-  //     console.log('error', e);
-  //   }
-  // }
-
-  // facebookSignIn = async () => {
-  //   const cognitoUrl = 'https://khalics.auth.eu-west-1.amazoncognito.com';
-  //   const redirectUrl = AuthSession.getRedirectUrl();
-  //   console.log(redirectUrl);
-  //   const clientId = '2h58edhdok2kc8ujlankvev9cj';
-  //   const result = await AuthSession.startAsync({
-  //     authUrl: `${cognitoUrl}/login?response_type=code`
-  //     + `&client_id=${clientId}`
-  //     + `&redirect_uri=${redirectUrl}`,
-  //   });
-  //   console.log(result);
-  //   const requestUrl = `${cognitoUrl}/oauth2/token`;
-  //   const authCode = result.params.code;
-  //   console.log(authCode);
-  //   const token = await fetch(requestUrl, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //     body: qs.stringify({
-  //       grant_type: 'authorization_code',
-  //       // scope: 'email profile',
-  //       redirect_uri: redirectUrl,
-  //       client_id: clientId,
-  //       code: authCode,
-  //     }),
-  //   });
-  //   const tokenJson = await token.json();
-  //   console.log(tokenJson);
-  //   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  //     IdentityPoolId: 'eu-west-1:ee3cde2b-e434-4be8-9f9b-756098823f3a',
-  //     Logins: {
-  //       'graph.facebook.com': tokenJson.access_token,
-  //     },
-  //   });
-  //   AWS.config.credentials.get(() => {
-  //     const { accessKeyId, secretAccessKey, sessionToken } = AWS.config.credentials;
-  //     console.log(accessKeyId, '===', secretAccessKey, ' ||| ', sessionToken);
-  //   });
-  // }
-
+  googleSignIn = async () => {
+    try {
+      const result = await Expo.Google.logInAsync({
+        androidClientId: '103645810049-3eii44q1peb4st03reos8u8gq50m1ihj.apps.googleusercontent.com',
+        iosClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
+        // iosStandaloneAppClientId: '103645810049-s1ko294ef5p17s4rgob3vun7pghkc6kq.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+      });
+      if (result.type === 'success') {
+        const { email, name } = result.user;
+        const twoMonthsSeconds = 5184000;
+        const expiresAt = (new Date().getTime() / 1000) + twoMonthsSeconds;
+        Auth.federatedSignIn('google',
+          { token: result.idToken, expires_at: expiresAt },
+          { name, email })
+          .then((credentials) => {
+            console.log('get aws credentials', credentials);
+          }).catch((e) => {
+            console.log(e);
+          });
+      } else {
+        console.log('cancelled');
+      }
+    } catch (e) {
+      console.log('error', e);
+    }
+  }
 
   render() {
     const { username, password, error } = this.state;
