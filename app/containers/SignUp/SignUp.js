@@ -100,7 +100,6 @@ class SignUp extends React.PureComponent {
       .then(data => console.log(data))
       .catch((err) => {
         this.signUpBackError(err);
-        console.log('signUpBackError:', err);
       });
   }
 

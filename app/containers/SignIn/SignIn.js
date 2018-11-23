@@ -69,9 +69,9 @@ class SignIn extends React.PureComponent {
   signInError = (err) => {
     const error = { username: '', password: '' };
     if (err.code === 'UserNotFoundException') {
-      error.username = 'Incorrect username';
+      error.username = 'Incorrect username / email or email not verified';
     } else if (err.code === 'UserNotConfirmedException') {
-      error.username = 'You have not confirmed your account. Please check your email.';
+      error.username = 'You have not verified your email. Please check your mailbox.';
     } else if (err.code === 'NotAuthorizedException') {
       error.username = err.message; error.password = err.message;
     }
@@ -82,8 +82,12 @@ class SignIn extends React.PureComponent {
   cognitoSignIn = () => {
     const { username, password } = this.state;
     Auth.signIn(username, password)
-      .then(user => console.log(user))
-      .catch(err => console.log(err));
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((err) => {
+        this.signInError(err);
+      });
   }
 
   facebookSignIn = async () => {
@@ -182,7 +186,7 @@ class SignIn extends React.PureComponent {
               </View>
               <View style={styles.form_container}>
                 <FloatingLabelInput
-                  label="Username"
+                  label="Username or Email"
                   focusColor="white"
                   unfocusColor="#D3D3D3"
                   value={username}
