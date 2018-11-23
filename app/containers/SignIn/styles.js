@@ -54,4 +54,14 @@ export default StyleSheet.create({
     marginRight: 20,
     color: '#EB241A',
   },
+  info_box: {
+    backgroundColor: '#008CBA',
+    margin: 20,
+    marginBottom: 10,
+    marginTop: 10,
+    padding: 5,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

@@ -1,7 +1,5 @@
-// import qs from 'querystring'; // npm uninstall --save qs
 import React from 'react';
 import * as Expo from 'expo';
-// import { AuthSession } from 'expo';
 import Amplify, { Auth } from 'aws-amplify';
 import {
   View,
@@ -13,7 +11,6 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
-// import AWS from 'aws-sdk';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
 import ForgotPasswordPopup from '../../components/ForgotPasswordPopup';
@@ -33,6 +30,7 @@ class SignIn extends React.PureComponent {
       username: '',
       password: '',
       error: { username: '', password: '' },
+      isVerifyEmailVisible: true,
       signIn: false, // TODO: keep ?
       name: '', // TODO: keep ?
     };
@@ -41,6 +39,7 @@ class SignIn extends React.PureComponent {
       username: 'test42',
       password: '',
       error: { username: '', password: '' },
+      isVerifyEmailVisible: true,
     };
   }
 
@@ -56,12 +55,31 @@ class SignIn extends React.PureComponent {
     });
   }
 
+  displayVerifyEmail = () => {
+    console.log('displayVerifyEmail');
+    this.setState({
+      isVerifyEmailVisible: true,
+    });
+  }
+
   fieldError = (field) => {
     if (field) {
       return (
         <Text style={styles.field_error}>
           { field }
         </Text>
+      );
+    }
+  }
+
+  displayVerifyEmailInfo = () => {
+    const { isVerifyEmailVisible } = this.state;
+    console.log(isVerifyEmailVisible);
+    if (isVerifyEmailVisible) {
+      return (
+        <View style={styles.info_box}>
+          <Text style={{ color: 'white', fontSize: 15, textAlign: 'center' }}>Almost done ! You just need to verify your email to become a Khalics member.</Text>
+        </View>
       );
     }
   }
@@ -181,6 +199,7 @@ class SignIn extends React.PureComponent {
                 />
               </View>
               <View style={styles.form_container}>
+                { this.displayVerifyEmailInfo() }
                 <FloatingLabelInput
                   label="Username"
                   focusColor="white"
@@ -222,7 +241,7 @@ class SignIn extends React.PureComponent {
                 />
                 <Text
                   style={[styles.small_text, { textAlign: 'center' }]}
-                  onPress={() => { navigation.navigate('SignUp'); }}
+                  onPress={() => { navigation.navigate('SignUp', { displayVerifyEmail: this.displayVerifyEmail }); }}
                 >
                   Don&apos;t have an account?
                   <Text style={{ fontWeight: 'bold' }}> Sign up</Text>

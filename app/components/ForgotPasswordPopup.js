@@ -31,11 +31,14 @@ class ForgotPasswordPopup extends React.PureComponent {
   }
 
   forgotPassword = () => {
-    // const { email } = this.state;
-    const email = 'arthur.dubedat@gmail.com';
+    const { email } = this.state;
     Auth.forgotPassword(email)
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   forgotPasswordSubmit = () => {

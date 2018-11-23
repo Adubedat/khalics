@@ -92,6 +92,7 @@ class SignUp extends React.PureComponent {
 
   signUp = () => {
     const { username, email, password } = this.state;
+    const { navigation } = this.props;
     if (this.signUpFrontError(username, email, password)) {
       return;
     }
@@ -100,7 +101,11 @@ class SignUp extends React.PureComponent {
       password,
       attributes: { email },
     })
-      .then(data => console.log(data))
+      .then((data) => {
+        navigation.state.params.displayVerifyEmail();
+        navigation.goBack();
+        console.log(data);
+      })
       .catch((err) => {
         this.signUpBackError(err);
         console.log('signUpBackError:', err);
