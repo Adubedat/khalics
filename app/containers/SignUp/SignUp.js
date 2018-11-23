@@ -63,7 +63,7 @@ class SignUp extends React.PureComponent {
       error.username = 'must be between between 1 and 32 characters';
     }
     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,256}$/.test(password)) {
-      error.password = 'must require at least one number, one uppercase letter,'
+      error.password = 'Your password must have at least one number, one uppercase letter,'
       + ' one lowercase letter and be between 8 and 256 characters';
     }
     if (!/^\S+@\S+[\.][0-9a-z]{1,}$/.test(email) //eslint-disable-line

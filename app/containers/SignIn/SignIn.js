@@ -30,7 +30,7 @@ class SignIn extends React.PureComponent {
       username: '',
       password: '',
       error: { username: '', password: '' },
-      isVerifyEmailVisible: true,
+      isVerifyEmailVisible: false,
       signIn: false, // TODO: keep ?
       name: '', // TODO: keep ?
     };
@@ -39,7 +39,7 @@ class SignIn extends React.PureComponent {
       username: 'test42',
       password: '',
       error: { username: '', password: '' },
-      isVerifyEmailVisible: true,
+      isVerifyEmailVisible: false,
     };
   }
 
@@ -56,7 +56,6 @@ class SignIn extends React.PureComponent {
   }
 
   displayVerifyEmail = () => {
-    console.log('displayVerifyEmail');
     this.setState({
       isVerifyEmailVisible: true,
     });
@@ -74,7 +73,6 @@ class SignIn extends React.PureComponent {
 
   displayVerifyEmailInfo = () => {
     const { isVerifyEmailVisible } = this.state;
-    console.log(isVerifyEmailVisible);
     if (isVerifyEmailVisible) {
       return (
         <View style={styles.info_box}>
@@ -85,13 +83,15 @@ class SignIn extends React.PureComponent {
   }
 
   signInError = (err) => {
+    console.log(err);
     const error = { username: '', password: '' };
     if (err.code === 'UserNotFoundException') {
       error.username = 'Incorrect username / email or email not verified';
     } else if (err.code === 'UserNotConfirmedException') {
       error.username = 'You have not verified your email. Please check your mailbox.';
-    } else if (err.code === 'NotAuthorizedException') {
-      error.username = err.message; error.password = err.message;
+    } else {
+      error.username = 'Incorrect username or password.';
+      error.password = 'Incorrect username or password.';
     }
     const state = { ...this.state, error };
     this.setState(state);
