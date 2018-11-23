@@ -189,6 +189,7 @@ class SignIn extends React.PureComponent {
                   label="Username or Email"
                   focusColor="white"
                   unfocusColor="#D3D3D3"
+                  autoCapitalize="none"
                   value={username}
                   error={error.username.length !== 0}
                   onChangeText={this.handleUsernameTextChange}
@@ -201,6 +202,7 @@ class SignIn extends React.PureComponent {
                   inputRef={(input) => { this.PasswordTextInput = input; }}
                   label="Password"
                   focusColor="white"
+                  autoCapitalize="none"
                   unfocusColor="#D3D3D3"
                   value={password}
                   error={error.password.length !== 0}
