@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "aws-amplify": "^1.1.10",
+    "aws-amplify-react-native": "^2.0.8",
     "aws-sdk": "^2.360.0",
     "expo": "^31.0.2",
     "react": "16.5.0",
