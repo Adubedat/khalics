@@ -11,6 +11,7 @@ import {
   Button,
   Icon,
 } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatingLabelInput from '../../components/FloatingLabelInput';
 import ForgotPasswordPopup from '../../components/ForgotPasswordPopup';
@@ -157,6 +158,7 @@ class SignIn extends React.PureComponent {
   }
 
   render() {
+    console.log(this.props);
     const { username, password, error } = this.state;
     const { navigation } = this.props;
     return (
@@ -262,4 +264,7 @@ class SignIn extends React.PureComponent {
   }
 }
 
-export default SignIn;
+const mapStateToProps = state => ({
+  isSignedIn: state.isSignedIn,
+});
+export default connect(mapStateToProps)(SignIn);

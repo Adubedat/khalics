@@ -84,7 +84,7 @@ class ForgotPasswordPopup extends React.PureComponent {
   }
 
   forgotPasswordSubmit = () => {
-    const { verifCode, newPassword, username } = this.state;
+    const { username, verifCode, newPassword } = this.state;
     Auth.forgotPasswordSubmit(username, verifCode, newPassword)
       .then(data => console.log(data))
       .catch((err) => {
