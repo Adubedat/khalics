@@ -9,6 +9,7 @@ class WorkoutList extends React.PureComponent {
 
   render() {
     return (
+      /**/
       <Text>Welcome to Khalics home page.</Text>
     );
   }
