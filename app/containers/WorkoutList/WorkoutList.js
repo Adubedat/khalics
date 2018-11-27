@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, StatusBar } from 'react-native';
-import { ListItem, Text, Divider } from 'react-native-elements';
+import StepIndicator from 'react-native-step-indicator';
+import { ListItem, Text } from 'react-native-elements';
 
 // do we add a warm up ?
 
@@ -19,10 +20,33 @@ const workouts = [
   },
 ];
 
+const stepIndicatorStyles = {
+  stepIndicatorSize: 30,
+  currentStepIndicatorSize: 40,
+  separatorStrokeWidth: 3,
+  currentStepStrokeWidth: 5,
+  stepStrokeCurrentColor: '#fe7013',
+  separatorFinishedColor: '#fe7013',
+  separatorUnFinishedColor: '#aaaaaa',
+  stepIndicatorFinishedColor: '#fe7013',
+  stepIndicatorUnFinishedColor: '#aaaaaa',
+  stepIndicatorCurrentColor: '#ffffff',
+  stepIndicatorLabelFontSize: 15,
+  currentStepIndicatorLabelFontSize: 15,
+  stepIndicatorLabelCurrentColor: '#000000',
+  stepIndicatorLabelFinishedColor: '#ffffff',
+  stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
+  labelColor: '#666666',
+  labelSize: 15,
+  currentStepLabelColor: '#fe7013',
+};
+
 class WorkoutList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      currentIndex: 0, //
+    };
   }
 
   listItemBorder = (index) => {
@@ -50,6 +74,16 @@ class WorkoutList extends React.PureComponent {
     // '#EB241A' -> red
     return (
       <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#3c3c3c' }}>
+        <View>
+          <StepIndicator
+            customStyles={stepIndicatorStyles}
+            stepCount={6}
+            direction="vertical"
+            currentPosition={this.state.currentIndex}
+            labels={workouts.map(item => item.title)}
+          />
+        </View>
+
         <StatusBar barStyle="light-content" />
         <View style={{ flex: 1, marginTop: 50, alignItems: 'center' }}>
           <Text h2 style={{ color: 'white' }}>Workouts</Text>
