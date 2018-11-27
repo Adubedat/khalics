@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-// import { withAuthenticator } from 'aws-amplify-react-native'; //TODO: delete if not used
 import { Auth } from 'aws-amplify';
 import * as Expo from 'expo';
 import { createStore } from 'redux';
@@ -38,7 +37,9 @@ class App extends React.PureComponent {
       SignIn: { screen: SignIn },
       SignUp: { screen: SignUp },
     });
+    this.state.loggedIn = true; // test
     const { loggedIn } = this.state;
+
     if (loggedIn) {
       return (
         <Provider store={this.store}>
@@ -54,56 +55,4 @@ class App extends React.PureComponent {
   }
 }
 
-// const App = () => {
-// console.log(user);
-
-// try {
-//   await Auth.currentAuthenticatedUser();
-//   return (
-//     <Provider store={store}>
-//       <WorkoutList />
-//     </Provider>
-//   );
-// } catch (err) {
-//   return (
-//     <Provider store={store}>
-//       <Navigation />
-//     </Provider>
-//   );
-// }
-// const home = (
-//   <Provider store={store}>
-//     <Navigation />
-//   </Provider>
-// );
-// return home;
-// await Auth.currentAuthenticatedUser()
-//   .then((user) => {
-//     home = (
-//       <Provider store={store}>
-//         <WorkoutList />
-//       </Provider>
-//     );
-//   })
-//   .catch((err) => {
-//   home = (
-//     <Provider store={store}>
-//       <Navigation />
-//     </Provider>
-//   );
-// });
-// console.log(home);
-
-// return { home };
-// console.log('END', home);
-
-// return (
-//   <Provider store={store}>
-//     <Navigation />
-//   </Provider>
-// );
-// return home;
-// };
-
 Expo.registerRootComponent(App);
-// export default withAuthenticator(App);
