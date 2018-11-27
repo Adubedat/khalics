@@ -102,7 +102,8 @@ class SignIn extends React.PureComponent {
     const { username, password } = this.state;
     Auth.signIn(username, password)
       .then((user) => {
-        console.log(user);
+        const { screenProps } = this.props;
+        screenProps.session();
       })
       .catch((err) => {
         this.signInError(err);
@@ -158,7 +159,6 @@ class SignIn extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props);
     const { username, password, error } = this.state;
     const { navigation } = this.props;
     return (

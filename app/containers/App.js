@@ -17,35 +17,37 @@ class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      session: null,
+      loggedIn: false,
     };
+    this.store = createStore(toggleSignIn);
+  }
+
+  componentDidMount() {
+    if (Auth.user) {
+      this.setState({ loggedIn: true });
+    }
   }
 
   authStateChange() {
-    this.setState({ session: Auth.user });
+    const { loggedIn } = this.state;
+    this.setState({ loggedIn: !loggedIn });
   }
 
   render() {
-    const store = createStore(toggleSignIn);
     const Navigation = createStackNavigator({
       SignIn: { screen: SignIn },
       SignUp: { screen: SignUp },
     });
-    let loggedIn = false;
-    console.log(Auth.user);
-    if (Auth.user) {
-      const { user: { signInUserSession: { accessToken: { payload: { exp, iat } } } } } = Auth;
-      if (iat < exp) loggedIn = true;
-    }
+    const { loggedIn } = this.state;
     if (loggedIn) {
       return (
-        <Provider store={store}>
+        <Provider store={this.store}>
           <WorkoutList session={() => { this.authStateChange(); }} />
         </Provider>
       );
     }
     return (
-      <Provider store={store}>
+      <Provider store={this.store}>
         <Navigation screenProps={{ session: () => { this.authStateChange(); } }} />
       </Provider>
     );
