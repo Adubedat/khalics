@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { ListItem, Text } from 'react-native-elements';
+import { View, FlatList, StatusBar } from 'react-native';
+import { ListItem, Text, Divider } from 'react-native-elements';
+
+// do we add a warm up ?
 
 const workouts = [
   {
@@ -11,6 +13,10 @@ const workouts = [
     name: 'Upper body',
     description: 'push up, chin up, l-sit',
   },
+  {
+    name: 'Lower body',
+    description: 'squat, deadlift, calves raise',
+  },
 ];
 
 class WorkoutList extends React.PureComponent {
@@ -19,16 +25,24 @@ class WorkoutList extends React.PureComponent {
     this.state = {};
   }
 
+  listItemBorder = (index) => {
+    if (index !== workouts.length - 1) {
+      return {
+        backgroundColor: '#3c3c3c', borderBottomWidth: 1, borderBottomColor: 'white',
+      };
+    }
+    return { backgroundColor: '#3c3c3c' };
+  }
+
   keyExtractor = (item, index) => index;
 
-  renderItem = ({ item }) => (
+  renderItem = ({ item, index }) => (
     <ListItem
       title={item.name}
-      containerStyle={{ backgroundColor: '#3c3c3c' }}
+      containerStyle={this.listItemBorder(index)}
       titleStyle={{ color: 'white', fontWeight: 'bold' }}
       subtitleStyle={{ color: 'white' }}
       subtitle={item.description}
-      topDivider
     />
   );
 
@@ -36,6 +50,7 @@ class WorkoutList extends React.PureComponent {
     // '#EB241A' -> red
     return (
       <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#3c3c3c' }}>
+        <StatusBar barStyle="light-content" />
         <View style={{ flex: 1, marginTop: 50, alignItems: 'center' }}>
           <Text h2 style={{ color: 'white' }}>Workouts</Text>
         </View>
