@@ -13,6 +13,7 @@
     "aws-amplify-react-native": "^2.0.8",
     "aws-sdk": "^2.360.0",
     "expo": "^31.0.2",
+    "prop-types": "^15.6.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-elements": "^1.0.0-beta7",
