@@ -39,7 +39,7 @@ class App extends React.PureComponent {
     });
     const { loggedIn } = this.state;
 
-    if (loggedIn) {
+    if (!loggedIn) {
       return (
         <Provider store={this.store}>
           <MainTabNavigator screenProps={{ session: () => { this.authStateChange(); } }} />
