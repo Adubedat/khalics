@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 import * as Expo from 'expo';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import WorkoutList from './WorkoutList/WorkoutList';
+import MainTabNavigator from '../components/Navigation';
 import SignUp from './SignUp/SignUp';
 import SignIn from './SignIn/SignIn';
 import toggleSignIn from '../reducers/signInReducer';
@@ -33,23 +33,22 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const Navigation = createStackNavigator({
+    const SignInStackNavigation = createStackNavigator({
       SignIn: { screen: SignIn },
       SignUp: { screen: SignUp },
     });
-    this.state.loggedIn = true; // test
     const { loggedIn } = this.state;
 
     if (loggedIn) {
       return (
         <Provider store={this.store}>
-          <WorkoutList session={() => { this.authStateChange(); }} />
+          <MainTabNavigator screenProps={{ session: () => { this.authStateChange(); } }} />
         </Provider>
       );
     }
     return (
       <Provider store={this.store}>
-        <Navigation screenProps={{ session: () => { this.authStateChange(); } }} />
+        <SignInStackNavigation screenProps={{ session: () => { this.authStateChange(); } }} />
       </Provider>
     );
   }
