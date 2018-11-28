@@ -1,5 +1,9 @@
 import React from 'react';
-import { Text } from 'react-native';
+import {
+  ScrollView, View, Text, StatusBar, SafeAreaView,
+} from 'react-native';
+import ProgressBar from '../../components/ProgressBar';
+import styles from './styles';
 
 class Profile extends React.PureComponent {
   constructor(props) {
@@ -9,7 +13,38 @@ class Profile extends React.PureComponent {
 
   render() {
     return (
-      <Text>Welcome to the profile page.</Text>
+      <ScrollView
+        style={{ backgroundColor: '#383838' }}
+        contentContainerStyle={{ flexGrow: 1, backgroundColor: '#181818' }}
+      >
+        <SafeAreaView style={{ flex: 1 }}>
+          <StatusBar barStyle="light-content" />
+          <View style={styles.main_container}>
+
+            <View style={styles.header_container}>
+              <Text style={styles.username}>Username</Text>
+              <ProgressBar
+                height={30}
+                borderRadius={15}
+                style={{ width: '80%' }}
+                fillColor="#181818"
+                barColor="#D00000"
+                progress={0.42}
+                // wrapStyle={styles.main_progressbar}
+                // fillStyle={styles.main_progressbar}
+              // barStyle={styles.main_progressbar}
+              >
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.bar_text}>Level 8 - 42%</Text>
+                </View>
+              </ProgressBar>
+            </View>
+            <View style={styles.content_container}>
+              <Text>Statistics</Text>
+            </View>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
     );
   }
 }
