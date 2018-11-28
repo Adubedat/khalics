@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     margin: 15,
     elevation: 2,
     zIndex: 1,
+    borderRadius: 1,
   },
   username: {
     fontSize: 30,

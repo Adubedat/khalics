@@ -26,15 +26,13 @@ class Profile extends React.PureComponent {
               <ProgressBar
                 height={30}
                 borderRadius={15}
+                borderWidth={0}
                 style={{ width: '80%' }}
                 fillColor="#181818"
                 barColor="#D00000"
                 progress={0.42}
-                // wrapStyle={styles.main_progressbar}
-                // fillStyle={styles.main_progressbar}
-              // barStyle={styles.main_progressbar}
               >
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                   <Text style={styles.bar_text}>Level 8 - 42%</Text>
                 </View>
               </ProgressBar>
