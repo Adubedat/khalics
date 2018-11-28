@@ -1,9 +1,30 @@
-import React from 'react';
-import { View, FlatList, StatusBar } from 'react-native';
+import React, { Component } from 'react';
+import {
+  View, StyleSheet, FlatList, StatusBar,
+} from 'react-native';
+import { Text } from 'react-native-elements';
 import StepIndicator from 'react-native-step-indicator';
-import { ListItem, Text } from 'react-native-elements';
 
-// do we add a warm up ?
+const stepIndicatorStyles = {
+  stepIndicatorSize: 42,
+  currentStepIndicatorSize: 45,
+  separatorStrokeWidth: 4,
+  currentStepStrokeWidth: 6,
+  stepStrokeCurrentColor: '#fe7013',
+  separatorFinishedColor: '#fe7013',
+  separatorUnFinishedColor: '#aaaaaa',
+  stepIndicatorFinishedColor: '#fe7013',
+  stepIndicatorUnFinishedColor: '#aaaaaa',
+  stepIndicatorCurrentColor: '#ffffff',
+  stepIndicatorLabelFontSize: 20,
+  currentStepIndicatorLabelFontSize: 20,
+  stepIndicatorLabelCurrentColor: '#000000',
+  stepIndicatorLabelFinishedColor: '#ffffff',
+  stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
+  labelColor: '#666666',
+  labelSize: 30,
+  currentStepLabelColor: '#fe7013',
+};
 
 const workouts = [
   {
@@ -20,84 +41,95 @@ const workouts = [
   },
 ];
 
-const stepIndicatorStyles = {
-  stepIndicatorSize: 30,
-  currentStepIndicatorSize: 40,
-  separatorStrokeWidth: 3,
-  currentStepStrokeWidth: 5,
-  stepStrokeCurrentColor: '#fe7013',
-  separatorFinishedColor: '#fe7013',
-  separatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorFinishedColor: '#fe7013',
-  stepIndicatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorCurrentColor: '#ffffff',
-  stepIndicatorLabelFontSize: 15,
-  currentStepIndicatorLabelFontSize: 15,
-  stepIndicatorLabelCurrentColor: '#000000',
-  stepIndicatorLabelFinishedColor: '#ffffff',
-  stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
-  labelColor: '#666666',
-  labelSize: 15,
-  currentStepLabelColor: '#fe7013',
-};
+export default class VerticalStepIndicator extends Component {
+  constructor() {
+    super();
 
-class WorkoutList extends React.PureComponent {
-  constructor(props) {
-    super(props);
     this.state = {
-      currentIndex: 0, //
+      currentWorkout: 0,
     };
+    this.viewabilityConfig = { itemVisiblePercentThreshold: 40 };
   }
 
-  listItemBorder = (index) => {
-    if (index !== workouts.length - 1) {
-      return {
-        backgroundColor: '#3c3c3c', borderBottomWidth: 1, borderBottomColor: 'white',
-      };
+  renderPage = (rowData) => {
+    const item = rowData.item;
+    return (
+      <View style={styles.rowItem}>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.description}>{item.description}</Text>
+      </View>
+    );
+  }
+
+  onViewableItemsChanged = ({ viewableItems, changed }) => {
+    const visibleItemsCount = viewableItems.length;
+    if (visibleItemsCount !== 0) {
+      this.setState({ currentWorkout: viewableItems[visibleItemsCount - 1].index });
     }
-    return { backgroundColor: '#3c3c3c' };
   }
-
-  keyExtractor = (item, index) => index;
-
-  renderItem = ({ item, index }) => (
-    <ListItem
-      title={item.name}
-      containerStyle={this.listItemBorder(index)}
-      titleStyle={{ color: 'white', fontWeight: 'bold' }}
-      subtitleStyle={{ color: 'white' }}
-      subtitle={item.description}
-    />
-  );
 
   render() {
-    // '#EB241A' -> red
     return (
-      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#3c3c3c' }}>
-        <View>
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <View style={styles.mainTitle}>
+          <Text h2 style={{ color: 'white', textAlign: 'center' }}>Workouts</Text>
+        </View>
+        <View style={styles.stepIndicator}>
           <StepIndicator
             customStyles={stepIndicatorStyles}
-            stepCount={6}
+            stepCount={3}
             direction="vertical"
-            currentPosition={this.state.currentIndex}
-            labels={workouts.map(item => item.title)}
+            currentPosition={this.state.currentWorkout}
+            labels={workouts.map(item => item.name)}
           />
         </View>
-
-        <StatusBar barStyle="light-content" />
-        <View style={{ flex: 1, marginTop: 50, alignItems: 'center' }}>
-          <Text h2 style={{ color: 'white' }}>Workouts</Text>
-        </View>
-        <View style={{ flex: 6 }}>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={workouts}
-            renderItem={this.renderItem}
-          />
-        </View>
+        {/* <FlatList
+          style={{ flexGrow: 1 }}
+          data={workouts}
+          renderItem={this.renderPage}
+          onViewableItemsChanged={this.onViewableItemsChanged}
+          viewabilityConfig={this.viewabilityConfig}
+        /> */}
       </View>
     );
   }
 }
 
-export default WorkoutList;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#3C3C3C',
+  },
+  mainTitle: {
+    marginTop: 50,
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  stepIndicator: {
+    paddingLeft: 42,
+    flexDirection: 'row',
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // backgroundColor: 'red',
+  },
+  rowItem: {
+    flex: 3,
+    paddingVertical: 20,
+  },
+  name: {
+    flex: 1,
+    fontSize: 20,
+    color: '#333333',
+    paddingVertical: 16,
+    fontWeight: '600',
+  },
+  description: {
+    flex: 1,
+    fontSize: 15,
+    color: '#606060',
+    lineHeight: 24,
+    marginRight: 8,
+  },
+});
