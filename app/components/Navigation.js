@@ -1,28 +1,30 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { createStackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import WorkoutList from '../containers/WorkoutList/WorkoutList';
 import WorkoutDetails from '../containers/WorkoutDetails/WorkoutDetails';
 import Profile from '../containers/Profile/Profile';
 import Settings from '../containers/Settings/Settings';
 
-const styles = StyleSheet.create({
-  labelStyle: {
-    color: 'white',
-    textAlign: 'center',
-  },
-});
-
 const WorkoutStackNavigator = createStackNavigator({
   WorkoutList,
   WorkoutDetails,
 });
 
-const MainTabNavigator = createBottomTabNavigator(
+const SettingsStackNavigator = createStackNavigator({
+  Settings: {
+    screen: Settings,
+    navigationOptions: () => ({
+      title: 'Settings',
+    }),
+  },
+});
+
+const MainTabNavigator = createMaterialBottomTabNavigator(
   {
     Settings: {
-      screen: Settings,
+      screen: SettingsStackNavigator,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon
@@ -31,12 +33,12 @@ const MainTabNavigator = createBottomTabNavigator(
             color={tintColor}
           />
         ),
-        tabBarLabel: ({ focused }) => (focused ? <Text style={styles.labelStyle}>Settings</Text> : null),
       },
     },
     Workout: {
       screen: WorkoutStackNavigator,
       navigationOptions: {
+        title: 'Workout',
         tabBarIcon: ({ tintColor }) => (
           <Icon
             name="dumbbell"
@@ -44,7 +46,6 @@ const MainTabNavigator = createBottomTabNavigator(
             color={tintColor}
           />
         ),
-        tabBarLabel: ({ focused }) => (focused ? <Text style={styles.labelStyle}>Workout</Text> : null),
       },
     },
     Profile: {
@@ -57,20 +58,16 @@ const MainTabNavigator = createBottomTabNavigator(
             color={tintColor}
           />
         ),
-        tabBarLabel: ({ focused }) => (focused ? <Text style={styles.labelStyle}>Profile</Text> : null),
       },
     },
   },
   {
-    tabBarOptions: {
-      showLabel: true,
-      showIcon: true,
-      activeTintColor: 'white',
-      inactiveTintColor: '#D3D3D3',
-      style: { backgroundColor: '#202020' },
-      labelStyle: { color: 'white' },
-    },
-    animationEnabled: true,
+    initialRouteName: 'Workout',
+    shifting: true,
+    labeled: true,
+    activeColor: 'white',
+    inactiveColor: '#808080',
+    barStyle: { backgroundColor: '#202020' },
   },
 );
 
