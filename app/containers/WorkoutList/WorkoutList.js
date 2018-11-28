@@ -1,31 +1,10 @@
 import React, { Component } from 'react';
-import {
-  View, StyleSheet, FlatList, StatusBar,
-} from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { Text } from 'react-native-elements';
-import StepIndicator from 'react-native-step-indicator';
+import StepIndicator from '../../components/StepIndicator';
+import { styles, stepIndicatorStyles } from './styles';
 
-const stepIndicatorStyles = {
-  stepIndicatorSize: 42,
-  currentStepIndicatorSize: 45,
-  separatorStrokeWidth: 4,
-  currentStepStrokeWidth: 6,
-  stepStrokeCurrentColor: '#fe7013',
-  separatorFinishedColor: '#fe7013',
-  separatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorFinishedColor: '#fe7013',
-  stepIndicatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorCurrentColor: '#ffffff',
-  stepIndicatorLabelFontSize: 20,
-  currentStepIndicatorLabelFontSize: 20,
-  stepIndicatorLabelCurrentColor: '#000000',
-  stepIndicatorLabelFinishedColor: '#ffffff',
-  stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
-  labelColor: '#666666',
-  labelSize: 30,
-  currentStepLabelColor: '#fe7013',
-};
-
+// TODO: fetch workouts from DB or from generate workout
 const workouts = [
   {
     name: 'Full body',
@@ -48,27 +27,10 @@ export default class VerticalStepIndicator extends Component {
     this.state = {
       currentWorkout: 0,
     };
-    this.viewabilityConfig = { itemVisiblePercentThreshold: 40 };
-  }
-
-  renderPage = (rowData) => {
-    const item = rowData.item;
-    return (
-      <View style={styles.rowItem}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-      </View>
-    );
-  }
-
-  onViewableItemsChanged = ({ viewableItems, changed }) => {
-    const visibleItemsCount = viewableItems.length;
-    if (visibleItemsCount !== 0) {
-      this.setState({ currentWorkout: viewableItems[visibleItemsCount - 1].index });
-    }
   }
 
   render() {
+    const { currentWorkout } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -80,56 +42,12 @@ export default class VerticalStepIndicator extends Component {
             customStyles={stepIndicatorStyles}
             stepCount={3}
             direction="vertical"
-            currentPosition={this.state.currentWorkout}
+            currentPosition={currentWorkout}
             labels={workouts.map(item => item.name)}
+            descriptions={workouts.map(item => item.description)}
           />
         </View>
-        {/* <FlatList
-          style={{ flexGrow: 1 }}
-          data={workouts}
-          renderItem={this.renderPage}
-          onViewableItemsChanged={this.onViewableItemsChanged}
-          viewabilityConfig={this.viewabilityConfig}
-        /> */}
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3C3C3C',
-  },
-  mainTitle: {
-    marginTop: 50,
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  stepIndicator: {
-    paddingLeft: 42,
-    flexDirection: 'row',
-    flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: 'red',
-  },
-  rowItem: {
-    flex: 3,
-    paddingVertical: 20,
-  },
-  name: {
-    flex: 1,
-    fontSize: 20,
-    color: '#333333',
-    paddingVertical: 16,
-    fontWeight: '600',
-  },
-  description: {
-    flex: 1,
-    fontSize: 15,
-    color: '#606060',
-    lineHeight: 24,
-    marginRight: 8,
-  },
-});
