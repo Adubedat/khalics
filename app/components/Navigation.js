@@ -38,7 +38,6 @@ const MainTabNavigator = createMaterialBottomTabNavigator(
     Workout: {
       screen: WorkoutStackNavigator,
       navigationOptions: {
-        title: 'Workout',
         tabBarIcon: ({ tintColor }) => (
           <Icon
             name="dumbbell"
