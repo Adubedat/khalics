@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import dark from '../../theme';
+import theme from '../../theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -37,10 +37,10 @@ export const stepIndicatorStyles = {
   currentStepIndicatorSize: 45,
   separatorStrokeWidth: 4,
   currentStepStrokeWidth: 6,
-  stepStrokeCurrentColor: dark.red,
-  separatorFinishedColor: dark.red,
+  stepStrokeCurrentColor: theme.red,
+  separatorFinishedColor: theme.red,
   separatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorFinishedColor: dark.red,
+  stepIndicatorFinishedColor: theme.red,
   stepIndicatorUnFinishedColor: '#aaaaaa',
   stepIndicatorCurrentColor: '#ffffff',
   stepIndicatorLabelFontSize: 20,
