@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { View } from 'react-native';
 
 class Settings extends React.PureComponent {
   constructor(props) {
@@ -9,7 +9,7 @@ class Settings extends React.PureComponent {
 
   render() {
     return (
-      <Text>Welcome to the Settings page.</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />
     );
   }
 }
