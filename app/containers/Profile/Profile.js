@@ -3,7 +3,7 @@ import {
   ScrollView, View, Text, StatusBar, SafeAreaView, TouchableHighlight, StyleSheet,
 } from 'react-native';
 import {
-  LineChart, Grid, Xaxis, Yaxis,
+  LineChart, Grid, XAxis, YAxis,
 } from 'react-native-svg-charts';
 import ProgressBar from '../../components/ProgressBar';
 import styles from './styles';
@@ -12,7 +12,7 @@ class Profile extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isFLactive: false,
+      isFLactive: true,
       isBLactive: false,
       isHDSactive: false,
       isLSITactive: false,
@@ -107,7 +107,7 @@ class Profile extends React.PureComponent {
       value: 7.85,
     }, {
       name: 'PST',
-      value: 9.48,
+      value: 9.98,
     }, {
       name: 'MU',
       value: 1.45,
@@ -139,13 +139,12 @@ class Profile extends React.PureComponent {
           style={StyleSheet.absoluteFill}
           data={data}
           svg={{ stroke: color, strokeWidth: 2 }}
+          contentInset={{ top: 10, bottom: 20 }}
           yMin={0}
           yMax={10}
           xMin={0}
           xMax={8}
-        >
-          <Grid />
-        </LineChart>
+        />
       );
     }
   }
@@ -212,35 +211,51 @@ class Profile extends React.PureComponent {
       isPLKactive,
     } = this.state;
     return (
-      <View style={{ flex: 1 }}>
-        <ScrollView
-          style={{ backgroundColor: '#282828' }}
-          contentContainerStyle={{ flexGrow: 1, backgroundColor: '#181818' }}
-        >
-          <SafeAreaView style={{ flex: 1 }}>
-            <StatusBar barStyle="light-content" />
-            <View style={styles.main_container}>
-
-              <View style={styles.header_container}>
-                <Text style={styles.username}>Username</Text>
-                <ProgressBar
-                  height={30}
-                  borderRadius={15}
-                  borderWidth={0}
-                  style={{ width: '80%' }}
-                  fillColor="#181818"
-                  barColor="#D00000"
-                  progress={0.42}
-                >
-                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.bar_text}>Level 8 - 42%</Text>
-                  </View>
-                </ProgressBar>
-              </View>
-              <View style={styles.content_container}>
-                <View style={styles.chart_container}>
-                  <View style={styles.linechart_container}>
-                    <Grid style={{ flex: 1 }} />
+      <View style={{ flex: 1, backgroundColor: '#181818' }}>
+        <StatusBar barStyle="light-content" />
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.main_container}
+          >
+            <View style={styles.header_container}>
+              <Text style={styles.username}>Username</Text>
+              <ProgressBar
+                height={30}
+                borderRadius={15}
+                borderWidth={0}
+                style={{ width: '80%' }}
+                fillColor="#181818"
+                barColor="#D00000"
+                progress={0.42}
+              >
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.bar_text}>Level 8 - 42%</Text>
+                </View>
+              </ProgressBar>
+            </View>
+            <View style={styles.content_container}>
+              <View style={styles.chart_container}>
+                <View style={styles.linechart_container}>
+                  <YAxis
+                    data={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                    style={{ marginBottom: -10 }}
+                    contentInset={{ top: 10, bottom: 33 }}
+                    svg={{ fontSize: 12, fill: 'gray' }}
+                  />
+                  <View style={{ flex: 1, marginLeft: 10 }}>
+                    <LineChart
+                      style={{ flex: 1 }}
+                      data={[0]}
+                      svg={{ stroke: '', strokeWidth: 0 }}
+                      contentInset={{ top: 10, bottom: 10 }}
+                      yMin={0}
+                      yMax={10}
+                      xMin={0}
+                      xMax={8}
+                    >
+                      <Grid />
+                    </LineChart>
                     {this.displayLineChart('FL', isFLactive, '#64DD17')}
                     {this.displayLineChart('BL', isBLactive, '#18FFFF')}
                     {this.displayLineChart('HDS', isHDSactive, '#FF9800')}
@@ -249,31 +264,34 @@ class Profile extends React.PureComponent {
                     {this.displayLineChart('PST', isPSTactive, 'white')}
                     {this.displayLineChart('HF', isHFactive, '#304FFE')}
                     {this.displayLineChart('PLK', isPLKactive, '#EC407A')}
-                    {/* <Xaxis
-                      style={{ marginHorizontal: -10 }}
+                    <XAxis
                       data={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
                       formatLabel={(value, index) => index}
-                      contentInset={{ left: 10, right: 10 }}
-                      svg={{ fontSize: 10, fill: 'black' }}
-                    >
-                      <Grid />
-                    </Xaxis> */}
+                      style={{ marginHorizontal: -10 }}
+                      contentInset={{ top: 50, left: 10, right: 10 }}
+                      svg={{ fontSize: 12, fill: 'gray' }}
+                    />
                   </View>
-                  <View style={styles.button_chart_container}>
-                    {this.displayChartButton('FL', isFLactive)}
-                    {this.displayChartButton('BL', isBLactive)}
-                    {this.displayChartButton('HDS', isHDSactive)}
-                    {this.displayChartButton('LSIT', isLSITactive)}
-                    {this.displayChartButton('MU', isMUactive)}
-                    {this.displayChartButton('PST', isPSTactive)}
-                    {this.displayChartButton('HF', isHFactive)}
-                    {this.displayChartButton('PLK', isPLKactive)}
-                  </View>
+                </View>
+                <View style={styles.button_chart_container}>
+                  {this.displayChartButton('FL', isFLactive)}
+                  {this.displayChartButton('BL', isBLactive)}
+                  {this.displayChartButton('HDS', isHDSactive)}
+                  {this.displayChartButton('LSIT', isLSITactive)}
+                  {this.displayChartButton('MU', isMUactive)}
+                  {this.displayChartButton('PST', isPSTactive)}
+                  {this.displayChartButton('HF', isHFactive)}
+                  <TouchableHighlight
+                    style={[styles.chart_button, { backgroundColor: isPLKactive ? '#181818' : '#383838', borderRightWidth: 0 }]}
+                    onPress={() => this.handleChartButton('PLK')}
+                  >
+                    <Text style={[{ color: 'white' }, styles.button_text]}>PLK</Text>
+                  </TouchableHighlight>
                 </View>
               </View>
             </View>
-          </SafeAreaView>
-        </ScrollView>
+          </ScrollView>
+        </SafeAreaView>
       </View>
     );
   }

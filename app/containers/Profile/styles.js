@@ -2,12 +2,13 @@ import { StyleSheet, Platform, StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
   main_container: {
-    flex: 1,
+    flexGrow: 1,
     marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
     backgroundColor: '#282828',
+    justifyContent: 'space-around',
   },
   header_container: {
-    height: '33%',
+    height: 180,
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -36,26 +37,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chart_container: {
-    height: '70%',
+    height: 250,
     width: '100%',
+    marginBottom: 20,
     backgroundColor: '#282828',
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    elevation: 2,
-    borderRadius: 1,
-    zIndex: 1,
   },
   linechart_container: {
-    flex: 15,
-    marginTop: 10,
-    marginRight: 10,
-    marginBottom: 30,
-    marginLeft: 30,
+    flex: 6,
+    flexDirection: 'row',
+    padding: 10,
   },
   button_chart_container: {
     flex: 1,
@@ -66,6 +56,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    elevation: 2,
+    borderRadius: 1,
+    zIndex: 1,
+    borderRightWidth: 1,
+    borderRightColor: 'gray',
   },
   button_text: {
     fontWeight: 'bold',
