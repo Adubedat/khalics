@@ -9,27 +9,30 @@ export default class WorkoutList extends Component {
   constructor() {
     super();
 
-    this.test = true; // to delete
+    this.testFetch = false; // to test fetching, to delete
     this.state = {
       currentWorkout: 0,
       workouts: [],
+      fetch: false, // true when all data has been fetched
+      // because componentWillUpdate is deprecated and should never be used
     };
   }
 
   async componentDidMount() {
     const getWorkoutUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/workout/get';
-    if (this.test) {
+    if (this.testFetch) {
       // below is example normally get workouts ids from user data
       const res = await fetch(`${getWorkoutUrl}?ids=["test", "test2"]`);
-      const workouts = await res.json();
-      const state = { ...this.state, workouts };
+      const resJson = await res.json();
+      const state = { ...this.state, workouts: resJson.workouts, fetch: true };
       this.setState(state);
     }
   }
 
   render() {
-    const { currentWorkout, workouts } = this.state;
-    console.log('workouts', workouts);
+    this.state.fetch = true; // to delete
+    const { currentWorkout, workouts, fetch } = this.state;
+    if (!fetch) { return <View />; } // loading page ?
     if (workouts.length === 0) {
       return (
         <TestMySkills />
