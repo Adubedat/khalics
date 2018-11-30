@@ -16,13 +16,35 @@ export default class TestMySkills extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View>
-          <Text h2 style={{ color: 'white', textAlign: 'center' }}>
+          <Text h2 style={styles.mainTitle}>
             Test my skills
           </Text>
-          <Button
-            large
-            title="Test my skills"
-          />
+          <Text style={styles.presentationTxt}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Praesent tempor nisi quis erat mattis pretium.
+          Suspendisse placerat fringilla sapien sed venenatis.
+          Sed blandit id nisi quis hendrerit.
+            {'\n\n'}
+          Morbi ut urna venenatis, dictum tortor eget, consequat ante.
+          Suspendisse id convallis mauris, in fermentum urna. Etiam at ornare orci.
+          Praesent arcu massa, eleifend quis turpis in, auctor consequat lectus.
+          Etiam ornare, massa vitae iaculis mattis, mi velit porta libero, et egestas tellus ex cursus sem.
+          Nam vel pulvinar eros, aliquet aliquam nunc.
+            {'\n\n'}
+          Ut vel tellus elementum, efficitur felis quis, finibus arcu.
+          Maecenas efficitur nulla urna, fermentum vehicula dolor ornare at.
+          Duis posuere nisl tincidunt tortor venenatis, non venenatis dolor porta.
+          Quisque sit amet suscipit nisi
+          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <Button
+              raised
+              containerStyle={{ flex: 0.8 }}
+              buttonStyle={{ backgroundColor: 'white' }}
+              titleStyle={{ color: theme.darkGray3, fontWeight: 'bold', fontSize: 25 }}
+              title="Test my skills"
+            />
+          </View>
         </View>
       </View>
     );
