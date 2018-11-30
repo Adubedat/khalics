@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-    backgroundColor: '#383838',
+    backgroundColor: '#282828',
   },
   header_container: {
     height: '33%',
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOffset: {
       height: 2,
-      width: 2,
+      width: 0,
     },
     elevation: 2,
     zIndex: 1,
@@ -36,36 +36,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chart_container: {
-    height: '60%',
-    width: '95%',
+    height: '70%',
+    width: '100%',
     backgroundColor: '#282828',
     shadowColor: 'black',
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.8,
     shadowRadius: 2,
     shadowOffset: {
-      height: 2,
-      width: 2,
+      height: 1,
+      width: 0,
     },
     elevation: 2,
     borderRadius: 1,
+    zIndex: 1,
   },
   linechart_container: {
-    flex: 8,
+    flex: 15,
+    marginTop: 10,
+    marginRight: 10,
+    marginBottom: 30,
+    marginLeft: 30,
   },
   button_chart_container: {
-    height: 30,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
   chart_button: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#181818',
     justifyContent: 'center',
     alignItems: 'center',
   },
   button_text: {
     fontWeight: 'bold',
+    fontSize: 13,
+    marginTop: 5,
+    marginBottom: 5,
   },
 });
 
