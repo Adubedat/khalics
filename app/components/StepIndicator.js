@@ -39,7 +39,6 @@ export default class StepIndicator extends PureComponent {
       currentStepLabelColor: '#4aae4f',
     };
     const customStyles = Object.assign(defaultStyles, props.customStyles);
-    console.log(customStyles);
 
     this.state = {
       width: 0,

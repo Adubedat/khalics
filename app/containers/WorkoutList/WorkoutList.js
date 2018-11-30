@@ -3,6 +3,7 @@ import { View, StatusBar } from 'react-native';
 import { Text } from 'react-native-elements';
 import StepIndicator from '../../components/StepIndicator';
 import { styles, stepIndicatorStyles } from './styles';
+import TestMySkills from '../testMySkills/testMySkills';
 
 // TODO: fetch workouts from DB or from generate workout
 const workouts = [
@@ -20,17 +21,23 @@ const workouts = [
   },
 ];
 
-export default class VerticalStepIndicator extends Component {
+export default class WorkoutList extends Component {
   constructor() {
     super();
 
     this.state = {
       currentWorkout: 0,
+      testSkill: true,
     };
   }
 
   render() {
-    const { currentWorkout } = this.state;
+    const { currentWorkout, testSkill } = this.state;
+    if (testSkill) {
+      return (
+        <TestMySkills />
+      );
+    }
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
