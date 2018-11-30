@@ -19,12 +19,17 @@ export default class TestMySkills extends Component {
           <Text h2 style={styles.mainTitle}>
             Test my skills
           </Text>
-          <Text style={styles.presentationTxt}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Praesent tempor nisi quis erat mattis pretium.
-          Suspendisse placerat fringilla sapien sed venenatis.
-          Sed blandit id nisi quis hendrerit.
+          <Text h4 style={styles.presentationTxt}>
+            In Khalics we will generate a workout that fit you.
             {'\n\n'}
+            We use powerful algorithm to reach this goal.
+            {'\n\n'}
+            We first need to test you, then we will be able to evaluate your skill
+            and generate for you a workout.
+            {'\n\n'}
+            The aim of the workout is to improve your skill towards mastering
+            calisthenics figures.
+            {/* {'\n\n'}
           Morbi ut urna venenatis, dictum tortor eget, consequat ante.
           Suspendisse id convallis mauris, in fermentum urna. Etiam at ornare orci.
           Praesent arcu massa, eleifend quis turpis in, auctor consequat lectus.
@@ -34,7 +39,7 @@ export default class TestMySkills extends Component {
           Ut vel tellus elementum, efficitur felis quis, finibus arcu.
           Maecenas efficitur nulla urna, fermentum vehicula dolor ornare at.
           Duis posuere nisl tincidunt tortor venenatis, non venenatis dolor porta.
-          Quisque sit amet suscipit nisi
+          Quisque sit amet suscipit nisi */}
           </Text>
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Button
