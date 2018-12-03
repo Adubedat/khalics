@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ScrollView, View, Text, StatusBar, SafeAreaView, TouchableHighlight, StyleSheet,
+  ScrollView, View, Text, StatusBar, SafeAreaView, TouchableHighlight, StyleSheet, Dimensions,
 } from 'react-native';
 import {
   LineChart, Grid, XAxis, YAxis,
@@ -16,11 +16,12 @@ class Profile extends React.PureComponent {
       isFLactive: true,
       isBLactive: false,
       isHDSactive: false,
-      isLSITactive: false,
+      isLSactive: false,
       isMUactive: false,
       isPSTactive: false,
       isHFactive: false,
       isPLKactive: false,
+      isLoading: true,
     };
     this.skills = [{
       name: 'FL',
@@ -68,28 +69,28 @@ class Profile extends React.PureComponent {
       name: 'PLK',
       value: 2.10,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 1.12,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 1.52,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 1.78,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 2.31,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 2.54,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 3.42,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 4.12,
     }, {
-      name: 'L-SIT',
+      name: 'LS',
       value: 4.76,
     }, {
       name: 'PST',
@@ -164,7 +165,7 @@ class Profile extends React.PureComponent {
       isFLactive,
       isBLactive,
       isHDSactive,
-      isLSITactive,
+      isLSactive,
       isMUactive,
       isPSTactive,
       isHFactive,
@@ -180,8 +181,8 @@ class Profile extends React.PureComponent {
       case 'HDS':
         this.setState({ isHDSactive: !isHDSactive });
         break;
-      case 'LSIT':
-        this.setState({ isLSITactive: !isLSITactive });
+      case 'LS':
+        this.setState({ isLSactive: !isLSactive });
         break;
       case 'MU':
         this.setState({ isMUactive: !isMUactive });
@@ -204,14 +205,24 @@ class Profile extends React.PureComponent {
 
   getSkillsLevel = () => {
     const { skills } = this;
-    return (
-      skills.reduce((acc, skill) => {
-        if (!acc[skill.name] || acc[skill.name] < skill.value) {
-          acc[skill.name] = skill.value;
-        }
-        return acc;
-      }, {})
-    );
+    const skillLevels = skills.reduce((acc, skill) => {
+      if (!acc[skill.name] || acc[skill.name] < skill.value) {
+        acc[skill.name] = skill.value;
+      }
+      return acc;
+    }, {});
+    return ({
+      'Front-lever (FL)': skillLevels.FL || 0,
+      'Back-lever (BL)': skillLevels.BL || 0,
+      'L-sit (LS)': skillLevels.LS || 0,
+      'Pistol (PST)': skillLevels.PST || 0,
+      'Handstand (HDS)': skillLevels.HDS || 0,
+      'Human flag (HF)': skillLevels.HF || 0,
+      'Plank (PLK)': skillLevels.PLK || 0,
+      'Muscle up (MU)': skillLevels.MU || 0,
+
+
+    });
   }
 
   render() {
@@ -219,16 +230,17 @@ class Profile extends React.PureComponent {
       isFLactive,
       isBLactive,
       isHDSactive,
-      isLSITactive,
+      isLSactive,
       isMUactive,
       isPSTactive,
       isHFactive,
       isPLKactive,
+      isLoading,
     } = this.state;
     const skillsLevel = this.getSkillsLevel();
     const options = {
       rings: 5,
-      r: 100,
+      r: Dimensions.get('window').width / 4,
       max: 11,
       fill: '#D00000',
       stroke: '#606060',
@@ -237,11 +249,15 @@ class Profile extends React.PureComponent {
         duration: 200,
       },
       label: {
-        fontSize: 15,
+        fontSize: 12,
         fontWeight: true,
         fill: 'white',
       },
     };
+    console.log('sreen width : ', Dimensions.get('window').width);
+    // if (isLoading) {
+    //   return <LoadingView />
+    // }
     return (
       <View style={{ flex: 1, backgroundColor: '#181818' }}>
         <StatusBar barStyle="light-content" />
@@ -294,7 +310,7 @@ class Profile extends React.PureComponent {
                     {this.displayLineChart('FL', isFLactive, '#64DD17')}
                     {this.displayLineChart('BL', isBLactive, '#18FFFF')}
                     {this.displayLineChart('HDS', isHDSactive, '#FF9800')}
-                    {this.displayLineChart('L-SIT', isLSITactive, '#AA00FF')}
+                    {this.displayLineChart('LS', isLSactive, '#AA00FF')}
                     {this.displayLineChart('MU', isMUactive, '#D00000')}
                     {this.displayLineChart('PST', isPSTactive, 'white')}
                     {this.displayLineChart('HF', isHFactive, '#304FFE')}
@@ -304,7 +320,7 @@ class Profile extends React.PureComponent {
                       formatLabel={(value, index) => index}
                       style={{ marginHorizontal: -10 }}
                       contentInset={{ top: 50, left: 10, right: 10 }}
-                      svg={{ fontSize: 12, fill: 'gray' }}
+                      svg={{ fontSize: 10, fill: 'gray' }}
                     />
                   </View>
                 </View>
@@ -312,7 +328,7 @@ class Profile extends React.PureComponent {
                   {this.displayChartButton('FL', isFLactive)}
                   {this.displayChartButton('BL', isBLactive)}
                   {this.displayChartButton('HDS', isHDSactive)}
-                  {this.displayChartButton('LSIT', isLSITactive)}
+                  {this.displayChartButton('LS', isLSactive)}
                   {this.displayChartButton('MU', isMUactive)}
                   {this.displayChartButton('PST', isPSTactive)}
                   {this.displayChartButton('HF', isHFactive)}
