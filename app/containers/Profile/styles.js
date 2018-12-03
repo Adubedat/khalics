@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   main_container: {
     flexGrow: 1,
     marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-    backgroundColor: '#282828',
+    backgroundColor: '#202020',
     justifyContent: 'space-around',
   },
   header_container: {
@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#282828',
     shadowColor: 'black',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
     shadowOffset: {
-      height: 2,
+      height: 1,
       width: 0,
     },
     elevation: 2,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   chart_container: {
     height: 250,
-    width: '100%',
+    width: '95%',
     marginBottom: 20,
     backgroundColor: '#282828',
   },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: 'black',
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowRadius: 1,
     shadowOffset: {
       height: 1,

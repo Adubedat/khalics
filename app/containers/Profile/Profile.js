@@ -5,6 +5,7 @@ import {
 import {
   LineChart, Grid, XAxis, YAxis,
 } from 'react-native-svg-charts';
+import Radar from '../../components/RadarChart';
 import ProgressBar from '../../components/ProgressBar';
 import styles from './styles';
 
@@ -205,8 +206,8 @@ class Profile extends React.PureComponent {
     const { skills } = this;
     return (
       skills.reduce((acc, skill) => {
-        if (!acc[skill.name] || acc[skill.name].value < skill.value) {
-          acc[skill.name] = skill;
+        if (!acc[skill.name] || acc[skill.name] < skill.value) {
+          acc[skill.name] = skill.value;
         }
         return acc;
       }, {})
@@ -225,7 +226,22 @@ class Profile extends React.PureComponent {
       isPLKactive,
     } = this.state;
     const skillsLevel = this.getSkillsLevel();
-    console.log(skillsLevel);
+    const options = {
+      rings: 5,
+      r: 100,
+      max: 11,
+      fill: '#D00000',
+      stroke: '#606060',
+      animate: {
+        type: 'oneByOne',
+        duration: 200,
+      },
+      label: {
+        fontSize: 15,
+        fontWeight: true,
+        fill: 'white',
+      },
+    };
     return (
       <View style={{ flex: 1, backgroundColor: '#181818' }}>
         <StatusBar barStyle="light-content" />
@@ -251,6 +267,9 @@ class Profile extends React.PureComponent {
               </ProgressBar>
             </View>
             <View style={styles.content_container}>
+              <Text style={{ color: 'white', fontSize: 30, top: 40 }}>My skills</Text>
+              <Radar data={[skillsLevel]} options={options} />
+              <Text style={{ color: 'white', fontSize: 30, bottom: 30 }}>My progression</Text>
               <View style={styles.chart_container}>
                 <View style={styles.linechart_container}>
                   <YAxis
