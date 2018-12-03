@@ -199,6 +199,20 @@ class Profile extends React.PureComponent {
     }
   }
 
+  // TODO: Change value by timestamp when DB setup
+
+  getSkillsLevel = () => {
+    const { skills } = this;
+    return (
+      skills.reduce((acc, skill) => {
+        if (!acc[skill.name] || acc[skill.name].value < skill.value) {
+          acc[skill.name] = skill;
+        }
+        return acc;
+      }, {})
+    );
+  }
+
   render() {
     const {
       isFLactive,
@@ -210,6 +224,8 @@ class Profile extends React.PureComponent {
       isHFactive,
       isPLKactive,
     } = this.state;
+    const skillsLevel = this.getSkillsLevel();
+    console.log(skillsLevel);
     return (
       <View style={{ flex: 1, backgroundColor: '#181818' }}>
         <StatusBar barStyle="light-content" />
