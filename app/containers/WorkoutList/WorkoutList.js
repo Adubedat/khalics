@@ -9,7 +9,6 @@ export default class WorkoutList extends Component {
   constructor() {
     super();
 
-    this.testFetch = false; // to test fetching, to delete
     this.state = {
       currentWorkout: 0,
       workouts: [],
@@ -20,17 +19,14 @@ export default class WorkoutList extends Component {
 
   async componentDidMount() {
     const getWorkoutUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/workout/get';
-    if (this.testFetch) {
-      // below is example normally get workouts ids from user data
-      const res = await fetch(`${getWorkoutUrl}?ids=["test", "test2"]`);
-      const resJson = await res.json();
-      const state = { ...this.state, workouts: resJson.workouts, fetch: true };
-      this.setState(state);
-    }
+    // below is example normally get workouts ids from user data
+    const res = await fetch(`${getWorkoutUrl}?ids=["test", "test2"]`);
+    const resJson = await res.json();
+    const state = { ...this.state, workouts: resJson.workouts, fetch: true };
+    this.setState(state);
   }
 
   render() {
-    this.state.fetch = true; // to delete
     const { currentWorkout, workouts, fetch } = this.state;
     if (!fetch) { return <View />; } // loading page ?
     if (workouts.length === 0) {
