@@ -7,6 +7,7 @@ import {
 } from 'react-native-svg-charts';
 import Radar from '../../components/RadarChart';
 import ProgressBar from '../../components/ProgressBar';
+import LoadingView from '../../components/LoadingView';
 import styles from './styles';
 
 class Profile extends React.PureComponent {
@@ -255,9 +256,9 @@ class Profile extends React.PureComponent {
       },
     };
     console.log('sreen width : ', Dimensions.get('window').width);
-    // if (isLoading) {
-    //   return <LoadingView />
-    // }
+    if (isLoading) {
+      return <LoadingView />;
+    }
     return (
       <View style={{ flex: 1, backgroundColor: '#181818' }}>
         <StatusBar barStyle="light-content" />
