@@ -12,8 +12,7 @@ export default class WorkoutList extends Component {
     this.state = {
       currentWorkout: 0,
       workouts: [],
-      loading: true, // false when all data has been fetched
-      // because componentWillUpdate is deprecated and should never be used
+      loading: true,
     };
   }
 
@@ -36,12 +35,16 @@ export default class WorkoutList extends Component {
   render() {
     const { currentWorkout, workouts, loading } = this.state;
     const { navigation } = this.props;
-    if (loading) { return <View />; } // loading page ?
+    if (loading) { return <View />; }
     if (workouts.length === 0) {
       return (
         <TestMySkills />
       );
     }
+    // test
+    navigation.navigate('Workout', { workout: workouts[0] });
+    return (<View />);
+    //
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
