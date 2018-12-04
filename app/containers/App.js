@@ -6,6 +6,7 @@ import * as Expo from 'expo';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import MainTabNavigator from '../components/Navigation';
+import LoadingView from '../components/LoadingView';
 import SignUp from './SignUp/SignUp';
 import SignIn from './SignIn/SignIn';
 import toggleSignIn from '../reducers/signInReducer';
@@ -18,14 +19,15 @@ class App extends React.PureComponent {
     super(props);
     this.state = {
       loggedIn: false,
+      isLoading: true,
     };
     this.store = createStore(toggleSignIn);
   }
 
   componentDidMount() {
-    if (Auth.user) {
-      this.setState({ loggedIn: true });
-    }
+    Auth.currentAuthenticatedUser()
+      .then(() => this.setState({ loggedIn: true, isLoading: false }))
+      .catch(() => this.setState({ loggedIn: false, isLoading: false }));
   }
 
   authStateChange() {
@@ -38,8 +40,11 @@ class App extends React.PureComponent {
       SignIn: { screen: SignIn },
       SignUp: { screen: SignUp },
     });
-    const { loggedIn } = this.state;
-    if (!loggedIn) {
+    const { loggedIn, isLoading } = this.state;
+    if (isLoading) {
+      return <LoadingView />;
+    }
+    if (loggedIn) {
       return (
         <Provider store={this.store}>
           <MainTabNavigator screenProps={{ session: () => { this.authStateChange(); } }} />

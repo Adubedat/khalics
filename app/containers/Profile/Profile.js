@@ -5,10 +5,14 @@ import {
 import {
   LineChart, Grid, XAxis, YAxis,
 } from 'react-native-svg-charts';
+import Amplify, { Auth } from 'aws-amplify';
 import Radar from '../../components/RadarChart';
 import ProgressBar from '../../components/ProgressBar';
 import LoadingView from '../../components/LoadingView';
+import config from '../../../aws-exports';
 import styles from './styles';
+
+Amplify.configure(config);
 
 class Profile extends React.PureComponent {
   constructor(props) {
@@ -132,6 +136,17 @@ class Profile extends React.PureComponent {
     }];
   }
 
+  async componentDidMount() {
+    console.log(Auth.user);
+    // const getUserUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/user/get';
+    // // below is example normally get workouts ids from user data
+    // const res = await fetch(`${getUserUrl}?ids=["test", "test2"]`);
+    // const resJson = await res.json();
+    const state = { ...this.state, isLoading: false };
+    // const state = { ...this.state, skills: resJson.skills, isLoading: false };
+    this.setState(state);
+  }
+
   displayLineChart = (skillName, isActive, color) => {
     if (isActive) {
       const { skills } = this;
@@ -152,12 +167,14 @@ class Profile extends React.PureComponent {
     }
   }
 
-  displayChartButton = (skillName, isActive) => (
+  displayChartButton = (skillName, isActive, color) => (
     <TouchableHighlight
       style={[{ backgroundColor: isActive ? '#181818' : '#383838' }, styles.chart_button]}
       onPress={() => this.handleChartButton(skillName)}
     >
-      <Text style={[{ color: 'white' }, styles.button_text]}>{skillName}</Text>
+      <View style={{ borderBottomWidth: 2, borderBottomColor: color, width: '80%' }}>
+        <Text style={[{ color: 'white', textAlign: 'center' }, styles.button_text]}>{skillName}</Text>
+      </View>
     </TouchableHighlight>
   )
 
@@ -326,18 +343,20 @@ class Profile extends React.PureComponent {
                   </View>
                 </View>
                 <View style={styles.button_chart_container}>
-                  {this.displayChartButton('FL', isFLactive)}
-                  {this.displayChartButton('BL', isBLactive)}
-                  {this.displayChartButton('HDS', isHDSactive)}
-                  {this.displayChartButton('LS', isLSactive)}
-                  {this.displayChartButton('MU', isMUactive)}
-                  {this.displayChartButton('PST', isPSTactive)}
-                  {this.displayChartButton('HF', isHFactive)}
+                  {this.displayChartButton('FL', isFLactive, '#64DD17')}
+                  {this.displayChartButton('BL', isBLactive, '#18FFFF')}
+                  {this.displayChartButton('HDS', isHDSactive, '#FF9800')}
+                  {this.displayChartButton('LS', isLSactive, '#AA00FF')}
+                  {this.displayChartButton('MU', isMUactive, '#D00000')}
+                  {this.displayChartButton('PST', isPSTactive, 'white')}
+                  {this.displayChartButton('HF', isHFactive, '#304FFE')}
                   <TouchableHighlight
                     style={[styles.chart_button, { backgroundColor: isPLKactive ? '#181818' : '#383838', borderRightWidth: 0 }]}
                     onPress={() => this.handleChartButton('PLK')}
                   >
-                    <Text style={[{ color: 'white' }, styles.button_text]}>PLK</Text>
+                    <View style={{ borderBottomWidth: 2, borderBottomColor: '#EC407A', width: '80%' }}>
+                      <Text style={[{ color: 'white', textAlign: 'center' }, styles.button_text]}>PLK</Text>
+                    </View>
                   </TouchableHighlight>
                 </View>
               </View>
