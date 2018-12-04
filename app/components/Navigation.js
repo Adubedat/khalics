@@ -3,13 +3,13 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { createStackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import WorkoutList from '../containers/WorkoutList/WorkoutList';
-import WorkoutDetails from '../containers/WorkoutDetails/WorkoutDetails';
+import Workout from '../containers/Workout/Workout';
 import Profile from '../containers/Profile/Profile';
 import Settings from '../containers/Settings/Settings';
 
 const WorkoutStackNavigator = createStackNavigator({
   WorkoutList,
-  WorkoutDetails,
+  Workout,
 });
 
 const SettingsStackNavigator = createStackNavigator({

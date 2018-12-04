@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-class WorkoutDetails extends React.PureComponent {
+class Workout extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
@@ -9,9 +9,9 @@ class WorkoutDetails extends React.PureComponent {
 
   render() {
     return (
-      <Text>Welcome to the WorkoutDetails page.</Text>
+      <Text>Welcome to the Workout page.</Text>
     );
   }
 }
 
-export default WorkoutDetails;
+export default Workout;

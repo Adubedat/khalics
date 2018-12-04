@@ -20,7 +20,7 @@ export default class WorkoutList extends Component {
   async componentDidMount() {
     const getWorkoutUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/workout/get';
     // below is example normally get workouts ids from user data
-    const res = await fetch(`${getWorkoutUrl}?ids=["test", "test2"]`);
+    const res = await fetch(`${getWorkoutUrl}?ids=["4e720443-9165-44ac-8366-d970390409c1", "f6e6f739-e568-4bfb-8671-1bac585a9544", "48e76214-7c0a-439a-8170-54cb37b620a1"]`);
     const resJson = await res.json();
     const state = { ...this.state, workouts: resJson.workouts, fetch: true };
     this.setState(state);
