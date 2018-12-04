@@ -360,6 +360,7 @@ class Profile extends React.PureComponent {
                   </TouchableHighlight>
                 </View>
               </View>
+              <Text style={styles.hint_text}>You can find the skills abbreviations in the radar chart above.</Text>
             </View>
           </ScrollView>
         </SafeAreaView>

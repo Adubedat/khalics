@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   chart_container: {
     height: 250,
     width: '95%',
-    marginBottom: 20,
     backgroundColor: '#282828',
   },
   linechart_container: {
@@ -74,6 +73,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 5,
     marginBottom: 5,
+  },
+  hint_text: {
+    fontSize: 12,
+    color: 'gray',
+    textAlign: 'center',
+    padding: 20,
   },
 });
 
