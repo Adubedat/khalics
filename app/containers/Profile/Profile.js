@@ -137,11 +137,28 @@ class Profile extends React.PureComponent {
   }
 
   async componentDidMount() {
-    console.log(Auth.user);
-    // const getUserUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/user/get';
-    // // below is example normally get workouts ids from user data
+    let idToken;
+    await Auth.currentSession()
+      .then((session) => {
+        idToken = session.getIdToken();
+        console.log(idToken);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    const getUserUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/user/get';
+    const res = await fetch(getUserUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: idToken.jwtToken,
+      },
+    });
+    // below is example normally get workouts ids from user data
     // const res = await fetch(`${getUserUrl}?ids=["test", "test2"]`);
-    // const resJson = await res.json();
+    const resJson = await res.json();
+    console.log(resJson);
     const state = { ...this.state, isLoading: false };
     // const state = { ...this.state, skills: resJson.skills, isLoading: false };
     this.setState(state);

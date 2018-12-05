@@ -123,6 +123,8 @@ class SignIn extends React.PureComponent {
         { token, expires_at: expires },
         { name: userData.name, email: userData.email })
         .then((credentials) => {
+          const { screenProps } = this.props;
+          screenProps.session();
           console.log('get aws credentials', credentials);
         }).catch((e) => {
           console.log(e);
