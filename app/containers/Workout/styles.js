@@ -13,11 +13,11 @@ export default StyleSheet.create({
     color: 'white',
   },
   exercisesContainer: {
-    // marginHorizontal: 21,
-    marginVertical: 10,
-    borderWidth: 2,
-    borderStyle: 'solid',
-    borderColor: theme.red,
+    // marginTop: 21,
+    // marginVertical: 10,
+    // borderWidth: 2,
+    // borderStyle: 'solid',
+    // borderColor: theme.red,
     backgroundColor: theme.darkGray1,
   },
 });
