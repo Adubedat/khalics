@@ -46,13 +46,11 @@ class Workout extends React.PureComponent {
     }
     // last element style
     styles.exercisesContainer = { ...styles.exercisesContainer, marginBottom: 30 };
-    console.log('last element', styles.exercisesContainer);
     return styles.exercisesContainer;
   }
 
   render() {
     const { exercises, loading, workout } = this.state;
-    console.log('-->', workout, '==>', exercises);
     const { description, name } = workout;
     if (loading) { return <View />; }
     return (
@@ -75,7 +73,7 @@ class Workout extends React.PureComponent {
         </View>
         <Button
           title="START WORKOUT"
-          large
+          raised
           buttonStyle={{ backgroundColor: theme.red }}
           titleStyle={{ fontWeight: 'bold' }}
         />
