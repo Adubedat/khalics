@@ -18,6 +18,7 @@ class Profile extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       isFLactive: true,
       isBLactive: false,
       isHDSactive: false,
@@ -136,7 +137,7 @@ class Profile extends React.PureComponent {
     }];
   }
 
-  async componentDidMount() {
+  async componentDidMount() { // Error gestion ?
     let idToken;
     await Auth.currentSession()
       .then((session) => {
@@ -155,12 +156,9 @@ class Profile extends React.PureComponent {
         Authorization: idToken.jwtToken,
       },
     });
-    // below is example normally get workouts ids from user data
-    // const res = await fetch(`${getUserUrl}?ids=["test", "test2"]`);
     const resJson = await res.json();
     console.log(resJson);
-    const state = { ...this.state, isLoading: false };
-    // const state = { ...this.state, skills: resJson.skills, isLoading: false };
+    const state = { ...this.state, user: resJson.user, isLoading: false };
     this.setState(state);
   }
 
@@ -262,6 +260,7 @@ class Profile extends React.PureComponent {
 
   render() {
     const {
+      user,
       isFLactive,
       isBLactive,
       isHDSactive,
@@ -302,7 +301,7 @@ class Profile extends React.PureComponent {
             contentContainerStyle={styles.main_container}
           >
             <View style={styles.header_container}>
-              <Text style={styles.username}>Username</Text>
+              <Text style={styles.username}>{user.username}</Text>
               <ProgressBar
                 height={30}
                 borderRadius={15}
