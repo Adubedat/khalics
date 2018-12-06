@@ -7,17 +7,12 @@ export default StyleSheet.create({
     backgroundColor: theme.darkGray2,
   },
   mainTitle: {
-    marginVertical: 38,
+    marginVertical: 35,
     textAlign: 'center',
     flexDirection: 'column',
     color: 'white',
   },
   exercisesContainer: {
-    // marginTop: 21,
-    // marginVertical: 10,
-    // borderWidth: 2,
-    // borderStyle: 'solid',
-    // borderColor: theme.darkGray1,
     backgroundColor: theme.darkGray2,
   },
 });

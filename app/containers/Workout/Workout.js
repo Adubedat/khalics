@@ -39,12 +39,14 @@ class Workout extends React.PureComponent {
     if (index !== exercisesNb - 1) {
       const borderStyle = {
         borderBottomWidth: 2,
-        borderBottomStyle: 'solid',
         borderBottomColor: theme.darkGray1,
         paddingBottom: 21,
       };
       return { ...styles.exercisesContainer, ...borderStyle };
     }
+    // last element style
+    styles.exercisesContainer = { ...styles.exercisesContainer, marginBottom: 30 };
+    console.log('last element', styles.exercisesContainer);
     return styles.exercisesContainer;
   }
 
@@ -72,7 +74,10 @@ class Workout extends React.PureComponent {
           }
         </View>
         <Button
-          title="BUTTON WITH ICON COMPONENT"
+          title="START WORKOUT"
+          large
+          buttonStyle={{ backgroundColor: theme.red }}
+          titleStyle={{ fontWeight: 'bold' }}
         />
       </View>
     );
