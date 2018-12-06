@@ -8,9 +8,9 @@ class Workout extends React.PureComponent {
   constructor(props) {
     super(props);
     const { navigation } = this.props;
+    this.workout = navigation.state.params.workout;
     this.state = {
       loading: true,
-      workout: {},
       exercises: [],
     };
   }
@@ -18,24 +18,25 @@ class Workout extends React.PureComponent {
   async componentDidMount() {
     const getExerciseUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/exercise/get';
 
-    const { navigation } = this.props;
-    const { workout } = navigation.state.params;
-    const ids = workout.exercises.reduce((acc, val, index, array) => {
+    const ids = this.workout.exercises.reduce((acc, val, index, array) => {
       let param = `"${val.id}"`;
       if (index !== array.length - 1) { param += ', '; }
       return acc + param;
     }, '');
     const res = await fetch(`${getExerciseUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-    delete workout.exercises;
+    // console.log('resJson:', resJson);
+    // delete workout.exercises;
+
+    // let workout = {  }
     const state = {
-      ...this.state, workout, exercises: resJson.exercises, loading: false,
+      ...this.state, exercises: resJson.exercises, loading: false,
     };
     this.setState(state);
   }
 
   exerciseContainerStyle = (index, exercisesNb) => {
-    console.log('=>', index, '->', exercisesNb);
+    // console.log('=>', index, '->', exercisesNb);
     if (index !== exercisesNb - 1) {
       const borderStyle = {
         borderBottomWidth: 2,
@@ -52,9 +53,10 @@ class Workout extends React.PureComponent {
   render() {
     const { loading } = this.state;
     if (loading) { return <View />; }
-    const { exercises, workout } = this.state;
-    const { description, name } = workout;
+    const { exercises } = this.state;
+    const { description, name } = this.workout;
     const { navigation } = this.props;
+    // console.log('))))', workout);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -66,6 +68,8 @@ class Workout extends React.PureComponent {
                 key={val._id} //eslint-disable-line
                 title={val.name}
                 titleStyle={{ fontSize: 30, color: 'white' }}
+                rightTitle={val.totalSet}
+                rightTitleStyle={{ fontSize: 30, color: 'white' }}
                 subtitleStyle={{ color: 'white' }}
                 subtitle={val.description}
                 containerStyle={this.exerciseContainerStyle(index, array.length)}
