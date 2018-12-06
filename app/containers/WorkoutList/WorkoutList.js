@@ -27,13 +27,8 @@ export default class WorkoutList extends Component {
     }, '');
     const res = await fetch(`${getWorkoutUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-<<<<<<< HEAD
     const workouts = resJson.workouts || [];
     const state = { ...this.state, workouts, fetch: true };
-=======
-    console.log(resJson);
-    const state = { ...this.state, workouts: resJson.workouts, loading: false };
->>>>>>> 0350167156d550874bf8027b51068bf2a1b09507
     this.setState(state);
   }
 
