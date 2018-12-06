@@ -4,6 +4,7 @@ import { Text } from 'react-native-elements';
 import StepIndicator from '../../components/StepIndicator';
 import { styles, stepIndicatorStyles } from './styles';
 import TestMySkills from '../testMySkills/testMySkills';
+import LoadingView from '../../components/LoadingView';
 
 export default class WorkoutList extends Component {
   constructor() {
@@ -12,7 +13,7 @@ export default class WorkoutList extends Component {
     this.state = {
       currentWorkout: 0,
       workouts: [],
-      loading: true,
+      isLoading: true,
     };
   }
 
@@ -28,14 +29,20 @@ export default class WorkoutList extends Component {
     const res = await fetch(`${getWorkoutUrl}?ids=[${ids}]`);
     const resJson = await res.json();
     const workouts = resJson.workouts || [];
-    const state = { ...this.state, workouts, fetch: true };
+    const state = {
+      ...this.state, workouts, fetch: true, isLoading: false,
+    };
     this.setState(state);
   }
 
   render() {
-    const { currentWorkout, workouts, loading } = this.state;
+    const { currentWorkout, workouts, isLoading } = this.state;
     const { navigation } = this.props;
-    if (loading) { return <View />; }
+    if (isLoading) {
+      return (
+        <LoadingView />
+      );
+    }
     if (workouts.length === 0) {
       return (
         <TestMySkills />
