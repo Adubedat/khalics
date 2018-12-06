@@ -25,10 +25,8 @@ class Workout extends React.PureComponent {
     }, '');
     const res = await fetch(`${getExerciseUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-    // console.log('resJson:', resJson);
-    // delete workout.exercises;
+    console.log('resJson:', resJson);
 
-    // let workout = {  }
     const state = {
       ...this.state, exercises: resJson.exercises, loading: false,
     };
@@ -55,6 +53,7 @@ class Workout extends React.PureComponent {
     if (loading) { return <View />; }
     const { exercises } = this.state;
     const { description, name } = this.workout;
+    console.log(this.workout.exercises[0].totalSet);
     const { navigation } = this.props;
     // console.log('))))', workout);
     return (
@@ -63,19 +62,21 @@ class Workout extends React.PureComponent {
         <Text h2 style={styles.mainTitle}>{name}</Text>
         <View>
           {
-            exercises.map((val, index, array) => (
-              <ListItem
+            exercises.map((val, index, array) => {
+              const { repBySet, totalSet, totalRound } = this.workout.exercises[index];
+              const set = totalRound === 0 ? totalSet : totalRound;
+              return (
+                <ListItem
                 key={val._id} //eslint-disable-line
-                title={val.name}
-                titleStyle={{ fontSize: 30, color: 'white' }}
-                rightTitle={val.totalSet}
-                rightTitleStyle={{ fontSize: 30, color: 'white' }}
-                subtitleStyle={{ color: 'white' }}
-                subtitle={val.description}
-                containerStyle={this.exerciseContainerStyle(index, array.length)}
-                onPress={() => { navigation.navigate('Exercise', { exercise: exercises[index] }); }}
-              />
-            ))
+                  title={`${repBySet} ${val.name}   x ${set}`}
+                  titleStyle={{ fontSize: 30, color: 'white' }}
+                  subtitleStyle={{ color: 'white' }}
+                  subtitle={val.description}
+                  containerStyle={this.exerciseContainerStyle(index, array.length)}
+                  onPress={() => { navigation.navigate('Exercise', { exercise: exercises[index] }); }}
+                />
+              );
+            })
           }
         </View>
         <Button
