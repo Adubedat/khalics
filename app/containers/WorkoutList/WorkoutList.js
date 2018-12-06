@@ -12,29 +12,44 @@ export default class WorkoutList extends Component {
     this.state = {
       currentWorkout: 0,
       workouts: [],
-      fetch: false, // true when all data has been fetched
-      // because componentWillUpdate is deprecated and should never be used
+      loading: true,
     };
   }
 
   async componentDidMount() {
     const getWorkoutUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/workout/get';
     // below is example normally get workouts ids from user data
-    const res = await fetch(`${getWorkoutUrl}?ids=["test", "test2"]`);
+    const workoutsIds = ['4e720443-9165-44ac-8366-d970390409c1', 'f6e6f739-e568-4bfb-8671-1bac585a9544', '48e76214-7c0a-439a-8170-54cb37b620a1'];
+    const ids = workoutsIds.reduce((acc, val, index, array) => {
+      let param = `"${val}"`;
+      if (index !== array.length - 1) { param += ', '; }
+      return acc + param;
+    }, '');
+    const res = await fetch(`${getWorkoutUrl}?ids=[${ids}]`);
     const resJson = await res.json();
+<<<<<<< HEAD
     const workouts = resJson.workouts || [];
     const state = { ...this.state, workouts, fetch: true };
+=======
+    console.log(resJson);
+    const state = { ...this.state, workouts: resJson.workouts, loading: false };
+>>>>>>> 0350167156d550874bf8027b51068bf2a1b09507
     this.setState(state);
   }
 
   render() {
-    const { currentWorkout, workouts, fetch } = this.state;
-    if (!fetch) { return <View />; } // loading page ?
+    const { currentWorkout, workouts, loading } = this.state;
+    const { navigation } = this.props;
+    if (loading) { return <View />; }
     if (workouts.length === 0) {
       return (
         <TestMySkills />
       );
     }
+    // test
+    // navigation.navigate('Workout', { workout: workouts[0] });
+    // return (<View />);
+    //
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -49,6 +64,7 @@ export default class WorkoutList extends Component {
             currentPosition={currentWorkout}
             labels={workouts.map(item => item.name)}
             descriptions={workouts.map(item => item.description)}
+            onPress={(number) => { navigation.navigate('Workout', { workout: workouts[number] }); }}
           />
         </View>
       </View>
