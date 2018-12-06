@@ -22,7 +22,8 @@ export default class WorkoutList extends Component {
     // below is example normally get workouts ids from user data
     const res = await fetch(`${getWorkoutUrl}?ids=["test", "test2"]`);
     const resJson = await res.json();
-    const state = { ...this.state, workouts: resJson.workouts, fetch: true };
+    const workouts = resJson.workouts || [];
+    const state = { ...this.state, workouts, fetch: true };
     this.setState(state);
   }
 

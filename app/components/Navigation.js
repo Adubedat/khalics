@@ -66,7 +66,11 @@ const MainTabNavigator = createMaterialBottomTabNavigator(
     labeled: true,
     activeColor: 'white',
     inactiveColor: '#808080',
-    barStyle: { backgroundColor: '#202020' },
+    barStyle: {
+      backgroundColor: '#282828',
+      borderTopWidth: 1,
+      borderTopColor: '#484848',
+    },
   },
 );
 
