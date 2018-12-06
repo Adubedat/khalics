@@ -8,7 +8,14 @@ import Profile from '../containers/Profile/Profile';
 import Settings from '../containers/Settings/Settings';
 
 const WorkoutStackNavigator = createStackNavigator({
-  WorkoutList,
+  WorkoutList: {
+    screen: WorkoutList,
+    navigationOptions: () => ({
+      title: 'WORKOUTS',
+      headerStyle: { backgroundColor: '#181818' },
+      headerTitleStyle: { color: 'white', fontWeight: 'bold' },
+    }),
+  },
   Workout,
 });
 

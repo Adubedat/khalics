@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
-import { Text } from 'react-native-elements';
+import {
+  View, StatusBar, Text, FlatList,
+} from 'react-native';
+import { ListItem, Button } from 'react-native-elements';
 import StepIndicator from '../../components/StepIndicator';
 import { styles, stepIndicatorStyles } from './styles';
 import TestMySkills from '../testMySkills/testMySkills';
 import LoadingView from '../../components/LoadingView';
+import WorkoutItem from '../../components/WorkoutItem';
+import theme from '../../theme';
 
 export default class WorkoutList extends Component {
   constructor() {
@@ -29,15 +33,30 @@ export default class WorkoutList extends Component {
     const res = await fetch(`${getWorkoutUrl}?ids=[${ids}]`);
     const resJson = await res.json();
     const workouts = resJson.workouts || [];
+    let currentWorkout;
+    for (let i = 0; i < workouts.length; i += 1) {
+      if (!workouts[i].done) {
+        currentWorkout = i;
+        break;
+      }
+    }
     const state = {
-      ...this.state, workouts, fetch: true, isLoading: false,
+      ...this.state, workouts, fetch: true, isLoading: false, currentWorkout,
     };
     this.setState(state);
   }
 
+  displayWorkout = (workout) => {
+    const { navigation } = this.props;
+    navigation.navigate(
+      'Workout',
+      { workout },
+    );
+  }
+
   render() {
     const { currentWorkout, workouts, isLoading } = this.state;
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
     if (isLoading) {
       return (
         <LoadingView />
@@ -48,17 +67,14 @@ export default class WorkoutList extends Component {
         <TestMySkills />
       );
     }
-    // test
-    // navigation.navigate('Workout', { workout: workouts[0] });
-    // return (<View />);
-    //
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <View style={styles.mainTitle}>
+        {/* <View style={styles.mainTitle}>
           <Text h2 style={{ color: 'white', textAlign: 'center' }}>Workouts</Text>
-        </View>
-        <View style={styles.stepIndicator}>
+        </View> */}
+        {/* <View style={styles.stepIndicator}>
           <StepIndicator
             customStyles={stepIndicatorStyles}
             stepCount={3}
@@ -68,7 +84,28 @@ export default class WorkoutList extends Component {
             descriptions={workouts.map(item => item.description)}
             onPress={(number) => { navigation.navigate('Workout', { workout: workouts[number] }); }}
           />
-        </View>
+        </View> */}
+        <FlatList
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+          keyExtractor={({ item, index }) => index} // eslint-disable-line
+          data={workouts}
+          renderItem={({ item, index }) => (
+            <WorkoutItem
+              workout={item}
+              index={index}
+              displayWorkout={this.displayWorkout}
+              done={item.done}
+              current={(index === currentWorkout)}
+              workoutsNbr={workouts.length}
+            />
+          )}
+        />
+        <Button
+          title="FINISH WEEK"
+          raised
+          buttonStyle={{ backgroundColor: theme.red }}
+          titleStyle={{ fontWeight: 'bold' }}
+        />
       </View>
     );
   }

@@ -179,7 +179,7 @@ export default class StepIndicator extends PureComponent {
               <Text style={[styles.stepLabel, selectedStepLabelStyle, { fontSize: this.state.customStyles.labelSize }]}>
                 {label}
               </Text>
-              <Text style={[styles.stepLabel, selectedStepLabelStyle, { fontSize: 18 }]}>
+              <Text style={[styles.stepDescription, selectedStepLabelStyle, { fontSize: 18 }]}>
                 {descriptions[index]}
               </Text>
             </View>
@@ -317,11 +317,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   stepLabel: {
     fontSize: 12,
-    textAlign: 'center',
-    fontWeight: '500',
+    textAlign: 'right',
+    fontWeight: '700',
+  },
+  stepDescription: {
+    fontSize: 12,
+    textAlign: 'right',
+    fontWeight: '300',
   },
   stepLabelItem: {
     flex: 1,
