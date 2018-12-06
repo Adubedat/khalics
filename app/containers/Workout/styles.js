@@ -7,7 +7,7 @@ export default StyleSheet.create({
     backgroundColor: theme.darkGray2,
   },
   mainTitle: {
-    marginVertical: 50,
+    marginVertical: 38,
     textAlign: 'center',
     flexDirection: 'column',
     color: 'white',
@@ -17,7 +17,7 @@ export default StyleSheet.create({
     // marginVertical: 10,
     // borderWidth: 2,
     // borderStyle: 'solid',
-    // borderColor: theme.red,
-    backgroundColor: theme.darkGray1,
+    // borderColor: theme.darkGray1,
+    backgroundColor: theme.darkGray2,
   },
 });

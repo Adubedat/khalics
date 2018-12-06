@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
-import { Text, ListItem } from 'react-native-elements';
+import { Text, ListItem, Button } from 'react-native-elements';
 import styles from './styles';
+import theme from '../../theme';
 
 class Workout extends React.PureComponent {
   constructor(props) {
@@ -33,6 +34,20 @@ class Workout extends React.PureComponent {
     this.setState(state);
   }
 
+  containerStyle = (index, exercisesNb) => {
+    console.log('=>', index, '->', exercisesNb);
+    if (index !== exercisesNb - 1) {
+      const borderStyle = {
+        borderBottomWidth: 2,
+        borderBottomStyle: 'solid',
+        borderBottomColor: theme.darkGray1,
+        paddingBottom: 21,
+      };
+      return { ...styles.exercisesContainer, ...borderStyle };
+    }
+    return styles.exercisesContainer;
+  }
+
   render() {
     const { exercises, loading, workout } = this.state;
     console.log('-->', workout, '==>', exercises);
@@ -44,18 +59,21 @@ class Workout extends React.PureComponent {
         <Text h2 style={styles.mainTitle}>{name}</Text>
         <View>
           {
-            exercises.map(val => (
+            exercises.map((val, index, array) => (
               <ListItem
                 key={val._id} //eslint-disable-line
                 title={val.name}
                 titleStyle={{ fontSize: 30, color: 'white' }}
                 subtitleStyle={{ color: 'white' }}
                 subtitle={val.description}
-                containerStyle={styles.exercisesContainer}
+                containerStyle={this.containerStyle(index, array.length)}
               />
             ))
           }
         </View>
+        <Button
+          title="BUTTON WITH ICON COMPONENT"
+        />
       </View>
     );
   }
