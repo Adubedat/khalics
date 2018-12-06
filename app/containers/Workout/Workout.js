@@ -34,7 +34,7 @@ class Workout extends React.PureComponent {
     this.setState(state);
   }
 
-  containerStyle = (index, exercisesNb) => {
+  exerciseContainerStyle = (index, exercisesNb) => {
     console.log('=>', index, '->', exercisesNb);
     if (index !== exercisesNb - 1) {
       const borderStyle = {
@@ -50,9 +50,11 @@ class Workout extends React.PureComponent {
   }
 
   render() {
-    const { exercises, loading, workout } = this.state;
-    const { description, name } = workout;
+    const { loading } = this.state;
     if (loading) { return <View />; }
+    const { exercises, workout } = this.state;
+    const { description, name } = workout;
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -66,7 +68,8 @@ class Workout extends React.PureComponent {
                 titleStyle={{ fontSize: 30, color: 'white' }}
                 subtitleStyle={{ color: 'white' }}
                 subtitle={val.description}
-                containerStyle={this.containerStyle(index, array.length)}
+                containerStyle={this.exerciseContainerStyle(index, array.length)}
+                onPress={() => { navigation.navigate('Exercise', { exercise: exercises[index] }); }}
               />
             ))
           }

@@ -33,9 +33,10 @@ export default class WorkoutList extends Component {
   }
 
   render() {
-    const { currentWorkout, workouts, loading } = this.state;
-    const { navigation } = this.props;
+    const { loading } = this.state;
     if (loading) { return <View />; }
+    const { currentWorkout, workouts } = this.state;
+    const { navigation } = this.props;
     if (workouts.length === 0) {
       return (
         <TestMySkills />
