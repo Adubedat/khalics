@@ -25,7 +25,6 @@ class Workout extends React.PureComponent {
     }, '');
     const res = await fetch(`${getExerciseUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-    console.log('resJson:', resJson);
 
     const state = {
       ...this.state, exercises: resJson.exercises, loading: false,
@@ -34,7 +33,6 @@ class Workout extends React.PureComponent {
   }
 
   exerciseContainerStyle = (index, exercisesNb) => {
-    // console.log('=>', index, '->', exercisesNb);
     if (index !== exercisesNb - 1) {
       const borderStyle = {
         borderBottomWidth: 2,
@@ -53,9 +51,7 @@ class Workout extends React.PureComponent {
     if (loading) { return <View />; }
     const { exercises } = this.state;
     const { description, name } = this.workout;
-    console.log(this.workout.exercises[0].totalSet);
     const { navigation } = this.props;
-    // console.log('))))', workout);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
