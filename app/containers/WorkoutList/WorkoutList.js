@@ -27,7 +27,6 @@ export default class WorkoutList extends Component {
     }, '');
     const res = await fetch(`${getWorkoutUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-    console.log(resJson);
     const state = { ...this.state, workouts: resJson.workouts, loading: false };
     this.setState(state);
   }
@@ -42,7 +41,7 @@ export default class WorkoutList extends Component {
         <TestMySkills />
       );
     }
-    // test
+    // test to delete
     navigation.navigate('Workout', { workout: workouts[0] });
     return (<View />);
     //
