@@ -3,6 +3,7 @@ export default {
   lightGray1: '#E8E8E8',
   lightGray2: '#DCDCDC',
   lightGray3: '#D3D3D3',
+  lightGray4: '#CCCCCC',
   gray1: '#808080',
   gray2: '#707070',
   gray3: '#606060',

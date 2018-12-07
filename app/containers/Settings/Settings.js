@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { Auth } from 'aws-amplify';
 import styles from './styles';
@@ -25,6 +25,9 @@ class Settings extends React.PureComponent {
     return (
       <View style={{ flex: 1, backgroundColor: theme.darkGray2 }}>
         <StatusBar barStyle="light-content" />
+        <View style={styles.separator}>
+          <Text style={styles.separator_label}>Profile</Text>
+        </View>
         <ListItem
           chevron
           containerStyle={styles.item_container}
@@ -32,6 +35,16 @@ class Settings extends React.PureComponent {
           titleStyle={styles.title}
           onPress={() => {}}
         />
+        <ListItem
+          chevron
+          containerStyle={[styles.item_container, { borderBottomWidth: 0 }]}
+          title="Log out"
+          titleStyle={styles.title}
+          onPress={() => { this.SignOut(); }}
+        />
+        <View style={styles.separator}>
+          <Text style={styles.separator_label}>Other</Text>
+        </View>
         <ListItem
           chevron
           containerStyle={styles.item_container}
@@ -52,13 +65,6 @@ class Settings extends React.PureComponent {
           title="About us"
           titleStyle={styles.title}
           onPress={() => {}}
-        />
-        <ListItem
-          chevron
-          containerStyle={styles.item_container}
-          title="Log out"
-          titleStyle={styles.title}
-          onPress={() => { this.SignOut(); }}
         />
         <ListItem
           containerStyle={styles.item_container}
