@@ -60,7 +60,7 @@ class WorkoutItem extends React.PureComponent {
       return (
         <View style={[
           styles.bottom_bar,
-          { backgroundColor: (current || done) ? theme.red : theme.lightGray3 }]}
+          { backgroundColor: (done) ? theme.red : theme.lightGray3 }]}
         />
       );
     }
