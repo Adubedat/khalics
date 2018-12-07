@@ -5,7 +5,7 @@ import SvgUri from 'react-native-svg-uri';
 // import Svg, { Polygon, Image } from 'react-native-svg';
 import styles from './styles';
 import humanBodySvg from './human_body.svg';
-import HumanBody from './humanBody.js';
+import HumanBody from './HumanBody';
 import theme from '../../theme';
 
 class Exercise extends React.PureComponent {
