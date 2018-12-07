@@ -10,7 +10,7 @@ export default StyleSheet.create({
   item_container: {
     backgroundColor: theme.darkGray2,
     height: 90,
-    borderTopColor: 'gray',
+    borderTopColor: theme.gray5,
     borderTopWidth: 1,
   },
   exercisesContainer: {

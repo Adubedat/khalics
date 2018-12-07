@@ -7,9 +7,9 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   container: {
     height: 120,
-    borderTopColor: 'gray',
+    borderTopColor: theme.gray3,
     borderBottomWidth: 1,
-    borderBottomColor: 'gray',
+    borderBottomColor: theme.gray3,
   },
   icon: {
     height: 40,
