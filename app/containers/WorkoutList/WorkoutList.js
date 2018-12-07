@@ -4,6 +4,7 @@ import { Text } from 'react-native-elements';
 import StepIndicator from '../../components/StepIndicator';
 import { styles, stepIndicatorStyles } from './styles';
 import TestMySkills from '../testMySkills/testMySkills';
+import LoadingView from '../../components/LoadingView';
 
 export default class WorkoutList extends Component {
   constructor() {
@@ -12,7 +13,7 @@ export default class WorkoutList extends Component {
     this.state = {
       currentWorkout: 0,
       workouts: [],
-      loading: true,
+      isLoading: true,
     };
   }
 
@@ -27,13 +28,16 @@ export default class WorkoutList extends Component {
     }, '');
     const res = await fetch(`${getWorkoutUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-    const state = { ...this.state, workouts: resJson.workouts, loading: false };
+    const workouts = resJson.workouts || [];
+    const state = {
+      ...this.state, workouts, fetch: true, isLoading: false,
+    };
     this.setState(state);
   }
 
   render() {
-    const { loading } = this.state;
-    if (loading) { return <View />; }
+    const { isLoading } = this.state;
+    if (isLoading) { return <LoadingView />; }
     const { currentWorkout, workouts } = this.state;
     const { navigation } = this.props;
     if (workouts.length === 0) {
@@ -41,14 +45,6 @@ export default class WorkoutList extends Component {
         <TestMySkills />
       );
     }
-<<<<<<< HEAD
-    // test
-=======
-    // test to delete
->>>>>>> workoutPage
-    // navigation.navigate('Workout', { workout: workouts[0] });
-    // return (<View />);
-    //
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
