@@ -27,21 +27,25 @@ export default class WorkoutList extends Component {
     }, '');
     const res = await fetch(`${getWorkoutUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-    console.log(resJson);
     const state = { ...this.state, workouts: resJson.workouts, loading: false };
     this.setState(state);
   }
 
   render() {
-    const { currentWorkout, workouts, loading } = this.state;
-    const { navigation } = this.props;
+    const { loading } = this.state;
     if (loading) { return <View />; }
+    const { currentWorkout, workouts } = this.state;
+    const { navigation } = this.props;
     if (workouts.length === 0) {
       return (
         <TestMySkills />
       );
     }
+<<<<<<< HEAD
     // test
+=======
+    // test to delete
+>>>>>>> workoutPage
     // navigation.navigate('Workout', { workout: workouts[0] });
     // return (<View />);
     //

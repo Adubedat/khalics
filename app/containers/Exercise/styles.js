@@ -12,7 +12,4 @@ export default StyleSheet.create({
     flexDirection: 'column',
     color: 'white',
   },
-  exercisesContainer: {
-    backgroundColor: theme.darkGray2,
-  },
 });
