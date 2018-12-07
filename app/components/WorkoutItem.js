@@ -89,8 +89,8 @@ class WorkoutItem extends React.PureComponent {
         titleStyle={{ color: (current) ? 'white' : theme.gray3, fontSize: 20, fontWeight: '700' }}
         subtitle={workout.description}
         subtitleStyle={{ color: (current) ? theme.gray1 : theme.gray4, fontSize: 14, fontWeight: '400' }}
-        onPress={() => { displayWorkout(workout); }}
-        leftAvatar={() => (
+        onPress={() => { displayWorkout(workout, index); }}
+        leftIcon={() => (
           <View>
             {this.displayTopBar(index, current, done)}
             <View style={[

@@ -10,6 +10,10 @@ import WorkoutItem from '../../components/WorkoutItem';
 import theme from '../../theme';
 
 export default class WorkoutList extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam('title', 'WORKOUT'),
+  });
+
   constructor() {
     super();
 
@@ -39,17 +43,19 @@ export default class WorkoutList extends Component {
         break;
       }
     }
+    const { navigation } = this.props;
+    navigation.setParams({ title: 'WEEK 1' });
     const state = {
       ...this.state, workouts, fetch: true, isLoading: false, currentWorkout,
     };
     this.setState(state);
   }
 
-  displayWorkout = (workout) => {
+  displayWorkout = (workout, index) => {
     const { navigation } = this.props;
     navigation.navigate(
       'Workout',
-      { workout },
+      { workout, index: index + 1 },
     );
   }
 
@@ -57,7 +63,6 @@ export default class WorkoutList extends Component {
     const { isLoading } = this.state;
     if (isLoading) { return <LoadingView />; }
     const { currentWorkout, workouts } = this.state;
-    const { navigation } = this.props;
     if (workouts.length === 0) {
       return (
         <TestMySkills />
@@ -66,8 +71,10 @@ export default class WorkoutList extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <View style={{ flex: 2, justifyContent: 'space-around', padding: 16 }}>
-          <Text style={{ color: 'white', fontSize: 20, fontWeight: '700' }}>WEEK 1</Text>
+        <View style={{
+          height: 70, justifyContent: 'space-around', paddingLeft: 16, paddingRight: 16,
+        }}
+        >
           <Text style={{ color: theme.gray1, fontSize: 14, fontWeight: '400' }}>
             Here is your weekly goal, try to spread your workouts over the week.
             {'\n'}

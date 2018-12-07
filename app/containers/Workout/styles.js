@@ -5,14 +5,16 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.darkGray2,
+    justifyContent: 'space-around',
   },
-  mainTitle: {
-    marginVertical: 35,
-    textAlign: 'center',
-    flexDirection: 'column',
-    color: 'white',
+  item_container: {
+    backgroundColor: theme.darkGray2,
+    height: 90,
+    borderTopColor: 'gray',
+    borderTopWidth: 1,
   },
   exercisesContainer: {
-    backgroundColor: theme.darkGray2,
+    flex: 9,
+    justifyContent: 'center',
   },
 });

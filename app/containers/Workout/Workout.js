@@ -1,16 +1,23 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
-import { Text, ListItem, Button } from 'react-native-elements';
+import {
+  Text, View, StatusBar, SectionList,
+} from 'react-native';
+import { ListItem, Button } from 'react-native-elements';
+import LoadingView from '../../components/LoadingView';
 import styles from './styles';
 import theme from '../../theme';
 
 class Workout extends React.PureComponent {
+  static navigationOptions = ({ navigation }) => ({
+    title: `WORKOUT ${navigation.getParam('index')}`,
+  });
+
   constructor(props) {
     super(props);
     const { navigation } = this.props;
     this.workout = navigation.state.params.workout;
     this.state = {
-      loading: true,
+      isLoading: true,
       exercises: [],
     };
   }
@@ -25,62 +32,101 @@ class Workout extends React.PureComponent {
     }, '');
     const res = await fetch(`${getExerciseUrl}?ids=[${ids}]`);
     const resJson = await res.json();
-
     const state = {
-      ...this.state, exercises: resJson.exercises, loading: false,
+      ...this.state, exercises: resJson.exercises, isLoading: false,
     };
     this.setState(state);
   }
 
-  exerciseContainerStyle = (index, exercisesNb) => {
-    if (index !== exercisesNb - 1) {
-      const borderStyle = {
-        borderBottomWidth: 2,
-        borderBottomColor: theme.darkGray1,
-        paddingBottom: 21,
-      };
-      return { ...styles.exercisesContainer, ...borderStyle };
-    }
-    // last element style
-    styles.exercisesContainer = { ...styles.exercisesContainer, marginBottom: 30 };
-    return styles.exercisesContainer;
+  renderSectionHeader = ({ section: { title } }) => (
+    <View style={{
+      backgroundColor: theme.darkGray1, width: '100%', padding: 5, paddingLeft: 16,
+    }}
+    >
+      <Text style={{ fontWeight: '600', fontSize: 14, color: 'white' }}>{title}</Text>
+    </View>
+  )
+
+  renderWarmUpItem = ({ item, index }) => (
+    <ListItem
+      containerStyle={[
+        styles.item_container,
+        { borderTopWidth: (index === 0) ? 0 : 1 },
+      ]}
+      subtitleStyle={{ color: theme.gray1, fontSize: 14, fontWeight: '400' }}
+      subtitle={item.description}
+    />
+  )
+
+  renderWorkoutItem = ({ item, index }) => {
+    const { repBySet, totalSet, totalRound } = this.workout.exercises[index];
+    const set = totalRound === 0 ? totalSet : totalRound;
+    const { navigation } = this.props;
+    return (
+      <ListItem
+        chevron
+        containerStyle={[
+          styles.item_container,
+          { borderTopWidth: (index === 0) ? 0 : 1 },
+        ]}
+        title={item.name}
+        titleStyle={{ color: 'white', fontSize: 20, fontWeight: '700' }}
+        subtitleStyle={{ color: theme.gray1, fontSize: 14, fontWeight: '400' }}
+        subtitle={item.description}
+        onPress={() => { navigation.navigate('Exercise', { exercise: item }); }}
+        leftIcon={() => (
+          <View style={{
+            width: 30, height: 30, justifyContent: 'center', alignItems: 'center',
+          }}
+          >
+            <Text style={{ color: 'white', fontWeight: '700', fontSize: 18 }}>{repBySet}</Text>
+          </View>
+        )}
+        rightIcon={() => (
+          <View style={{
+            width: 30, height: 30, justifyContent: 'center', alignItems: 'center',
+          }}
+          >
+            <Text style={{ color: 'white', fontWeight: '400', fontSize: 18 }}>{`x${set}`}</Text>
+          </View>
+        )}
+      />
+    );
   }
 
   render() {
-    const { loading } = this.state;
-    if (loading) { return <View />; }
+    const { isLoading } = this.state;
+    if (isLoading) { return <LoadingView />; }
     const { exercises } = this.state;
-    const { description, name } = this.workout;
-    const { navigation } = this.props;
+    console.log(exercises);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Text h2 style={styles.mainTitle}>{name}</Text>
-        <View>
-          {
-            exercises.map((val, index, array) => {
-              const { repBySet, totalSet, totalRound } = this.workout.exercises[index];
-              const set = totalRound === 0 ? totalSet : totalRound;
-              return (
-                <ListItem
-                key={val._id} //eslint-disable-line
-                  title={`${repBySet} ${val.name}   x ${set}`}
-                  titleStyle={{ fontSize: 30, color: 'white' }}
-                  subtitleStyle={{ color: 'white' }}
-                  subtitle={val.description}
-                  containerStyle={this.exerciseContainerStyle(index, array.length)}
-                  onPress={() => { navigation.navigate('Exercise', { exercise: exercises[index] }); }}
-                />
-              );
-            })
-          }
+        <View style={styles.exercisesContainer}>
+          <SectionList
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+            keyExtractor={item => item._id} // eslint-disable-line
+            renderItem={this.renderWorkoutItem}
+            renderSectionHeader={this.renderSectionHeader}
+            sections={[
+              { title: 'Warm-up', data: [{ description: 'Feature coming soon' }], renderItem: this.renderWarmUpItem },
+              { title: 'Workout', data: exercises },
+              { title: 'Stretching', data: [{ description: 'Feature coming soon' }], renderItem: this.renderWarmUpItem },
+            ]}
+          />
         </View>
-        <Button
-          title="START WORKOUT"
-          raised
-          buttonStyle={{ backgroundColor: theme.red }}
-          titleStyle={{ fontWeight: 'bold' }}
-        />
+        <View style={{
+          flex: 1, justifyContent: 'center', backgroundColor: theme.darkGray2, padding: 16,
+        }}
+        >
+          <Button
+            title="START"
+            raised
+            containerStyle={{ borderRadius: 2, backgroundColor: theme.darkGray2 }}
+            buttonStyle={{ backgroundColor: theme.red }}
+            titleStyle={{ fontWeight: 'bold' }}
+          />
+        </View>
       </View>
     );
   }
