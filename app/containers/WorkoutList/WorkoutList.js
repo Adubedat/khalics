@@ -54,37 +54,24 @@ export default class WorkoutList extends Component {
   }
 
   render() {
-<<<<<<< HEAD
-    const { currentWorkout, workouts, isLoading } = this.state;
-    if (isLoading) {
-      return (
-        <LoadingView />
-      );
-    }
-=======
     const { isLoading } = this.state;
     if (isLoading) { return <LoadingView />; }
     const { currentWorkout, workouts } = this.state;
     const { navigation } = this.props;
->>>>>>> 1855c56266c36971a8e526add9acb7bcb4af6668
     if (workouts.length === 0) {
       return (
         <TestMySkills />
       );
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 1855c56266c36971a8e526add9acb7bcb4af6668
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={{ flex: 2, justifyContent: 'space-around', padding: 16 }}>
           <Text style={{ color: 'white', fontSize: 20, fontWeight: '700' }}>WEEK 1</Text>
           <Text style={{ color: theme.gray1, fontSize: 14, fontWeight: '400' }}>
-Here is your weekly goal, try to spread your workouts over the week.
+            Here is your weekly goal, try to spread your workouts over the week.
             {'\n'}
-Rest days are as important as workout days.
+            Rest days are as important as workout days.
           </Text>
         </View>
         <View style={styles.workouts_container}>
