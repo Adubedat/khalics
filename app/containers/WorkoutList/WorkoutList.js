@@ -42,8 +42,8 @@ export default class WorkoutList extends Component {
       );
     }
     // test to delete
-    navigation.navigate('Workout', { workout: workouts[0] });
-    return (<View />);
+    // navigation.navigate('Workout', { workout: workouts[0] });
+    // return (<View />);
     //
     return (
       <View style={styles.container}>
