@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import WorkoutList from '../containers/WorkoutList/WorkoutList';
 import Workout from '../containers/Workout/Workout';
+import Exercise from '../containers/Exercise/Exercise';
 import Profile from '../containers/Profile/Profile';
 import Settings from '../containers/Settings/Settings';
 
@@ -17,6 +18,7 @@ const WorkoutStackNavigator = createStackNavigator({
     }),
   },
   Workout,
+  Exercise,
 });
 
 const SettingsStackNavigator = createStackNavigator({
