@@ -3,7 +3,8 @@ import { View, StatusBar } from 'react-native';
 import { Text } from 'react-native-elements';
 import SvgUri from 'react-native-svg-uri';
 import styles from './styles';
-// import humanBodySvg from './human_body.svg';
+import humanBodySvg from './human_body.svg';
+// import HumanBody from './HumanBody.js';
 import theme from '../../theme';
 
 class Exercise extends React.PureComponent {
@@ -20,14 +21,7 @@ class Exercise extends React.PureComponent {
   render() {
     const { description, name, bodyParts } = this.exercise;
 
-    // const xml = humanBodySvg;
-    // console.log(xml);
-    // parseString(xml, (err, result) => {
-    // console.log(err, result);
-    // });
-
-
-    // console.log('--->', humanBodySvg, typeof humanBodySvg);
+    // console.log('--->', require('./human_body.svg'), typeof humanBodySvg);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
