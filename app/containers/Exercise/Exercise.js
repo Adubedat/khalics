@@ -2,9 +2,10 @@ import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { Text } from 'react-native-elements';
 import SvgUri from 'react-native-svg-uri';
+// import Svg, { Polygon, Image } from 'react-native-svg';
 import styles from './styles';
 import humanBodySvg from './human_body.svg';
-// import HumanBody from './HumanBody.js';
+import HumanBody from './humanBody.js';
 import theme from '../../theme';
 
 class Exercise extends React.PureComponent {
@@ -27,6 +28,7 @@ class Exercise extends React.PureComponent {
         <StatusBar barStyle="light-content" />
         <Text h2 style={styles.mainTitle}>{name}</Text>
         <View style={{ alignItems: 'center' }}>
+          <HumanBody />
           {/* <SvgUri
             width="500"
             height="300"
