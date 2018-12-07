@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {
-  View, StatusBar, Text, FlatList,
+  View, StatusBar, FlatList, Text,
 } from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
-import StepIndicator from '../../components/StepIndicator';
-import { styles, stepIndicatorStyles } from './styles';
+import { Button } from 'react-native-elements';
+import styles from './styles';
 import TestMySkills from '../testMySkills/testMySkills';
 import LoadingView from '../../components/LoadingView';
 import WorkoutItem from '../../components/WorkoutItem';
@@ -56,7 +55,6 @@ export default class WorkoutList extends Component {
 
   render() {
     const { currentWorkout, workouts, isLoading } = this.state;
-    // const { navigation } = this.props;
     if (isLoading) {
       return (
         <LoadingView />
@@ -71,41 +69,43 @@ export default class WorkoutList extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        {/* <View style={styles.mainTitle}>
-          <Text h2 style={{ color: 'white', textAlign: 'center' }}>Workouts</Text>
-        </View> */}
-        {/* <View style={styles.stepIndicator}>
-          <StepIndicator
-            customStyles={stepIndicatorStyles}
-            stepCount={3}
-            direction="vertical"
-            currentPosition={currentWorkout}
-            labels={workouts.map(item => item.name)}
-            descriptions={workouts.map(item => item.description)}
-            onPress={(number) => { navigation.navigate('Workout', { workout: workouts[number] }); }}
+        <View style={{ flex: 2, justifyContent: 'space-around', padding: 16 }}>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: '700' }}>WEEK 1</Text>
+          <Text style={{ color: theme.gray1, fontSize: 14, fontWeight: '400' }}>
+Here is your weekly goal, try to spread your workouts over the week.
+            {'\n'}
+Rest days are as important as workout days.
+          </Text>
+        </View>
+        <View style={styles.workouts_container}>
+          <FlatList
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+            keyExtractor={item => item._id} // eslint-disable-line
+            data={workouts}
+            renderItem={({ item, index }) => (
+              <WorkoutItem
+                workout={item}
+                index={index}
+                displayWorkout={this.displayWorkout}
+                done={item.done}
+                current={(index === currentWorkout)}
+                workoutsNbr={workouts.length}
+              />
+            )}
           />
-        </View> */}
-        <FlatList
-          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-          keyExtractor={({ item, index }) => index} // eslint-disable-line
-          data={workouts}
-          renderItem={({ item, index }) => (
-            <WorkoutItem
-              workout={item}
-              index={index}
-              displayWorkout={this.displayWorkout}
-              done={item.done}
-              current={(index === currentWorkout)}
-              workoutsNbr={workouts.length}
-            />
-          )}
-        />
-        <Button
-          title="FINISH WEEK"
-          raised
-          buttonStyle={{ backgroundColor: theme.red }}
-          titleStyle={{ fontWeight: 'bold' }}
-        />
+        </View>
+        <View style={{
+          flex: 1, justifyContent: 'center', backgroundColor: theme.darkGray2, padding: 16,
+        }}
+        >
+          <Button
+            title="FINISH WEEK"
+            raised
+            containerStyle={{ borderRadius: 2 }}
+            buttonStyle={{ backgroundColor: theme.red }}
+            titleStyle={{ fontWeight: 'bold' }}
+          />
+        </View>
       </View>
     );
   }

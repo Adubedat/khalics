@@ -8,6 +8,8 @@ const styles = StyleSheet.create({
   container: {
     height: 120,
     borderTopColor: 'gray',
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
   },
   icon: {
     height: 40,
@@ -79,14 +81,14 @@ class WorkoutItem extends React.PureComponent {
         containerStyle={[
           styles.container,
           {
-            borderTopWidth: (index !== 0) ? 1 : 0,
+            borderTopWidth: (index == 0) ? 1 : 0,
             backgroundColor: (current) ? '#303030' : theme.darkGray2,
           }]}
         chevron
         title={workout.name}
-        titleStyle={{ color: (current) ? 'white' : theme.gray1, fontSize: 20, fontWeight: '600' }}
+        titleStyle={{ color: (current) ? 'white' : theme.gray3, fontSize: 20, fontWeight: '700' }}
         subtitle={workout.description}
-        subtitleStyle={{ color: (current) ? theme.lightGray3 : theme.gray3, fontSize: 16, fontWeight: '400' }}
+        subtitleStyle={{ color: (current) ? theme.gray1 : theme.gray4, fontSize: 14, fontWeight: '400' }}
         onPress={() => { displayWorkout(workout); }}
         leftAvatar={() => (
           <View>

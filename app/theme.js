@@ -6,6 +6,7 @@ export default {
   gray1: '#808080',
   gray2: '#707070',
   gray3: '#606060',
+  gray4: '#505050',
   darkGray1: '#282828',
   darkGray2: '#202020',
   darkGray3: '#181818',
