@@ -29,6 +29,10 @@ const SettingsStackNavigator = createStackNavigator({
     screen: Settings,
     navigationOptions: () => ({
       title: 'Settings',
+      headerStyle: { backgroundColor: '#181818' },
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerBackTitle: null,
+      headerTintColor: 'white',
     }),
   },
 });

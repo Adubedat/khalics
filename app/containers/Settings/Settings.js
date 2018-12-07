@@ -1,9 +1,9 @@
 import React from 'react';
-import {
-  View, Platform, StatusBar, SafeAreaView,
-} from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, StatusBar } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { Auth } from 'aws-amplify';
+import styles from './styles';
+import theme from '../../theme';
 
 class Settings extends React.PureComponent {
   constructor(props) {
@@ -12,23 +12,59 @@ class Settings extends React.PureComponent {
   }
 
   SignOut = () => {
+    const { screenProps } = this.props;
     Auth.signOut()
-      .then(data => console.log(data))
+      .then((data) => {
+        console.log(data);
+        screenProps.session();
+      })
       .catch(err => console.log(err));
   }
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#181818' }}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={{
-            flex: 1, backgroundColor: '#202020', marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight, justifyContent: 'center', alignItems: 'center',
-          }}
-          >
-            <Button onPress={() => { this.SignOut(); }} title="Log out" />
-          </View>
-        </SafeAreaView>
-
+      <View style={{ flex: 1, backgroundColor: theme.darkGray2 }}>
+        <StatusBar barStyle="light-content" />
+        <ListItem
+          chevron
+          containerStyle={styles.item_container}
+          title="Change password"
+          titleStyle={styles.title}
+          onPress={() => {}}
+        />
+        <ListItem
+          chevron
+          containerStyle={styles.item_container}
+          title="Bug report"
+          titleStyle={styles.title}
+          onPress={() => {}}
+        />
+        <ListItem
+          chevron
+          containerStyle={styles.item_container}
+          title="Contact us"
+          titleStyle={styles.title}
+          onPress={() => {}}
+        />
+        <ListItem
+          chevron
+          containerStyle={styles.item_container}
+          title="About us"
+          titleStyle={styles.title}
+          onPress={() => {}}
+        />
+        <ListItem
+          chevron
+          containerStyle={styles.item_container}
+          title="Log out"
+          titleStyle={styles.title}
+          onPress={() => { this.SignOut(); }}
+        />
+        <ListItem
+          containerStyle={styles.item_container}
+          title="Version alpha 0.0.1"
+          titleStyle={styles.title}
+        />
       </View>
     );
   }
