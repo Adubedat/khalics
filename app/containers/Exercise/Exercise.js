@@ -4,8 +4,8 @@ import { Text } from 'react-native-elements';
 import SvgUri from 'react-native-svg-uri';
 // import Svg, { Polygon, Image } from 'react-native-svg';
 import styles from './styles';
-import humanBodySvg from './human_body.svg';
-import HumanBody from './HumanBody';
+// import humanBodySvg from './human_body_url.svg';
+import SvgHumanBody from './HumanBody';
 import theme from '../../theme';
 
 class Exercise extends React.PureComponent {
@@ -28,10 +28,11 @@ class Exercise extends React.PureComponent {
         <StatusBar barStyle="light-content" />
         <Text h2 style={styles.mainTitle}>{name}</Text>
         <View style={{ alignItems: 'center' }}>
-          <HumanBody />
+          <SvgHumanBody />
           {/* <SvgUri
             width="500"
             height="300"
+            source={{ uri: 'https://svgshare.com/i/7bP.svg' }}
             source={humanBodySvg}
             fill="red"
           /> */}
