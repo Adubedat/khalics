@@ -49,7 +49,7 @@ export default class WorkoutList extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.mainTitle}>
-          <Text h2 style={{ color: 'white', textAlign: 'center' }}>Workouts</Text>
+          <Text h3 style={{ color: 'white', textAlign: 'center' }}>Workouts</Text>
         </View>
         <View style={styles.stepIndicator}>
           <StepIndicator

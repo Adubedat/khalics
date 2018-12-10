@@ -12,4 +12,9 @@ export default StyleSheet.create({
     flexDirection: 'column',
     color: 'white',
   },
+  basicText: {
+    marginHorizontal: 10,
+    fontSize: 18,
+    color: 'white',
+  },
 });

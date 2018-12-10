@@ -15,16 +15,52 @@ class Exercise extends React.PureComponent {
 
   componentDidMount() {}
 
+  difficultyToStr = (difficultyNum) => {
+    let difficultyStr;
+    if (difficultyNum === 1) {
+      difficultyStr = 'easy';
+    } else {
+      difficultyStr = '';
+    }
+    return difficultyStr;
+  }
+
   render() {
-    const { description, name, bodyParts } = this.exercise;
+    const {
+      description, name, bodyParts, difficultyNum,
+    } = this.exercise;
 
     console.log('-->', this.exercise);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Text h2 style={styles.mainTitle}>{name}</Text>
-        <View style={{ alignItems: 'center' }} />
-        {/* <Text style={{ color: 'white', fontSize: 20, marginLeft: 2 }} /> */}
+        <Text h3 style={styles.mainTitle}>{name}</Text>
+        <View style={{ marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
+              Difficulty:
+          </Text>
+          <Text style={{ ...styles.basicText }}>
+            {this.difficultyToStr(difficultyNum)}
+          </Text>
+        </View>
+        {/* <View style={{ marginBottom: 12, ...styles.basicText }}>
+        <Text style={{ fontWeight: 'bold' }}>
+              Difficulty:
+          </Text>
+          <Text style={{
+            borderColor: 'red', borderWidth: 2, borderStyle: 'solid',
+          }}
+          >
+            {this.difficultyToStr(difficultyNum)}
+
+          </Text>
+        </View> */}
+        <Text style={{
+          color: 'white', fontSize: 18, marginHorizontal: 10, textAlign: 'center',
+        }}
+        >
+          {description}
+        </Text>
       </View>
     );
   }

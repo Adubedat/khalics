@@ -59,7 +59,7 @@ class Workout extends React.PureComponent {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Text h2 style={styles.mainTitle}>{name}</Text>
+        <Text h3 style={styles.mainTitle}>{name}</Text>
         <View>
           {
             exercises.map((val, index, array) => {
