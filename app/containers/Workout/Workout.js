@@ -98,7 +98,6 @@ class Workout extends React.PureComponent {
     const { isLoading } = this.state;
     if (isLoading) { return <LoadingView />; }
     const { exercises } = this.state;
-    console.log(exercises);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
