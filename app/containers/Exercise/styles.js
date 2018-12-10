@@ -3,6 +3,7 @@ import theme from '../../theme';
 
 export default StyleSheet.create({
   container: {
+    paddingTop: '20%',
     flex: 1,
     backgroundColor: theme.darkGray2,
   },

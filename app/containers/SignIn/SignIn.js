@@ -37,7 +37,7 @@ class SignIn extends React.PureComponent {
     };
     // below for testing
     this.state = {
-      username: 'test42',
+      username: 'tst42',
       password: '',
       error: { username: '', password: '' },
       isVerifyEmailVisible: false,

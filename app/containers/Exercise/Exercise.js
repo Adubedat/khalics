@@ -2,14 +2,18 @@ import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { Text, Divider } from 'react-native-elements';
 import styles from './styles';
+import DifficultyBar from '../../components/DifficultyBar';
 import theme from '../../theme';
 
-class Exercise extends React.PureComponent {
+class Exercise extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.exercise.name,
+  })
+
   constructor(props) {
     super(props);
     const { navigation } = this.props;
     this.exercise = navigation.state.params.exercise;
-    console.log(this.exercise);
     this.state = {};
   }
 
@@ -29,7 +33,6 @@ class Exercise extends React.PureComponent {
     const { bodyParts } = this.exercise;
     const bodyPartsTxt = bodyParts.reduce((acc, val, index, array) => {
       let bodyPartsStr = acc + val;
-      console.log(array.length, index);
       if (index !== array.length - 1) {
         bodyPartsStr += ', ';
       }
@@ -39,24 +42,21 @@ class Exercise extends React.PureComponent {
   }
 
   render() {
-    const { description, name, difficultyNum } = this.exercise;
+    const { description, difficultyNum } = this.exercise;
 
-    console.log('-->', this.exercise);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Text h3 style={styles.mainTitle}>{name}</Text>
+        {/* <Text h3 style={styles.mainTitle}>{name}</Text> */}
         <View style={{ marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
-              Difficulty:
+              Difficulty
           </Text>
-          <Text style={{ ...styles.basicText }}>
-            {this.difficultyToStr(difficultyNum)}
-          </Text>
+          <DifficultyBar barColor={theme.red} separationColor={theme.darkGray2} />
         </View>
         <View style={{ marginBottom: 12, flexDirection: 'row' }}>
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
-              Bodyparts:
+              Muscles
           </Text>
           <View style={{ flex: 1 }}>
             <Text style={{ ...styles.basicText, flexWrap: 'wrap' }}>
@@ -82,3 +82,9 @@ class Exercise extends React.PureComponent {
 }
 
 export default Exercise;
+
+// {/* <View style={{ flex: 1 }}> */}
+// {/* </View> */}
+// {/* <Text style={{ ...styles.basicText }}> */}
+// {/* {this.difficultyToStr(difficultyNum)} */}
+// {/* </Text> */}
