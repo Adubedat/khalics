@@ -1,10 +1,7 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { Text } from 'react-native-elements';
-import SvgUri from 'react-native-svg-uri';
-// import Svg, { Polygon, Image } from 'react-native-svg';
 import styles from './styles';
-// import SvgHumanBody from './HumanBody';
 import theme from '../../theme';
 
 class Exercise extends React.PureComponent {
@@ -21,20 +18,12 @@ class Exercise extends React.PureComponent {
   render() {
     const { description, name, bodyParts } = this.exercise;
 
-    // console.log('--->', require('./human_body.svg'), typeof humanBodySvg);
+    console.log('-->', this.exercise);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <Text h2 style={styles.mainTitle}>{name}</Text>
-        <View style={{ alignItems: 'center' }}>
-          {/* <SvgHumanBody /> */}
-          <SvgUri
-            width="500"
-            height="300"
-            source={{ uri: 'https://svgshare.com/i/7bP.svg' }}
-            fill="red"
-          />
-        </View>
+        <View style={{ alignItems: 'center' }} />
         {/* <Text style={{ color: 'white', fontSize: 20, marginLeft: 2 }} /> */}
       </View>
     );
