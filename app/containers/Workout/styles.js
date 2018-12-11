@@ -17,4 +17,10 @@ export default StyleSheet.create({
     flex: 9,
     justifyContent: 'center',
   },
+  button_container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: theme.darkGray2,
+    padding: 16,
+  },
 });

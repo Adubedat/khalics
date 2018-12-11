@@ -89,17 +89,28 @@ class AnimatedBar extends Component {
       barColor,
       fillColor,
       row,
-      style,
-      wrapStyle,
-      fillStyle,
-      barStyle,
+      style,        // eslint-disable-line
+      wrapStyle,    // eslint-disable-line
+      fillStyle,    // eslint-disable-line
+      barStyle,     // eslint-disable-line
     } = this.props;
 
     return (
-      <Animated.View style={[styles.outer, { height, borderRadius }, row ? styles.flex : undefined, style]}>
+      <Animated.View
+        style={[
+          styles.outer,
+          { height, borderRadius },
+          row ? styles.flex : undefined,
+          style,
+        ]}
+      >
         <Animated.View style={[styles.flex, { borderColor, borderWidth, borderRadius }, wrapStyle]}>
           <Animated.View
-            style={[StyleSheet.absoluteFill, { backgroundColor: fillColor, borderRadius }, fillStyle]}
+            style={[
+              StyleSheet.absoluteFill,
+              { backgroundColor: fillColor, borderRadius },
+              fillStyle,
+            ]}
           />
           <Animated.View
             style={[

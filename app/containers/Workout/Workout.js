@@ -14,7 +14,7 @@ class Workout extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    const { navigation } = this.props;
+    const { navigation } = this.props; //eslint-disable-line
     this.workout = navigation.state.params.workout;
     this.state = {
       isLoading: true,
@@ -116,10 +116,7 @@ class Workout extends React.PureComponent {
             ]}
           />
         </View>
-        <View style={{
-          flex: 1, justifyContent: 'center', backgroundColor: theme.darkGray2, padding: 16,
-        }}
-        >
+        <View style={styles.button_container}>
           <Button
             title="START"
             raised

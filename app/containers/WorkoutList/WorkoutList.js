@@ -52,7 +52,7 @@ export default class WorkoutList extends Component {
   }
 
   displayWorkout = (workout, index) => {
-    const { navigation } = this.props;
+    const { navigation } = this.props; //eslint-disable-line
     navigation.navigate(
       'Workout',
       { workout, index: index + 1 },
