@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import ProgressCircle from 'react-native-progress/Circle';
+import Exercise from '../Exercise/Exercise';
 import theme from '../../theme';
 import styles from './styles';
 
@@ -20,7 +21,7 @@ class OnGoingWorkout extends React.Component {
     this.timeoutId = null;
     this.state = {
       currentExerciseIndex: 0,
-      currentSetIndex: 1,
+      currentSet: 1,
       totalSetDone: 0,
       restTime: 0,
     };
@@ -43,6 +44,12 @@ class OnGoingWorkout extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.timeoutId) {
+      clearInterval(this.timeoutId);
+    }
+  }
+
   nextSet = () => {
     const { navigation } = this.props;
     const { workout, exercises } = this;
@@ -53,7 +60,7 @@ class OnGoingWorkout extends React.Component {
       if (temp < workout.exercises[i].totalSet) {
         this.setState({
           currentExerciseIndex: i,
-          currentSetIndex: temp + 1,
+          currentSet: temp + 1,
           totalSetDone: totalSetDone + 1,
           restTime: workout.restTime,
         });
@@ -64,14 +71,20 @@ class OnGoingWorkout extends React.Component {
     }
   }
 
+  renderHeader = () => {
+    const { restTime } = this.state;
+    if (restTime > 0) {
+      return (this.renderTimer());
+    }
+    return (this.renderGoal());
+  }
+
   renderTimer = () => {
     const screenWidth = Dimensions.get('window').width;
     const fontSize = screenWidth / 16;
+    const { restTime } = this.state;
     return (
-      <View style={{
-        flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',
-      }}
-      >
+      <View style={{ flex: 1, alignItems: 'center', flexDirection: 'row' }}>
         <View style={{ width: screenWidth / 3, paddingRight: 20 }}>
           <Text style={[styles.header_text, { fontSize, textAlign: 'right' }]}>Rest</Text>
         </View>
@@ -92,15 +105,29 @@ class OnGoingWorkout extends React.Component {
     );
   }
 
+  renderGoal = () => {
+    const { currentSet, currentExerciseIndex } = this.state;
+    const set = `Set ${currentSet}`;
+    const goal = `Goal x${this.workout.exercises[currentExerciseIndex].repBySet}`;
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontSize: 20, color: 'white', fontWeight: '400' }}>{set}</Text>
+        <Text style={{ fontSize: 50, color: 'white', fontWeight: '400' }}>{goal}</Text>
+      </View>
+    );
+  }
+
   render() {
-    const { currentExerciseIndex, currentSetIndex, restTime } = this.state;
     console.log(this.state);
+    const { currentExerciseIndex } = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.header_container} />
+        <View style={styles.header_container}>
+          {this.renderHeader()}
+        </View>
         <View style={styles.exercise_container}>
           <ScrollView>
-            <Text>Exercise component</Text>
+            <Exercise exercise={this.exercises[currentExerciseIndex]} />
           </ScrollView>
         </View>
         <View style={styles.button_container}>
