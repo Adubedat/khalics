@@ -127,7 +127,8 @@ class OnGoingWorkout extends React.Component {
         </View>
         <View style={styles.exercise_container}>
           <ScrollView>
-            <Exercise exercise={this.exercises[currentExerciseIndex]} />
+            <Text>Exercise component</Text>
+            {/* <Exercise exercise={this.exercises[currentExerciseIndex]} /> */}
           </ScrollView>
         </View>
         <View style={styles.button_container}>
