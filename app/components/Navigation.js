@@ -7,12 +7,14 @@ import Workout from '../containers/Workout/Workout';
 import Exercise from '../containers/Exercise/Exercise';
 import Profile from '../containers/Profile/Profile';
 import Settings from '../containers/Settings/Settings';
+import OnGoingWorkout from '../containers/OnGoingWorkout/OnGoingWorkout';
 
 const WorkoutStackNavigator = createStackNavigator(
   {
     WorkoutList,
     Workout,
     Exercise,
+    OnGoingWorkout,
   },
   {
     navigationOptions: {

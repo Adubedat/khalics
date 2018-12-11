@@ -9,7 +9,7 @@ import theme from '../../theme';
 
 class Workout extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
-    title: `WORKOUT ${navigation.getParam('index')}`,
+    title: `WORKOUT ${navigation.getParam('index', '')}`,
   });
 
   constructor(props) {
@@ -98,6 +98,7 @@ class Workout extends React.PureComponent {
     const { isLoading } = this.state;
     if (isLoading) { return <LoadingView />; }
     const { exercises } = this.state;
+    const { navigation } = this.props;
     console.log(exercises);
     return (
       <View style={styles.container}>
@@ -125,6 +126,7 @@ class Workout extends React.PureComponent {
             containerStyle={{ borderRadius: 2, backgroundColor: theme.darkGray2 }}
             buttonStyle={{ backgroundColor: theme.red }}
             titleStyle={{ fontWeight: 'bold' }}
+            onPress={() => navigation.navigate('OnGoingWorkout', { workout: this.workout, exercises })}
           />
         </View>
       </View>
