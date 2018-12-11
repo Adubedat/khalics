@@ -47,12 +47,11 @@ class Exercise extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        {/* <Text h3 style={styles.mainTitle}>{name}</Text> */}
         <View style={{ marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
               Difficulty
           </Text>
-          <DifficultyBar barColor={theme.red} separationColor={theme.darkGray2} />
+          <DifficultyBar activeSquareNb={difficultyNum} />
         </View>
         <View style={{ marginBottom: 12, flexDirection: 'row' }}>
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
@@ -82,9 +81,3 @@ class Exercise extends React.Component {
 }
 
 export default Exercise;
-
-// {/* <View style={{ flex: 1 }}> */}
-// {/* </View> */}
-// {/* <Text style={{ ...styles.basicText }}> */}
-// {/* {this.difficultyToStr(difficultyNum)} */}
-// {/* </Text> */}
