@@ -99,7 +99,10 @@ class Workout extends React.PureComponent {
     if (isLoading) { return <LoadingView />; }
     const { exercises } = this.state;
     const { navigation } = this.props;
-    console.log(exercises);
+    // TEST
+    navigation.navigate('Exercise', { exercise: exercises[0] });
+    return (<View />);
+    //
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />

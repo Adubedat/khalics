@@ -17,16 +17,17 @@ class Exercise extends React.Component {
     this.state = {};
   }
 
-  musclesInvolvedToStr = () => {
+  musclesInvolvedToBadge = () => {
     const { musclesInvolved } = this.exercise;
-    const musclesInvolvedTxt = musclesInvolved.reduce((acc, val, index, array) => {
-      let musclesInvolvedStr = acc + val;
-      if (index !== array.length - 1) {
-        musclesInvolvedStr += ', ';
-      }
-      return musclesInvolvedStr;
-    }, '');
-    return musclesInvolvedTxt;
+    const badges = [];
+    musclesInvolved.forEach((val, index) => {
+      badges.push(<Badge
+        value={val}
+        containerStyle={{ backgroundColor: theme.gray3, marginRight: 4 }}
+        textStyle={{ color: 'white' }}
+      />);
+    });
+    return badges;
   }
 
   render() {
@@ -45,10 +46,8 @@ class Exercise extends React.Component {
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
               Muscles
           </Text>
-          <View style={{ flex: 1 }}>
-            <Text style={{ ...styles.basicText, flexWrap: 'wrap' }}>
-              {this.musclesInvolvedToStr()}
-            </Text>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            {this.musclesInvolvedToBadge()}
           </View>
         </View>
         <View style={{ marginBottom: 12, flexDirection: 'row' }}>
