@@ -100,8 +100,8 @@ class Workout extends React.PureComponent {
     const { exercises } = this.state;
     const { navigation } = this.props;
     // TEST
-    navigation.navigate('Exercise', { exercise: exercises[0] });
-    return (<View />);
+    // navigation.navigate('Exercise', { exercise: exercises[0] });
+    // return (<View />);
     //
     return (
       <View style={styles.container}>
