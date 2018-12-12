@@ -5,11 +5,7 @@ import styles from './styles';
 import DifficultyBar from '../DifficultyBar';
 import theme from '../../theme';
 
-class Exercise extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.exercise.name,
-  });
-
+class ExerciseDescription extends React.Component {
   constructor(props) {
     super(props);
     const { exercise } = this.props;
@@ -21,26 +17,24 @@ class Exercise extends React.Component {
     const { musclesInvolved } = this.exercise;
     const badges = [];
     musclesInvolved.forEach((val, index) => {
-      badges.push(<Badge
-        value={val}
-        containerStyle={{ backgroundColor: theme.gray5, marginRight: 4 }}
-        textStyle={{ color: 'white' }}
-      />);
+      badges.push(
+        <Badge
+          value={val}
+          containerStyle={{ backgroundColor: theme.gray5, marginRight: 4 }}
+          textStyle={{ color: 'white' }}
+        />,
+      );
     });
     return badges;
   }
 
-  techniquesToView = () => {
+  techniquesToList = () => {
     const { techniques } = this.exercise;
-    const techniquesViews = [];
+    const techniquesList = [];
     techniques.forEach((val, index) => {
-      techniquesViews.push(
+      techniquesList.push(
         <View style={{
           marginBottom: 5,
-          backgroundColor: theme.gray5,
-          marginHorizontal: 10,
-          borderRadius: 5,
-          paddingVertical: 5,
         }}
         >
           <Text style={{
@@ -49,13 +43,40 @@ class Exercise extends React.Component {
             textAlign: 'center',
           }}
           >
-            {val}
+            {`${'\u2022 '}${val}`}
           </Text>
         </View>,
       );
     });
-    return techniquesViews;
+    return techniquesList;
   }
+
+  // techniquesToView = () => {
+  //   const { techniques } = this.exercise;
+  //   const techniquesViews = [];
+  //   techniques.forEach((val, index) => {
+  //     techniquesViews.push(
+  //       <View style={{
+  //         marginBottom: 5,
+  //         backgroundColor: theme.gray5,
+  //         marginHorizontal: 10,
+  //         borderRadius: 5,
+  //         paddingVertical: 5,
+  //       }}
+  //       >
+  //         <Text style={{
+  //           color: 'white',
+  //           fontSize: 18,
+  //           textAlign: 'center',
+  //         }}
+  //         >
+  //           {val}
+  //         </Text>
+  //       </View>,
+  //     );
+  //   });
+  // return techniquesViews;
+  // }
 
   render() {
     const { description, difficultyNum } = this.exercise;
@@ -63,33 +84,39 @@ class Exercise extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <View style={{ marginBottom: 12, flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{
+          marginBottom: 12, flexDirection: 'row',
+        }}
+        >
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
               Difficulty
           </Text>
-          <DifficultyBar activeSquareNb={difficultyNum} />
+          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            <DifficultyBar activeSquareNb={difficultyNum} />
+          </View>
         </View>
         <View style={{ marginBottom: 12, flexDirection: 'row' }}>
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
               Muscles
           </Text>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
             {this.musclesInvolvedToBadge()}
           </View>
         </View>
         <View style={{ marginBottom: 12, flexDirection: 'row' }}>
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
-              Techniques
+            Techniques
           </Text>
-          <View style={{ flex: 1, flexDirection: 'column' }}>
-            {this.techniquesToView()}
+          <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
+            <Text>{'\n'}</Text>
+            {this.techniquesToList()}
           </View>
         </View>
         <View style={{
           alignItems: 'center', marginBottom: 20, fontWeight: 'bold',
         }}
         >
-          <Divider style={{ backgroundColor: theme.gray3, width: '80%', height: 2 }} />
+          <Divider style={{ backgroundColor: theme.gray3, width: '80%', height: 1 }} />
         </View>
         <Text style={{
           color: 'white', fontSize: 16, textAlign: 'center',
@@ -102,4 +129,4 @@ class Exercise extends React.Component {
   }
 }
 
-export default Exercise;
+export default ExerciseDescription;
