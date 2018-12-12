@@ -111,7 +111,7 @@ class ExerciseDescription extends React.Component {
         <View style={{ alignItems: 'center', marginBottom: 20, fontWeight: 'bold' }}>
           <Divider style={styles.divider} />
         </View>
-        <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
+        <Text style={{ color: 'white', fontSize: 16, textAlign: 'left' }}>
           {description}
         </Text>
       </View>
