@@ -26,7 +26,8 @@ class OnGoingWorkout extends React.Component {
       currentSet: 1,
       totalSetDone: 0,
       restTime: 0,
-      repsDone: this.workout.exercises[0].repBySet,
+      pickerValue: this.workout.exercises[0].repBySet,
+      repsDone: [],
     };
     const { currentExerciseIndex } = this.state;
     navigation.setParams({ title: this.exercises[currentExerciseIndex].name });
@@ -56,17 +57,19 @@ class OnGoingWorkout extends React.Component {
   nextSet = () => {
     const { navigation } = this.props;
     const { workout, exercises } = this;
-    const { totalSetDone } = this.state;
+    const { totalSetDone, repsDone, pickerValue } = this.state;
     const len = workout.exercises.length;
     let temp = totalSetDone + 1;
     for (let i = 0; i < len; i += 1) {
       if (temp < workout.exercises[i].totalSet) {
+        repsDone.push(pickerValue);
         this.setState({
           currentExerciseIndex: i,
           currentSet: temp + 1,
           totalSetDone: totalSetDone + 1,
           restTime: workout.restTime,
-          repsDone: workout.exercises[i].repBySet,
+          pickerValue: workout.exercises[i].repBySet,
+          repsDone,
         });
         navigation.setParams({ title: exercises[i].name });
         return;
@@ -75,26 +78,33 @@ class OnGoingWorkout extends React.Component {
     }
   }
 
-  renderHeader = () => {
-    const { restTime } = this.state;
-    if (restTime > 0) {
-      return (this.renderTimer());
-    }
-    return (this.renderGoal());
-  }
+  // renderHeader = () => {
+  //   const { restTime } = this.state;
+  //   if (restTime > 0) {
+  //     return (this.renderTimer());
+  //   }
+  //   return (this.renderGoal());
+  // }
 
   renderTimer = () => {
     const screenWidth = Dimensions.get('window').width;
     const fontSize = screenWidth / 16;
-    const { restTime } = this.state;
-    const { currentSet, currentExerciseIndex } = this.state;
-    const set = restTime > 0 ? 'Rest' : `Set ${currentSet}`;
-    const goal = restTime > 0 ? 'seconds' : `${this.workout.exercises[currentExerciseIndex].repBySet} reps`;
+    const { currentSet, currentExerciseIndex, restTime } = this.state;
+    const leftText = (restTime > 0) ? 'Rest' : `Set ${currentSet}`;
+    const rightText = () => {
+      if (restTime > 0) {
+        return 'seconds';
+      }
+      if (this.exercises[currentExerciseIndex].isIsometric) {
+        return `Hold ${this.workout.exercises[currentExerciseIndex].repBySet} seconds`;
+      }
+      return `${this.workout.exercises[currentExerciseIndex].repBySet} reps`;
+    };
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
         <View style={{ flex: 1, alignItems: 'center', flexDirection: 'row' }}>
           <View style={{ width: screenWidth / 3, paddingRight: 20 }}>
-            <Text style={{ ...styles.header_text, fontSize, textAlign: 'right' }}>{set}</Text>
+            <Text style={{ ...styles.header_text, fontSize, textAlign: 'right' }}>{leftText}</Text>
           </View>
           <ProgressCircle
             progress={restTime / this.workout.restTime}
@@ -107,33 +117,33 @@ class OnGoingWorkout extends React.Component {
             textStyle={{ ...styles.header_text, fontSize: fontSize + 4 }}
           />
           <View style={{ width: screenWidth / 3, paddingLeft: 20 }}>
-            <Text style={{ ...styles.header_text, fontSize, textAlign: 'left' }}>{goal}</Text>
+            <Text style={{ ...styles.header_text, fontSize, textAlign: 'left' }}>{rightText()}</Text>
           </View>
         </View>
       </View>
     );
   }
 
-  renderGoal = () => {
-    const { currentSet, currentExerciseIndex } = this.state;
-    const set = `Set ${currentSet}`;
-    const goal = `${this.workout.exercises[currentExerciseIndex].repBySet} reps`;
-    return (
-      <View style={{ flex: 1, justifyContent: 'space-around' }}>
-        <Text style={{
-          fontSize: 30, color: 'white', fontWeight: '400', textAlign: 'center',
-        }}
-        >
-Go !
+  //   renderGoal = () => {
+  //     const { currentSet, currentExerciseIndex } = this.state;
+  //     const set = `Set ${currentSet}`;
+  //     const goal = `${this.workout.exercises[currentExerciseIndex].repBySet} reps`;
+  //     return (
+  //       <View style={{ flex: 1, justifyContent: 'space-around' }}>
+  //         <Text style={{
+  //           fontSize: 30, color: 'white', fontWeight: '400', textAlign: 'center',
+  //         }}
+  //         >
+  // Go !
 
-        </Text>
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{set}</Text>
-          <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{goal}</Text>
-        </View>
-      </View>
-    );
-  }
+  //         </Text>
+  //         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+  //           <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{set}</Text>
+  //           <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{goal}</Text>
+  //         </View>
+  //       </View>
+  //     );
+  //   }
 
   renderPickerItem = () => {
     const items = [];
@@ -157,7 +167,7 @@ Go !
   }
 
   render() {
-    const { currentExerciseIndex, repsDone } = this.state;
+    const { currentExerciseIndex, pickerValue } = this.state;
     console.log(this.state);
     return (
       <View style={styles.container}>
@@ -176,10 +186,10 @@ Go !
           {this.renderPickerQuestion()}
           <HorizontalPicker
             itemWidth={50}
-            selectedValue={repsDone}
+            selectedValue={pickerValue}
             foregroundColor="white"
             inactiveItemOpacity={0.5}
-            onChange={pickerValue => this.setState({ repsDone: pickerValue })}
+            onChange={pickerValue => this.setState({ pickerValue })}
           >
             {this.renderPickerItem()}
           </HorizontalPicker>
