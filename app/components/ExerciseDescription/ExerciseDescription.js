@@ -5,20 +5,16 @@ import styles from './styles';
 import DifficultyBar from '../DifficultyBar';
 import theme from '../../theme';
 
-class Exercise extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.exercise.name,
-  });
+class ExerciseDescription extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   // const { exercise } = this.props;
+  //   // this.exercise = exercise;
+  //   // this.state = {};
+  // }
 
-  constructor(props) {
-    super(props);
-    const { exercise } = this.props;
-    this.exercise = exercise;
-    this.state = {};
-  }
-
-  musclesInvolvedToStr = () => {
-    const { musclesInvolved } = this.exercise;
+  musclesInvolvedToStr = (musclesInvolved) => {
+    // const { musclesInvolved } = this.exercise;
     const musclesInvolvedTxt = musclesInvolved.reduce((acc, val, index, array) => {
       let musclesInvolvedStr = acc + val;
       if (index !== array.length - 1) {
@@ -30,8 +26,9 @@ class Exercise extends React.Component {
   }
 
   render() {
-    const { description, difficultyNum } = this.exercise;
-
+    console.log('exercise props : ', this.props);
+    const { exercise } = this.props;
+    const { description, difficultyNum, musclesInvolved } = exercise;
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -47,7 +44,7 @@ class Exercise extends React.Component {
           </Text>
           <View style={{ flex: 1 }}>
             <Text style={{ ...styles.basicText, flexWrap: 'wrap' }}>
-              {this.musclesInvolvedToStr()}
+              {this.musclesInvolvedToStr(musclesInvolved)}
             </Text>
           </View>
         </View>
@@ -68,4 +65,4 @@ class Exercise extends React.Component {
   }
 }
 
-export default Exercise;
+export default ExerciseDescription;

@@ -1,16 +1,18 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions,
+  View, Text, ScrollView, Dimensions, FlatList,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import ProgressCircle from 'react-native-progress/Circle';
-import Exercise from '../Exercise/Exercise';
+import ExerciseDescription from '../../components/ExerciseDescription/ExerciseDescription';
+import HorizontalPicker from '../../components/HorizontalPicker';
 import theme from '../../theme';
 import styles from './styles';
 
 class OnGoingWorkout extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('title', 'EXERCISE'),
+    tabBarVisible: false,
   });
 
   constructor(props) {
@@ -24,6 +26,7 @@ class OnGoingWorkout extends React.Component {
       currentSet: 1,
       totalSetDone: 0,
       restTime: 0,
+      repsDone: this.workout.exercises[0].repBySet,
     };
     const { currentExerciseIndex } = this.state;
     navigation.setParams({ title: this.exercises[currentExerciseIndex].name });
@@ -63,6 +66,7 @@ class OnGoingWorkout extends React.Component {
           currentSet: temp + 1,
           totalSetDone: totalSetDone + 1,
           restTime: workout.restTime,
+          repsDone: workout.exercises[i].repBySet,
         });
         navigation.setParams({ title: exercises[i].name });
         return;
@@ -83,23 +87,28 @@ class OnGoingWorkout extends React.Component {
     const screenWidth = Dimensions.get('window').width;
     const fontSize = screenWidth / 16;
     const { restTime } = this.state;
+    const { currentSet, currentExerciseIndex } = this.state;
+    const set = restTime > 0 ? 'Rest' : `Set ${currentSet}`;
+    const goal = restTime > 0 ? 'seconds' : `${this.workout.exercises[currentExerciseIndex].repBySet} reps`;
     return (
-      <View style={{ flex: 1, alignItems: 'center', flexDirection: 'row' }}>
-        <View style={{ width: screenWidth / 3, paddingRight: 20 }}>
-          <Text style={[styles.header_text, { fontSize, textAlign: 'right' }]}>Rest</Text>
-        </View>
-        <ProgressCircle
-          progress={restTime / this.workout.restTime}
-          color={theme.red}
-          size={screenWidth / 4}
-          borderWidth={0}
-          unfilledColor={theme.darkGray1}
-          showsText
-          formatText={() => restTime}
-          textStyle={{ color: 'white', fontSize }}
-        />
-        <View style={{ width: screenWidth / 3, paddingLeft: 20 }}>
-          <Text style={[styles.header_text, { fontSize, textAlign: 'left' }]}>seconds</Text>
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', flexDirection: 'row' }}>
+          <View style={{ width: screenWidth / 3, paddingRight: 20 }}>
+            <Text style={{ ...styles.header_text, fontSize, textAlign: 'right' }}>{set}</Text>
+          </View>
+          <ProgressCircle
+            progress={restTime / this.workout.restTime}
+            color={theme.red}
+            size={screenWidth / 4}
+            borderWidth={0}
+            unfilledColor={theme.darkGray1}
+            showsText
+            formatText={() => (restTime > 0 ? restTime : 'Go !')}
+            textStyle={{ ...styles.header_text, fontSize: fontSize + 4 }}
+          />
+          <View style={{ width: screenWidth / 3, paddingLeft: 20 }}>
+            <Text style={{ ...styles.header_text, fontSize, textAlign: 'left' }}>{goal}</Text>
+          </View>
         </View>
       </View>
     );
@@ -108,32 +117,74 @@ class OnGoingWorkout extends React.Component {
   renderGoal = () => {
     const { currentSet, currentExerciseIndex } = this.state;
     const set = `Set ${currentSet}`;
-    const goal = `Goal x${this.workout.exercises[currentExerciseIndex].repBySet}`;
+    const goal = `${this.workout.exercises[currentExerciseIndex].repBySet} reps`;
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 20, color: 'white', fontWeight: '400' }}>{set}</Text>
-        <Text style={{ fontSize: 50, color: 'white', fontWeight: '400' }}>{goal}</Text>
+      <View style={{ flex: 1, justifyContent: 'space-around' }}>
+        <Text style={{
+          fontSize: 30, color: 'white', fontWeight: '400', textAlign: 'center',
+        }}
+        >
+Go !
+
+        </Text>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{set}</Text>
+          <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{goal}</Text>
+        </View>
       </View>
     );
   }
 
-  render() {
-    console.log(this.state);
+  renderPickerItem = () => {
+    const items = [];
+    for (let i = 0; i <= 200; i += 1) {
+      items.push(<HorizontalPicker.Item key={i} label={`${i}`} value={i} />);
+    }
+    return items;
+  }
+
+  renderPickerQuestion = () => {
     const { currentExerciseIndex } = this.state;
+    const { isIsometric } = this.exercises[currentExerciseIndex];
+    if (isIsometric) {
+      return (
+        <Text style={styles.little_text}>How many seconds did you hold it ?</Text>
+      );
+    }
+    return (
+      <Text style={styles.little_text}>How many repetitions have you done ?</Text>
+    );
+  }
+
+  render() {
+    const { currentExerciseIndex, repsDone } = this.state;
+    console.log(this.state);
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
-          {this.renderHeader()}
+          {this.renderTimer()}
         </View>
         <View style={styles.exercise_container}>
-          <ScrollView>
-            <Text>Exercise component</Text>
-            {/* <Exercise exercise={this.exercises[currentExerciseIndex]} /> */}
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ flexGrow: 1 }}
+          >
+            <ExerciseDescription exercise={this.exercises[currentExerciseIndex]} />
           </ScrollView>
         </View>
         <View style={styles.button_container}>
+          {this.renderPickerQuestion()}
+          <HorizontalPicker
+            itemWidth={50}
+            selectedValue={repsDone}
+            foregroundColor="white"
+            inactiveItemOpacity={0.5}
+            onChange={pickerValue => this.setState({ repsDone: pickerValue })}
+          >
+            {this.renderPickerItem()}
+          </HorizontalPicker>
           <Button
-            title="DONE"
+            title="SET DONE"
             raised
             containerStyle={{ borderRadius: 2, backgroundColor: theme.darkGray2 }}
             buttonStyle={{ backgroundColor: theme.red }}
