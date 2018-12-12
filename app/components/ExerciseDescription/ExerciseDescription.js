@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
-import { Text, Divider } from 'react-native-elements';
+import { Text, Divider, Badge } from 'react-native-elements';
 import styles from './styles';
 import DifficultyBar from '../DifficultyBar';
 import theme from '../../theme';
@@ -30,7 +30,7 @@ class Exercise extends React.Component {
   }
 
   render() {
-    const { description, difficultyNum } = this.exercise;
+    const { description, difficultyNum, techniques } = this.exercise;
 
     return (
       <View style={styles.container}>
@@ -48,6 +48,16 @@ class Exercise extends React.Component {
           <View style={{ flex: 1 }}>
             <Text style={{ ...styles.basicText, flexWrap: 'wrap' }}>
               {this.musclesInvolvedToStr()}
+            </Text>
+          </View>
+        </View>
+        <View style={{ marginBottom: 12, flexDirection: 'row' }}>
+          <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
+              Techniques
+          </Text>
+          <View style={{ flex: 1 }}>
+            <Text style={{ ...styles.basicText, flexWrap: 'wrap' }}>
+              {techniques}
             </Text>
           </View>
         </View>

@@ -16,10 +16,7 @@ class Exercise extends React.Component {
   componentDidMount() {}
 
   render() {
-    // const { description, difficultyNum } = this.exercise;
-
     return (
-      // <View />
       <ExerciseDescription exercise={this.exercise} />
     );
   }
