@@ -23,15 +23,42 @@ class Exercise extends React.Component {
     musclesInvolved.forEach((val, index) => {
       badges.push(<Badge
         value={val}
-        containerStyle={{ backgroundColor: theme.gray3, marginRight: 4 }}
+        containerStyle={{ backgroundColor: theme.gray5, marginRight: 4 }}
         textStyle={{ color: 'white' }}
       />);
     });
     return badges;
   }
 
+  techniquesToView = () => {
+    const { techniques } = this.exercise;
+    const techniquesViews = [];
+    techniques.forEach((val, index) => {
+      techniquesViews.push(
+        <View style={{
+          marginBottom: 5,
+          backgroundColor: theme.gray5,
+          marginHorizontal: 10,
+          borderRadius: 5,
+          paddingVertical: 5,
+        }}
+        >
+          <Text style={{
+            color: 'white',
+            fontSize: 18,
+            textAlign: 'center',
+          }}
+          >
+            {val}
+          </Text>
+        </View>,
+      );
+    });
+    return techniquesViews;
+  }
+
   render() {
-    const { description, difficultyNum, techniques } = this.exercise;
+    const { description, difficultyNum } = this.exercise;
 
     return (
       <View style={styles.container}>
@@ -54,20 +81,18 @@ class Exercise extends React.Component {
           <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
               Techniques
           </Text>
-          <View style={{ flex: 1 }}>
-            <Text style={{ ...styles.basicText, flexWrap: 'wrap' }}>
-              {techniques}
-            </Text>
+          <View style={{ flex: 1, flexDirection: 'column' }}>
+            {this.techniquesToView()}
           </View>
         </View>
         <View style={{
-          alignItems: 'center', marginBottom: 20, fontWeight: 'bold', marginTop: 5,
+          alignItems: 'center', marginBottom: 20, fontWeight: 'bold',
         }}
         >
-          <Divider style={{ backgroundColor: 'white', width: '80%', height: 2 }} />
+          <Divider style={{ backgroundColor: theme.gray3, width: '80%', height: 2 }} />
         </View>
         <Text style={{
-          color: 'white', fontSize: 16, marginHorizontal: 10, textAlign: 'center',
+          color: 'white', fontSize: 16, textAlign: 'center',
         }}
         >
           {description}
