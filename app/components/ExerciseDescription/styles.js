@@ -6,16 +6,25 @@ export default StyleSheet.create({
     paddingTop: '20%',
     flex: 1,
     backgroundColor: theme.darkGray2,
+    padding: 10,
   },
-  mainTitle: {
-    marginVertical: 35,
-    textAlign: 'center',
-    flexDirection: 'column',
-    color: 'white',
-  },
-  basicText: {
-    marginHorizontal: 10,
+  title: {
     fontSize: 18,
     color: 'white',
+    fontWeight: 'bold',
+  },
+  rowContainer: {
+    marginBottom: 12,
+    flexDirection: 'row',
+  },
+  divider: {
+    backgroundColor: theme.gray3,
+    width: '80%',
+    height: 1,
+  },
+  techniquesContainer: {
+    alignItems: 'flex-start',
+    marginLeft: 30,
+    marginBottom: 20,
   },
 });

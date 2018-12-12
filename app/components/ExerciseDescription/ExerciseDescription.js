@@ -84,44 +84,34 @@ class ExerciseDescription extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <View style={{
-          marginBottom: 12, flexDirection: 'row',
-        }}
-        >
-          <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
+        <View style={styles.rowContainer}>
+          <Text style={styles.title}>
               Difficulty
           </Text>
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
             <DifficultyBar activeSquareNb={difficultyNum} />
           </View>
         </View>
-        <View style={{ marginBottom: 12, flexDirection: 'row' }}>
-          <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
+        <View style={styles.rowContainer}>
+          <Text style={styles.title}>
               Muscles
           </Text>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
             {this.musclesInvolvedToBadge()}
           </View>
         </View>
-        <View style={{ marginBottom: 12, flexDirection: 'row' }}>
-          <Text style={{ fontWeight: 'bold', ...styles.basicText }}>
+        <View style={styles.rowContainer}>
+          <Text style={styles.title}>
             Techniques
           </Text>
-          <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
-            <Text>{'\n'}</Text>
-            {this.techniquesToList()}
-          </View>
         </View>
-        <View style={{
-          alignItems: 'center', marginBottom: 20, fontWeight: 'bold',
-        }}
-        >
-          <Divider style={{ backgroundColor: theme.gray3, width: '80%', height: 1 }} />
+        <View style={styles.techniquesContainer}>
+          {this.techniquesToList()}
         </View>
-        <Text style={{
-          color: 'white', fontSize: 16, textAlign: 'center',
-        }}
-        >
+        <View style={{ alignItems: 'center', marginBottom: 20, fontWeight: 'bold' }}>
+          <Divider style={styles.divider} />
+        </View>
+        <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
           {description}
         </Text>
       </View>
