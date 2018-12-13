@@ -9,6 +9,20 @@ import { Button } from 'react-native-elements';
 import theme from '../../theme';
 import styles from './styles';
 
+const sendReport = (input) => {
+  const createBugUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/bug/create';
+  const res = await fetch(createBugUrl, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  });
+  const resJson = await res.json();
+  console.log('resJson:', resJson);
+};
+
 const BugReport = () => {
   const placeholderTxt = {
     summary: 'E.g: The price mentioned on the pricing page is not correct',
