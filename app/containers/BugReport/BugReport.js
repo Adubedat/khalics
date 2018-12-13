@@ -9,7 +9,7 @@ import { Button } from 'react-native-elements';
 import theme from '../../theme';
 import styles from './styles';
 
-const sendReport = (input) => {
+const sendReport = async (input) => {
   const createBugUrl = 'https://qmzsdq8495.execute-api.eu-west-1.amazonaws.com/dev/bug/create';
   const res = await fetch(createBugUrl, {
     method: 'POST',
