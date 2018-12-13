@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions,
+  View, Text, ScrollView, Dimensions, TouchableOpacity,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import ProgressCircle from 'react-native-progress/Circle';
@@ -143,6 +143,13 @@ class OnGoingWorkout extends React.Component {
       <View style={styles.container}>
         <View style={styles.header_container}>
           {this.renderTimer()}
+          <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
+            <TouchableOpacity
+              onPress={() => { this.setState({ restTime: 0 }); }}
+            >
+              <Text style={{ color: 'white', fontWeight: '400', fontSize: 14 }}>Skip</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.exercise_container}>
           <ScrollView

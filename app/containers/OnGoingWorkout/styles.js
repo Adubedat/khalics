@@ -8,10 +8,9 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
   },
   header_container: {
-    flex: 3,
+    height: 120,
     backgroundColor: theme.darkGray3,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'space-around',
   },
   header_text: {
     color: 'white',
