@@ -31,7 +31,7 @@ const BugReport = () => {
     actual: 'E.g: The price for the basic plan is 25$',
   };
   const input = {
-    summary: '', steps: '', expected: '', actual: '',
+    summary: '', steps: '', expected: '', actual: '', from: 'user',
   };
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: theme.darkGray2 }}>
@@ -74,7 +74,7 @@ const BugReport = () => {
         containerStyle={{ borderRadius: 2, backgroundColor: theme.darkGray2 }}
         buttonStyle={{ backgroundColor: theme.red }}
         titleStyle={{ fontWeight: 'bold' }}
-        // onPress={() => {  }}
+        onPress={() => { sendReport(input); }}
       />
     </View>
   );
