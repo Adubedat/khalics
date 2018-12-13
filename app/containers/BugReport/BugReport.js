@@ -31,7 +31,7 @@ const BugReport = () => {
     actual: 'E.g: The price for the basic plan is 25$',
   };
   const input = {
-    summary: '', steps: '', expected: '', actual: '', from: 'user',
+    summary: '', stepsToReproduce: '', expectedResult: '', actualResult: '', from: 'user',
   };
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: theme.darkGray2 }}>
@@ -50,7 +50,7 @@ const BugReport = () => {
         placeholder={placeholderTxt.steps}
         placeholderTextColor={theme.gray1}
         multiline
-        onChangeText={(text) => { input.steps = text; }}
+        onChangeText={(text) => { input.stepsToReproduce = text; }}
       />
       <Text style={styles.title}>Expected result (optional)</Text>
       <TextInput
@@ -58,7 +58,7 @@ const BugReport = () => {
         placeholder={placeholderTxt.expected}
         placeholderTextColor={theme.gray1}
         multiline
-        onChangeText={(text) => { input.expected = text; }}
+        onChangeText={(text) => { input.expectedResult = text; }}
       />
       <Text style={styles.title}>Actual result (optional)</Text>
       <TextInput
@@ -66,7 +66,7 @@ const BugReport = () => {
         placeholder={placeholderTxt.actual}
         placeholderTextColor={theme.gray1}
         multiline
-        onChangeText={(text) => { input.actual = text; }}
+        onChangeText={(text) => { input.actualResult = text; }}
       />
       <Button
         title="SEND"
