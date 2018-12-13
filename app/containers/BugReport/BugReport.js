@@ -16,6 +16,9 @@ const BugReport = () => {
     expected: 'E.g: The price for the basic plan should be 29$',
     actual: 'E.g: The price for the basic plan is 25$',
   };
+  const input = {
+    summary: '', steps: '', expected: '', actual: '',
+  };
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: theme.darkGray2 }}>
       <StatusBar barStyle="light-content" />
@@ -25,6 +28,7 @@ const BugReport = () => {
         placeholder={placeholderTxt.summary}
         placeholderTextColor={theme.gray1}
         multiline
+        onChangeText={(text) => { input.summary = text; }}
       />
       <Text style={styles.title}>Steps to reproduce (optional)</Text>
       <TextInput
@@ -32,6 +36,7 @@ const BugReport = () => {
         placeholder={placeholderTxt.steps}
         placeholderTextColor={theme.gray1}
         multiline
+        onChangeText={(text) => { input.steps = text; }}
       />
       <Text style={styles.title}>Expected result (optional)</Text>
       <TextInput
@@ -39,6 +44,7 @@ const BugReport = () => {
         placeholder={placeholderTxt.expected}
         placeholderTextColor={theme.gray1}
         multiline
+        onChangeText={(text) => { input.expected = text; }}
       />
       <Text style={styles.title}>Actual result (optional)</Text>
       <TextInput
@@ -46,6 +52,7 @@ const BugReport = () => {
         placeholder={placeholderTxt.actual}
         placeholderTextColor={theme.gray1}
         multiline
+        onChangeText={(text) => { input.actual = text; }}
       />
       <Button
         title="SEND"
@@ -53,7 +60,7 @@ const BugReport = () => {
         containerStyle={{ borderRadius: 2, backgroundColor: theme.darkGray2 }}
         buttonStyle={{ backgroundColor: theme.red }}
         titleStyle={{ fontWeight: 'bold' }}
-        // onPress={() => {}}
+        // onPress={() => {  }}
       />
     </View>
   );
