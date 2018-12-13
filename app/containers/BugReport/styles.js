@@ -8,6 +8,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     backgroundColor: theme.gray6,
     padding: 3,
-    marginBottom: 8,
+    marginBottom: 6,
+  },
+  textArea: {
+    backgroundColor: theme.gray6,
+    color: 'white',
+    height: '15%',
+    marginBottom: 16,
   },
 });
