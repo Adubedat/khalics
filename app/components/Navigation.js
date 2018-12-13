@@ -7,6 +7,7 @@ import Workout from '../containers/Workout/Workout';
 import Exercise from '../containers/Exercise/Exercise';
 import Profile from '../containers/Profile/Profile';
 import Settings from '../containers/Settings/Settings';
+import BugReport from '../containers/BugReport/BugReport';
 import OnGoingWorkout from '../containers/OnGoingWorkout/OnGoingWorkout';
 
 const WorkoutStackNavigator = createStackNavigator(
@@ -31,6 +32,16 @@ const SettingsStackNavigator = createStackNavigator({
     screen: Settings,
     navigationOptions: () => ({
       title: 'Settings',
+      headerStyle: { backgroundColor: '#181818' },
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerBackTitle: null,
+      headerTintColor: 'white',
+    }),
+  },
+  BugReport: {
+    screen: BugReport,
+    navigationOptions: () => ({
+      title: 'BugReport',
       headerStyle: { backgroundColor: '#181818' },
       headerTitleStyle: { fontWeight: 'bold' },
       headerBackTitle: null,

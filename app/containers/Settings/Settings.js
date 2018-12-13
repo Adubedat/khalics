@@ -22,6 +22,11 @@ class Settings extends React.PureComponent {
   }
 
   render() {
+    const { navigation } = this.props;
+    // TEST
+    navigation.navigate('BugReport');
+    return (<View />);
+    //
     return (
       <View style={{ flex: 1, backgroundColor: theme.darkGray2 }}>
         <StatusBar barStyle="light-content" />
@@ -50,7 +55,7 @@ class Settings extends React.PureComponent {
           containerStyle={styles.item_container}
           title="Bug report"
           titleStyle={styles.title}
-          onPress={() => {}}
+          onPress={() => { navigation.navigate('BugReport'); }}
         />
         <ListItem
           chevron
