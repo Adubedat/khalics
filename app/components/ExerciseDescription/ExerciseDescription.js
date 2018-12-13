@@ -1,11 +1,19 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { Text, Divider, Badge } from 'react-native-elements';
+import PropTypes from 'prop-types';
 import styles from './styles';
 import DifficultyBar from '../DifficultyBar';
 import theme from '../../theme';
 
 class ExerciseDescription extends React.Component {
+  static defaultProps = {
+    titleSize: 18,
+    titleColor: 'white',
+    textSize: 15,
+    textColor: theme.lightGray2,
+  }
+
   constructor(props) {
     super(props);
     const { exercise } = this.props;
@@ -13,14 +21,14 @@ class ExerciseDescription extends React.Component {
     this.state = {};
   }
 
-  musclesInvolvedToBadge = () => {
-    const { musclesInvolved } = this.exercise;
+  musclesInvolvedToBadge = (musclesInvolved) => {
     const badges = [];
-    musclesInvolved.forEach((val, index) => {
+    musclesInvolved.forEach((val) => {
       badges.push(
         <Badge
+          key={val}
           value={val}
-          containerStyle={{ backgroundColor: theme.gray5, marginRight: 4 }}
+          containerStyle={{ backgroundColor: theme.gray5, margin: 2 }}
           textStyle={{ color: 'white' }}
         />,
       );
@@ -28,65 +36,51 @@ class ExerciseDescription extends React.Component {
     return badges;
   }
 
-  techniquesToList = () => {
-    const { techniques } = this.exercise;
+  techniquesToList = (techniques) => {
+    // const { techniques } = this.exercise;
+    const { textSize, textColor } = this.props;
     const techniquesList = [];
-    techniques.forEach((val, index) => {
-      techniquesList.push(
-        <View style={{
-          marginBottom: 5,
+    if (techniques) {
+      techniques.forEach((val, index) => {
+        techniquesList.push(
+          <View
+            style={{ marginBottom: 5 }}
+            key={`${index}42`} //eslint-disable-line
+          >
+            <Text style={{
+              color: textColor, fontSize: textSize + 1, textAlign: 'center', fontWeight: '400',
+            }}
+            >
+              {`${'\u2022 '}${val}`}
+            </Text>
+          </View>,
+        );
+      });
+      return techniquesList;
+    }
+    return (
+      <View style={{ marginBottom: 5 }}>
+        <Text style={{
+          color: textColor, fontSize: textSize + 1, textAlign: 'center', fontWeight: '400',
         }}
         >
-          <Text style={{
-            color: 'white',
-            fontSize: 18,
-            textAlign: 'center',
-          }}
-          >
-            {`${'\u2022 '}${val}`}
-          </Text>
-        </View>,
-      );
-    });
-    return techniquesList;
+          {`${'\u2022 '}No techniques specified`}
+        </Text>
+      </View>
+    );
   }
-
-  // techniquesToView = () => {
-  //   const { techniques } = this.exercise;
-  //   const techniquesViews = [];
-  //   techniques.forEach((val, index) => {
-  //     techniquesViews.push(
-  //       <View style={{
-  //         marginBottom: 5,
-  //         backgroundColor: theme.gray5,
-  //         marginHorizontal: 10,
-  //         borderRadius: 5,
-  //         paddingVertical: 5,
-  //       }}
-  //       >
-  //         <Text style={{
-  //           color: 'white',
-  //           fontSize: 18,
-  //           textAlign: 'center',
-  //         }}
-  //         >
-  //           {val}
-  //         </Text>
-  //       </View>,
-  //     );
-  //   });
-  // return techniquesViews;
-  // }
 
   render() {
     console.log('exercise props : ', this.props);
-    const { exercise } = this.props;
-    const { description, difficultyNum, musclesInvolved } = exercise;
+    const {
+      exercise, titleSize, textSize, titleColor, textColor,
+    } = this.props;
+    const { description, difficultyNum } = exercise;
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.rowContainer}>
-          <Text style={styles.title}>
+          <Text style={{ ...styles.title, fontSize: titleSize, color: titleColor }}>
               Difficulty
           </Text>
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
@@ -94,30 +88,43 @@ class ExerciseDescription extends React.Component {
           </View>
         </View>
         <View style={styles.rowContainer}>
-          <Text style={styles.title}>
+          <Text style={{ ...styles.title, fontSize: titleSize, color: titleColor }}>
               Muscles
           </Text>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-            {this.musclesInvolvedToBadge()}
+          <View style={{
+            flex: 1, flexDirection: 'row', justifyContent: 'flex-end', flexWrap: 'wrap',
+          }}
+          >
+            {this.musclesInvolvedToBadge(exercise.musclesInvolved)}
           </View>
         </View>
         <View style={styles.rowContainer}>
-          <Text style={styles.title}>
+          <Text style={{ ...styles.title, fontSize: titleSize, color: titleColor }}>
             Techniques
           </Text>
         </View>
         <View style={styles.techniquesContainer}>
-          {this.techniquesToList()}
+          {this.techniquesToList(exercise.techniques)}
         </View>
         <View style={{ alignItems: 'center', marginBottom: 20, fontWeight: 'bold' }}>
           <Divider style={styles.divider} />
         </View>
-        <Text style={{ color: 'white', fontSize: 16, textAlign: 'left' }}>
+        <Text style={{
+          color: textColor, fontSize: textSize, textAlign: 'left', fontWeight: '300',
+        }}
+        >
           {description}
         </Text>
       </View>
     );
   }
 }
+
+ExerciseDescription.propTypes = {
+  titleSize: PropTypes.number,
+  titleColor: PropTypes.string,
+  textSize: PropTypes.number,
+  textColor: PropTypes.string,
+};
 
 export default ExerciseDescription;

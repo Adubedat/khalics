@@ -3,7 +3,7 @@ import theme from '../../theme';
 
 export default StyleSheet.create({
   container: {
-    paddingTop: 42,
+    paddingTop: '10%',
     flex: 1,
     backgroundColor: theme.darkGray2,
     padding: 10,
@@ -11,7 +11,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 18,
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   rowContainer: {
     marginBottom: 12,
@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
   divider: {
     backgroundColor: theme.gray3,
-    width: '80%',
+    width: '90%',
     height: 1,
   },
   techniquesContainer: {

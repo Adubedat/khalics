@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions, FlatList,
+  View, Text, ScrollView, Dimensions,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import ProgressCircle from 'react-native-progress/Circle';
@@ -31,7 +31,6 @@ class OnGoingWorkout extends React.Component {
     };
     const { currentExerciseIndex } = this.state;
     navigation.setParams({ title: this.exercises[currentExerciseIndex].name });
-    console.log(this.props.navigation.state.params);
   }
 
   componentDidUpdate() {
@@ -78,14 +77,6 @@ class OnGoingWorkout extends React.Component {
     }
   }
 
-  // renderHeader = () => {
-  //   const { restTime } = this.state;
-  //   if (restTime > 0) {
-  //     return (this.renderTimer());
-  //   }
-  //   return (this.renderGoal());
-  // }
-
   renderTimer = () => {
     const screenWidth = Dimensions.get('window').width;
     const fontSize = screenWidth / 16;
@@ -124,27 +115,6 @@ class OnGoingWorkout extends React.Component {
     );
   }
 
-  //   renderGoal = () => {
-  //     const { currentSet, currentExerciseIndex } = this.state;
-  //     const set = `Set ${currentSet}`;
-  //     const goal = `${this.workout.exercises[currentExerciseIndex].repBySet} reps`;
-  //     return (
-  //       <View style={{ flex: 1, justifyContent: 'space-around' }}>
-  //         <Text style={{
-  //           fontSize: 30, color: 'white', fontWeight: '400', textAlign: 'center',
-  //         }}
-  //         >
-  // Go !
-
-  //         </Text>
-  //         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-  //           <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{set}</Text>
-  //           <Text style={{ fontSize: 30, color: 'white', fontWeight: '400' }}>{goal}</Text>
-  //         </View>
-  //       </View>
-  //     );
-  //   }
-
   renderPickerItem = () => {
     const items = [];
     for (let i = 0; i <= 200; i += 1) {
@@ -179,7 +149,11 @@ class OnGoingWorkout extends React.Component {
             style={{ flex: 1 }}
             contentContainerStyle={{ flexGrow: 1 }}
           >
-            <ExerciseDescription exercise={this.exercises[currentExerciseIndex]} />
+            <ExerciseDescription
+              exercise={this.exercises[currentExerciseIndex]}
+              textSize={13}
+              titleSize={17}
+            />
           </ScrollView>
         </View>
         <View style={styles.button_container}>
@@ -189,7 +163,7 @@ class OnGoingWorkout extends React.Component {
             selectedValue={pickerValue}
             foregroundColor="white"
             inactiveItemOpacity={0.5}
-            onChange={pickerValue => this.setState({ pickerValue })}
+            onChange={() => this.setState({ pickerValue })}
           >
             {this.renderPickerItem()}
           </HorizontalPicker>
