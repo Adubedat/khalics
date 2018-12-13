@@ -36,7 +36,9 @@ const BugReport = () => {
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: theme.darkGray2 }}>
       <StatusBar barStyle="light-content" />
-      <Text style={styles.title}>Summary</Text>
+      <View style={styles.titleBorder}>
+        <Text style={styles.title}>Summary</Text>
+      </View>
       <TextInput
         style={styles.textArea}
         placeholder={placeholderTxt.summary}
@@ -44,7 +46,9 @@ const BugReport = () => {
         multiline
         onChangeText={(text) => { input.summary = text; }}
       />
-      <Text style={styles.title}>Steps to reproduce (optional)</Text>
+      <View style={styles.titleBorder}>
+        <Text style={styles.title}>Steps to reproduce (optional)</Text>
+      </View>
       <TextInput
         style={styles.textArea}
         placeholder={placeholderTxt.steps}
@@ -52,7 +56,9 @@ const BugReport = () => {
         multiline
         onChangeText={(text) => { input.stepsToReproduce = text; }}
       />
-      <Text style={styles.title}>Expected result (optional)</Text>
+      <View style={styles.titleBorder}>
+        <Text style={styles.title}>Expected result (optional)</Text>
+      </View>
       <TextInput
         style={styles.textArea}
         placeholder={placeholderTxt.expected}
@@ -60,7 +66,9 @@ const BugReport = () => {
         multiline
         onChangeText={(text) => { input.expectedResult = text; }}
       />
-      <Text style={styles.title}>Actual result (optional)</Text>
+      <View style={styles.titleBorder}>
+        <Text style={styles.title}>Actual result (optional)</Text>
+      </View>
       <TextInput
         style={styles.textArea}
         placeholder={placeholderTxt.actual}
