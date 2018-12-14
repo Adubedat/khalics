@@ -71,7 +71,7 @@ class ExerciseDescription extends React.Component {
   }
 
   render() {
-    console.log('exercise props : ', this.props);
+    // console.log('exercise props : ', this.props);
     const {
       exercise, titleSize, textSize, titleColor, textColor,
     } = this.props;

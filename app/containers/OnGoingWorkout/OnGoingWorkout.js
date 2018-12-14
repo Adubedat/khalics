@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions, TouchableOpacity,
+  View, Text, ScrollView, Dimensions, TouchableOpacity, BackHandler,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import ProgressCircle from 'react-native-progress/Circle';
@@ -33,6 +33,10 @@ class OnGoingWorkout extends React.Component {
     navigation.setParams({ title: this.exercises[currentExerciseIndex].name });
   }
 
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleGoBack);
+  }
+
   componentDidUpdate() {
     const { restTime } = this.state;
     if (!this.timeoutId && restTime > 0) {
@@ -48,9 +52,15 @@ class OnGoingWorkout extends React.Component {
   }
 
   componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleGoBack);
     if (this.timeoutId) {
       clearInterval(this.timeoutId);
     }
+  }
+
+  handleGoBack = () => {
+    console.log('hardware back button pressed');
+    return false;
   }
 
   nextSet = () => {
@@ -78,8 +88,6 @@ class OnGoingWorkout extends React.Component {
   }
 
   renderTimer = () => {
-    const screenWidth = Dimensions.get('window').width;
-    const fontSize = screenWidth / 16;
     const { currentSet, currentExerciseIndex, restTime } = this.state;
     const leftText = (restTime > 0) ? 'Rest' : `Set ${currentSet}`;
     const rightText = () => {
@@ -94,21 +102,21 @@ class OnGoingWorkout extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
         <View style={{ flex: 1, alignItems: 'center', flexDirection: 'row' }}>
-          <View style={{ width: screenWidth / 3, paddingRight: 20 }}>
-            <Text style={{ ...styles.header_text, fontSize, textAlign: 'right' }}>{leftText}</Text>
+          <View style={{ width: 100, paddingRight: 20 }}>
+            <Text style={{ ...styles.header_text, fontSize: 20, textAlign: 'right' }}>{leftText}</Text>
           </View>
           <ProgressCircle
             progress={restTime / this.workout.restTime}
             color={theme.red}
-            size={screenWidth / 4}
+            size={80}
             borderWidth={0}
             unfilledColor={theme.darkGray1}
             showsText
             formatText={() => (restTime > 0 ? restTime : 'Go !')}
-            textStyle={{ ...styles.header_text, fontSize: fontSize + 4 }}
+            textStyle={{ ...styles.header_text, fontSize: 24 }}
           />
-          <View style={{ width: screenWidth / 3, paddingLeft: 20 }}>
-            <Text style={{ ...styles.header_text, fontSize, textAlign: 'left' }}>{rightText()}</Text>
+          <View style={{ width: 100, paddingLeft: 20 }}>
+            <Text style={{ ...styles.header_text, fontSize: 20, textAlign: 'left' }}>{rightText()}</Text>
           </View>
         </View>
       </View>
@@ -117,8 +125,8 @@ class OnGoingWorkout extends React.Component {
 
   renderPickerItem = () => {
     const items = [];
-    for (let i = 0; i <= 200; i += 1) {
-      items.push(<HorizontalPicker.Item key={i} label={`${i}`} value={i} />);
+    for (let i = 0; i <= 100; i += 1) {
+      items.push(<HorizontalPicker.Item key={`${i}picker`} label={`${i}`} value={i} />);
     }
     return items;
   }
@@ -138,7 +146,6 @@ class OnGoingWorkout extends React.Component {
 
   render() {
     const { currentExerciseIndex, pickerValue } = this.state;
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <View style={styles.header_container}>
@@ -170,7 +177,7 @@ class OnGoingWorkout extends React.Component {
             selectedValue={pickerValue}
             foregroundColor="white"
             inactiveItemOpacity={0.5}
-            onChange={() => this.setState({ pickerValue })}
+            onChange={newPickerValue => this.setState({ pickerValue: newPickerValue })}
           >
             {this.renderPickerItem()}
           </HorizontalPicker>
