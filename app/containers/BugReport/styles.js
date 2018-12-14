@@ -15,6 +15,14 @@ export default StyleSheet.create({
     height: '15%',
     marginBottom: 16,
   },
+  // same as textArea but not same render when error
+  // summary is the only field with error (required field)
+  summaryTextArea: {
+    backgroundColor: theme.gray6,
+    color: 'white',
+    height: '15%',
+    marginBottom: 16,
+  },
   titleBorder: {
     marginBottom: 3,
   },

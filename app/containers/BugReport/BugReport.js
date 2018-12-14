@@ -14,6 +14,7 @@ class BugReport extends React.Component {
     super(props);
     this.state = {
       summaryError: '',
+      summaryPlaceholderColor: theme.gray1,
       summary: '',
       stepsToReproduce: '',
       expectedResult: '',
@@ -46,9 +47,35 @@ class BugReport extends React.Component {
     const resJson = await res.json();
   };
 
+  checkError = () => {
+    const { summary } = this.state;
+    if (summary.length === 0) {
+      styles.summaryTextArea = {
+        ...styles.summaryTextArea, fontWeight: 'bold', borderColor: theme.red, borderWidth: 1,
+      };
+      this.setState({
+        summaryError: 'required field, cannot be empty',
+        summaryPlaceholderColor: theme.red,
+      });
+      return true;
+    }
+    return false;
+  }
+
+  resetSummaryError = () => {
+    const { summaryError } = this.state;
+    if (summaryError.length > 0) {
+      styles.summaryTextArea = styles.textArea;
+      this.setState({
+        summaryError: '',
+        summaryPlaceholderColor: theme.gray1,
+      });
+    }
+  }
+
   render() {
     const {
-      summaryError, summary, stepsToReproduce, expectedResult, actualResult,
+      summaryError, summary, stepsToReproduce, expectedResult, actualResult, summaryPlaceholderColor,
     } = this.state;
     return (
       <View style={{ flex: 1, padding: 10, backgroundColor: theme.darkGray2 }}>
@@ -57,12 +84,16 @@ class BugReport extends React.Component {
           <Text style={styles.title}>Summary</Text>
         </View>
         <TextInput
-          style={styles.textArea}
+          style={styles.summaryTextArea}
           value={summary}
-          placeholder={this.placeholderTxt.summary}
-          placeholderTextColor={theme.gray1}
+          placeholder={summaryError || this.placeholderTxt.summary}
+          placeholderTextColor={summaryPlaceholderColor}
           multiline
-          onChangeText={(text) => { this.setState({ summary: text }); }}
+          onChangeText={(text) => {
+            if (summaryError.length > 0) { this.resetSummaryError(); }
+            this.setState({ summary: text });
+          }}
+          onFocus={this.resetSummaryError}
         />
         <View style={styles.titleBorder}>
           <Text style={styles.title}>Steps to reproduce (optional)</Text>
@@ -103,7 +134,11 @@ class BugReport extends React.Component {
           containerStyle={{ borderRadius: 2, backgroundColor: theme.darkGray2 }}
           buttonStyle={{ backgroundColor: theme.red }}
           titleStyle={{ fontWeight: 'bold' }}
-          onPress={() => { this.sendReport(); }}
+          onPress={() => {
+            if (!this.checkError()) {
+              this.sendReport();
+            }
+          }}
         />
       </View>
     );
