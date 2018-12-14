@@ -24,8 +24,8 @@ class Settings extends React.PureComponent {
   render() {
     const { navigation } = this.props;
     // TEST
-    // navigation.navigate('BugReport');
-    // return (<View />);
+    navigation.navigate('PasswordChange');
+    return (<View />);
     //
     return (
       <View style={{ flex: 1, backgroundColor: theme.darkGray2 }}>
@@ -38,7 +38,7 @@ class Settings extends React.PureComponent {
           containerStyle={styles.item_container}
           title="Change password"
           titleStyle={styles.title}
-          onPress={() => {}}
+          onPress={() => { navigation.navigate('PasswordChange'); }}
         />
         <ListItem
           chevron
@@ -62,14 +62,14 @@ class Settings extends React.PureComponent {
           containerStyle={styles.item_container}
           title="Contact us"
           titleStyle={styles.title}
-          onPress={() => {}}
+          onPress={() => { navigation.navigate('ContactUs'); }}
         />
         <ListItem
           chevron
           containerStyle={styles.item_container}
           title="About us"
           titleStyle={styles.title}
-          onPress={() => {}}
+          onPress={() => { navigation.navigate('AboutUs'); }}
         />
         <ListItem
           containerStyle={styles.item_container}

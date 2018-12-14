@@ -8,6 +8,9 @@ import Exercise from '../containers/Exercise/Exercise';
 import Profile from '../containers/Profile/Profile';
 import Settings from '../containers/Settings/Settings';
 import BugReport from '../containers/BugReport/BugReport';
+import ContactUs from '../containers/ContactUs/ContactUs';
+import AboutUs from '../containers/AboutUs/AboutUs';
+import PasswordChange from '../containers/PasswordChange/PasswordChange';
 import OnGoingWorkout from '../containers/OnGoingWorkout/OnGoingWorkout';
 
 const WorkoutStackNavigator = createStackNavigator(
@@ -41,7 +44,37 @@ const SettingsStackNavigator = createStackNavigator({
   BugReport: {
     screen: BugReport,
     navigationOptions: () => ({
-      title: 'BugReport',
+      title: 'Bug report',
+      headerStyle: { backgroundColor: '#181818' },
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerBackTitle: null,
+      headerTintColor: 'white',
+    }),
+  },
+  ContactUs: {
+    screen: ContactUs,
+    navigationOptions: () => ({
+      title: 'Contact us',
+      headerStyle: { backgroundColor: '#181818' },
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerBackTitle: null,
+      headerTintColor: 'white',
+    }),
+  },
+  AboutUs: {
+    screen: AboutUs,
+    navigationOptions: () => ({
+      title: 'About us',
+      headerStyle: { backgroundColor: '#181818' },
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerBackTitle: null,
+      headerTintColor: 'white',
+    }),
+  },
+  PasswordChange: {
+    screen: PasswordChange,
+    navigationOptions: () => ({
+      title: 'Change password',
       headerStyle: { backgroundColor: '#181818' },
       headerTitleStyle: { fontWeight: 'bold' },
       headerBackTitle: null,
