@@ -36,7 +36,7 @@ const BugReport = () => {
   return (
     <View style={{ flex: 1, padding: 10, backgroundColor: theme.darkGray2 }}>
       <StatusBar barStyle="light-content" />
-      <View style={styles.titleBorder}>
+      <View style={{ marginBottom: 2 }}>
         <Text style={styles.title}>Summary</Text>
       </View>
       <TextInput
