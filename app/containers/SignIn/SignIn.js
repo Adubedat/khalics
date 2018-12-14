@@ -84,7 +84,6 @@ class SignIn extends React.PureComponent {
   }
 
   signInError = (err) => {
-    console.log(err);
     const error = { username: '', password: '' };
     if (err.code === 'UserNotFoundException') {
       error.username = 'Incorrect username / email or email not verified';

@@ -17,7 +17,5 @@ export default StyleSheet.create({
   },
   titleBorder: {
     marginBottom: 3,
-    // borderBottomWidth: 2,
-    // borderBottomColor: theme.gray3,
   },
 });
