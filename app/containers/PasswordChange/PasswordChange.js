@@ -5,6 +5,7 @@ import {
   Text,
 } from 'react-native';
 import { Button, Input } from 'react-native-elements';
+import FloatingLabelInput from '../../components/FloatingLabelInput';
 import theme from '../../theme';
 import styles from './styles';
 
@@ -22,26 +23,37 @@ class PasswordChange extends React.Component {
     return (
       <View style={{ flex: 1, padding: 10, backgroundColor: theme.darkGray2 }}>
         <StatusBar barStyle="light-content" />
-        <View style={{ marginBottom: 2 }}>
-          <Text style={styles.title}>Old password</Text>
-        </View>
-        <Input
-          containerStyle={styles.textInputContainer}
+        <FloatingLabelInput
+          label="Old password"
+          focusColor="white"
+          unfocusColor="#D3D3D3"
+          autoCapitalize="none"
           value={oldPassword}
+        //   error={error.username.length !== 0}
           onChangeText={(text) => { this.setState({ oldPassword: text }); }}
+          returnKeyType="next"
+          blurOnSubmit={false}
+          onSubmitEditing={() => { this.PasswordTextInput.focus(); }}
         />
-        <View style={styles.titleBorder}>
-          <Text style={styles.title}>New password</Text>
+        <View style={{ marginBottom: 12 }}>
+          <FloatingLabelInput
+            inputRef={(input) => { this.PasswordTextInput = input; }}
+            label="New password"
+            focusColor="white"
+            unfocusColor="#D3D3D3"
+            autoCapitalize="none"
+            value={newPassword}
+        //   error={error.username.length !== 0}
+            onChangeText={(text) => { this.setState({ newPassword: text }); }}
+            blurOnSubmit={false}
+          />
         </View>
-        <Input
-          containerStyle={styles.textInputContainer}
-          value={newPassword}
-          onChangeText={(text) => { this.setState({ newPassword: text }); }}
-        />
         <Button
           title="CHANGE"
           raised
-          containerStyle={{ borderRadius: 2, backgroundColor: theme.darkGray2 }}
+          containerStyle={{
+            borderRadius: 2, backgroundColor: theme.darkGray2, marginHorizontal: '6%',
+          }}
           buttonStyle={{ backgroundColor: theme.red }}
           titleStyle={{ fontWeight: 'bold' }}
           onPress={() => {

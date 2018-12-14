@@ -24,8 +24,8 @@ class Settings extends React.PureComponent {
   render() {
     const { navigation } = this.props;
     // TEST
-    navigation.navigate('PasswordChange');
-    return (<View />);
+    // navigation.navigate('PasswordChange');
+    // return (<View />);
     //
     return (
       <View style={{ flex: 1, backgroundColor: theme.darkGray2 }}>
