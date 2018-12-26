@@ -18,4 +18,9 @@ export default StyleSheet.create({
   titleBorder: {
     marginBottom: 3,
   },
+  field_error: {
+    marginLeft: 20,
+    marginRight: 20,
+    color: '#EB241A',
+  },
 });
