@@ -21,12 +21,6 @@ We were two on this project, where we learned about cloud serverless back-end an
 * Serverless
 * AWS (AWS lambda, DynamoDB)
 
-https://ibb.co/RQmFqzj
-https://ibb.co/xqpmNZP
-https://ibb.co/pKWhdVG
-https://ibb.co/8N0JdZ2
-https://ibb.co/g6rBTKZ
-
 ## Project screens
 ### Sign in
 <img src="https://i.ibb.co/BwfSZM2/Screenshot-2021-03-03-11-35-11-340-host-exp-exponent.jpg" width="400" />
