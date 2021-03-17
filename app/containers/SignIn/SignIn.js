@@ -37,7 +37,7 @@ class SignIn extends React.PureComponent {
     };
     // below for testing
     this.state = {
-      username: 'test42',
+      username: 'tst42',
       password: '',
       error: { username: '', password: '' },
       isVerifyEmailVisible: false,
@@ -84,7 +84,6 @@ class SignIn extends React.PureComponent {
   }
 
   signInError = (err) => {
-    console.log(err);
     const error = { username: '', password: '' };
     if (err.code === 'UserNotFoundException') {
       error.username = 'Incorrect username / email or email not verified';
@@ -123,6 +122,8 @@ class SignIn extends React.PureComponent {
         { token, expires_at: expires },
         { name: userData.name, email: userData.email })
         .then((credentials) => {
+          const { screenProps } = this.props;
+          screenProps.session();
           console.log('get aws credentials', credentials);
         }).catch((e) => {
           console.log(e);
